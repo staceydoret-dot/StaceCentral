@@ -131,7 +131,15 @@ to the existing URL, by passing `url` to the Artifact tool.
 ## Still open
 
 - ~~Publishing.~~ DONE rev 16 — live at b5d65276.
-- Morning brief `trig_01PZMkQ3Nn12cXUQPAsCCSfk` — FAILING (~12s) as of 09-01, undiagnosed.
+- ~~Morning brief `trig_01PZMkQ3Nn12cXUQPAsCCSfk` FAILING.~~ Checked 09-02: the
+  09-02 11:06Z run SUCCEEDED (93s, model claude-fable-5) and wrote t2-t5 onto the
+  Today tab, rolling t1 into `wins`. The ~12s failures were 09-01 only. Enabled,
+  push on, next fire 09-03 11:00Z. Do not carry the FAILING note forward again.
+- **Latent, dated:** all three crons are UTC and were set during EDT, so they
+  drift an hour when ET goes back to EST on **Sun 2026-11-01**. Morning brief
+  `0 11 * * 1-5` becomes 6am ET; weekly tune-up `0 14 * * 0` becomes 9am;
+  job board `15 11 * * *` becomes 6:15am. Shift each +1h that weekend, and
+  -1h again when EDT resumes 2027-03-14.
 - Degree audit not uploaded. Loans: IBR switch in progress (t2). Not enrolled at FAU this term.
 - OLD artifact 669893d2-… — never publish to it; deletion still unresolved.
 - Sept 13 Reminder ("Nudge Cleveland Clinic internal transfer if no reply") open and correct.
