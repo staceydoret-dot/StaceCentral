@@ -1,4 +1,47 @@
-# HANDOFF — the "Today" tab  (rev 16, 2026-09-02) — PUBLISHED. merge rule DONE, gate 332/332.
+# HANDOFF — the plan page  (rev 17, 2026-09-02) — Jobs tab shipped. 335/335 + 27 + 20.
+
+## Rev 17 — the job board moved in
+
+There were three surfaces (plan page, separate job board artifact ac5f82a4,
+morning brief). She asked for one. The plan page now has a fifth view, **Jobs**,
+between Today and Board.
+
+- `inject_jobs.js` adds the nav button, `#view-jobs`, the styles (page tokens
+  only, no new palette), `renderJobs()`, and wires `setView` + `renderAll`.
+- `seed_jobs.js` writes two new state keys.
+  - `jobs` — content. `{updated, note, rows[]}`, rows grouped by `s`:
+    `open` / `blocked` / `gated`. The daily sweep owns this.
+  - `pipeline` — **hers**. Added to `FROM_LIVE` in `merge_state.js`, so a
+    republish can never wipe what she is tracking. If you add another
+    user-editable key, do the same or it will be silently destroyed.
+- `t_jobs.js` — 27 assertions, takes the file as argv[2] (unlike `t_track.js`).
+- `test_path.js` moved 4 -> 5 switches and gained two Jobs assertions: 332 -> 335.
+
+Two guards worth keeping: the suite rejects guilt wording anywhere in the view
+(it caught "gated **behind** a credential" in my own copy), and it rejects a
+pipeline ladder lit end to end for an unresolved application, because a full bar
+reads as a win when it was a bounce.
+
+## Rev 17 — the tracker ladder changed
+
+Old: Watching / Applied / Followed up / Nudged / Interview / Decision, seeded at
+"Followed up". That ends a rejection at a dead end. She was rejected on 2 Sep and
+is actively working it, so the ladder is now:
+
+  Watching / Applied / Not eligible yet / Under review / Interview / Decision
+
+seeded at **Under review**, lastFollow 2026-09-02, nextFollow 2026-09-09,
+gaps `{Applied:2, "Not eligible yet":7, "Under review":7}`.
+
+**The last two rungs are terminal** — the page deliberately stops offering a
+follow-up date once you reach index 4. Do not put a date-shaped stage there;
+that was tried and the nudge line vanished. Stages are states, not dates.
+
+`retrack.js` applies the ladder to `build.html` AND the published file. It has to
+be both: `stages`/`gaps` are `TRACK_BUILD_FIELDS`, so BUILD wins and a
+build-only-in-the-published-file change gets reverted by the next merge.
+
+
 
 ## READ THIS FIRST — IT IS PUBLISHED
 
@@ -11,7 +54,7 @@ What ran, in order:
   -> `0 kept from LIVE | 1 seeded from BUILD [p0/m02 -> Followed up]`, no `dropped`.
   LIVE carried no `track` at all, so this was the first-ship case: nothing of
   hers was at risk. Her `display`, `checked`, `notes`, `today`, `wins` all carried.
-- `run_gate.js merged.html` -> 332 passed, 0 failed
+- `run_gate.js` on the shipped file -> 335 passed, 0 failed (332 before rev 17)
 - `t_track.js build.html`   -> 20 passed, 0 failed
 - published `merged.html` to the existing URL. No conflict.
 

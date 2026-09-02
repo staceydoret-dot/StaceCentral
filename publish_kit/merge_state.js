@@ -17,7 +17,7 @@ const TAG = '<script id="app-state" type="application/json">';
 const END = '</' + 'script>';
 
 /* ---- her input. Anything here is taken from LIVE and never overwritten. ---- */
-const FROM_LIVE = ['checked', 'notes', 'asks', 'display', 'log', 'wins', 'today'];
+const FROM_LIVE = ['checked', 'notes', 'asks', 'display', 'log', 'wins', 'today', 'pipeline'];
 /* `view` is deliberately NOT in that list. This release makes Today the landing
    view, and the ship gate asserts it. `view` is an ephemeral UI position, not
    her content, so BUILD wins. She lands on Today once; after her first tap the

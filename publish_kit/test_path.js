@@ -44,8 +44,9 @@ const wrap = body => `<!doctype html><html lang="en"><head><meta charset="utf-8"
     });
     ok(contrast >= 7, `heading contrast ${contrast.toFixed(1)}:1`);
 
-    // --- today is the landing view, four switches ---
-    ok(await page.locator('.switch button').count() === 4, 'four switches');
+    // --- today is the landing view, five switches ---
+    ok(await page.locator('.switch button').count() === 5, 'five switches');
+    ok(await page.locator('.switch button[data-view="jobs"]').count() === 1, 'jobs tab present');
     ok(await page.locator('#view-today').isVisible(), 'today is the default landing view');
     ok(!await page.locator('#view-board').isVisible(), 'board view starts hidden');
     ok(!await page.locator('#view-vision').isVisible(), 'vision view starts hidden');
@@ -558,7 +559,8 @@ const wrap = body => `<!doctype html><html lang="en"><head><meta charset="utf-8"
     ok(await p3.evaluate(() => { const i = document.querySelector('.boardframe img'); return i && i.naturalWidth > 400; }), 'v2 still shows the board photo');
     ok(await p3.locator('#view-path').isVisible(), 'v2 reopened on the view she left it on');
     ok(/Quicksand/.test(await p3.evaluate(() => getComputedStyle(document.querySelector('h2')).fontFamily)), 'v2 opens in the font she picked');
-    ok(await p3.locator('.switch button').count() === 4, 'v2 kept four switches');
+    ok(await p3.locator('.switch button').count() === 5, 'v2 kept five switches');
+    ok(await p3.locator('#view-jobs .job').count() > 0, 'v2 kept the jobs rows');
     ok(await p3.locator('#tasklist li').count() === t0 + 2, 'v2 reloaded today’s tasks, plus the two added');
     ok(await p3.locator('#tasklist .tkbox[data-tid="t1"]').getAttribute('aria-pressed') === 'true', 'v2 restored the tick');
     ok(await p3.locator('#replylog .item').count() === 1, 'v2 still shows what she wrote and got back');

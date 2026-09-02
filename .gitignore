@@ -4,3 +4,8 @@ live.html
 merged.html
 node_modules/
 package-lock.json
+live*.html
+merged.html
+staged*.html
+final.html
+*.png
