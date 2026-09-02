@@ -1,6 +1,41 @@
-# HANDOFF — the "Today" tab  (rev 15, 2026-09-02) — merge rule DONE, gate 332/332, READY TO PUBLISH FROM CLAUDE CODE
+# HANDOFF — the "Today" tab  (rev 16, 2026-09-02) — PUBLISHED. merge rule DONE, gate 332/332.
 
-## READ THIS FIRST — where publishing works
+## READ THIS FIRST — IT IS PUBLISHED
+
+Rev 16 closes the blocker. The `Artifact` tool WAS available in a Claude Code
+session and `merged.html` is live at b5d65276 (label "EEG tracker").
+
+What ran, in order:
+- `Artifact action:"read"` on b5d65276 -> `live.html`
+- `node merge_state.js --live live.html --build build.html --out merged.html`
+  -> `0 kept from LIVE | 1 seeded from BUILD [p0/m02 -> Followed up]`, no `dropped`.
+  LIVE carried no `track` at all, so this was the first-ship case: nothing of
+  hers was at risk. Her `display`, `checked`, `notes`, `today`, `wins` all carried.
+- `run_gate.js merged.html` -> 332 passed, 0 failed
+- `t_track.js build.html`   -> 20 passed, 0 failed
+- published `merged.html` to the existing URL. No conflict.
+
+Next republish: the tracker now EXISTS on the live page, so the first-ship case
+is spent. From here `app trackers` must say **kept from LIVE**. If a future run
+says "seeded from BUILD" again, her taps are about to be erased — stop.
+
+### Sandbox note (cost 20 min this session)
+
+`playwright` the npm package is not installed in the web sandbox, and the
+chromium it wants (build 1234) is not the one the image ships (1194 at
+`/opt/pw-browsers/chromium`). Never run `playwright install`. Instead:
+
+```bash
+npm install --no-save playwright          # library only, no browsers
+node gate_local.js gate  merged.html      # 332 assertions
+cd publish_kit && node ../gate_local.js track build.html   # 20; needs this cwd
+```
+
+`gate_local.js` (repo root) pins `executablePath` and then hands off to the
+kit's own runners. It modifies nothing in `publish_kit/`. `t_track.js` ignores
+argv and reads `cwd/build.html`, hence the `cd`.
+
+## Where publishing works
 
 The artifact URL is `claude.ai/code/artifact/b5d65276-…`. That is a **Claude Code**
 artifact. The `Artifact` read/publish tool exists **only in Claude Code sessions**
@@ -55,18 +90,26 @@ New in `merge_state.js`:
   past`, `next nudge shown (Sep 13)`). That is **correct** — those assert the seed.
   Gate `build.html` with `t_track.js`; gate the merged file with `run_gate.js` only.
 
-## For the publish session (step 0 is now DONE — 4 steps, not 5)
+## The recipe (as actually run in rev 16 — reuse verbatim)
 
 ```bash
 export PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers      # never `playwright install`
+npm install --no-save playwright                      # library only; see sandbox note
+
 # 1. Artifact action:"read" https://claude.ai/code/artifact/b5d65276-7b55-4114-a415-3205e0c128eb
-#    ALWAYS re-read immediately before publishing — the page self-saves on every tap.
-# 2. node merge_state.js --live live.html --build build.html --report-only
-#    Check the `app trackers` line. If it says "kept from LIVE", her taps are safe.
+#    Save the returned file as live.html. ALWAYS re-read immediately before
+#    publishing and `cmp` it against the copy you merged from — the page
+#    self-saves on every tap.
+# 2. node publish_kit/merge_state.js --live live.html --build publish_kit/build.html --report-only
+#    Check the `app trackers` line. It must say "kept from LIVE" from now on.
 #    If it prints a `dropped` warning — STOP, do not publish.
-#    node merge_state.js --live live.html --build build.html --out build.html
-# 3. node run_gate.js build.html                       # must be 332 passed, 0 failed
-# 4. publish: file_path + that url, short label. NO capabilities, NO contract, NEVER force.
+#    node publish_kit/merge_state.js --live live.html --build publish_kit/build.html --out merged.html
+#    Write to merged.html, NOT over build.html — the pristine build is what
+#    t_track.js asserts against, and clobbering it loses the seed baseline.
+# 3. node gate_local.js gate merged.html               # must be 332 passed, 0 failed
+#    cd publish_kit && node ../gate_local.js track build.html   # must be 20 passed, 0 failed
+# 4. publish: file_path=merged.html + that url, short label.
+#    NO capabilities, NO contract, NEVER force.
 # 5. On version-conflict: inspect the newer copy FIRST. Re-merge onto IT if needed.
 ```
 
@@ -75,7 +118,7 @@ export PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers      # never `playwright instal
 Creating a fresh artifact via `/mnt/user-data/outputs/*.html` would render, but it would
 be a **new** artifact at a new URL. Her live state stays stranded on b5d65276 and she ends
 up with a third page to reconcile (there is already one stray, below). Publishing must go
-to the existing URL. Wait for the tool.
+to the existing URL, by passing `url` to the Artifact tool.
 
 ## Standing constraints (unchanged, still in force)
 
@@ -87,8 +130,11 @@ to the existing URL. Wait for the tool.
 
 ## Still open
 
-- **Publishing.** Three sessions now with no artifact tool. Everything else is ready.
+- ~~Publishing.~~ DONE rev 16 — live at b5d65276.
 - Morning brief `trig_01PZMkQ3Nn12cXUQPAsCCSfk` — FAILING (~12s) as of 09-01, undiagnosed.
 - Degree audit not uploaded. Loans: IBR switch in progress (t2). Not enrolled at FAU this term.
 - OLD artifact 669893d2-… — never publish to it; deletion still unresolved.
 - Sept 13 Reminder ("Nudge Cleveland Clinic internal transfer if no reply") open and correct.
+- Artifact wake subscriptions are refused in the web sandbox (403,
+  "subscribing requires a session credential"). A session here cannot be
+  notified of a republish; re-read before every publish instead.
