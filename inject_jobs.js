@@ -47,7 +47,7 @@ const CSS = `
 .jsect:first-child{margin-top:0}
 .job{background:var(--panel);border:1px solid var(--line);border-radius:14px;
   padding:16px 17px;margin:0 0 12px;box-shadow:var(--shadow)}
-.job[data-s="blocked"]{background:var(--panel-2)}
+.job[data-s="working"]{background:var(--panel-2)}
 .job[data-s="gated"]{background:transparent;box-shadow:none;padding:11px 14px}
 .job .jr{font-family:var(--display);font-size:16.5px;line-height:1.3;color:var(--ink);margin:0}
 .job .je{color:var(--ink-2);font-size:13.5px;margin:3px 0 0}
@@ -99,7 +99,7 @@ const FN = `  function renderJobs(){
     var rows=J.rows||[];
     var groups=[
       {s:"open",   h:"Open to you now"},
-      {s:"blocked",h:"Yours in November"},
+      {s:"working", h:"Working on it"},
       {s:"gated",  h:"Needs a credential first"}
     ];
     document.getElementById("jrows").innerHTML=groups.map(function(g){

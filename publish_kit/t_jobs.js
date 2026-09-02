@@ -41,12 +41,16 @@ const SRC = path.resolve(process.argv[2] || 'build.html');
   t('link opens in a new tab', await open.first().locator('a.jgo').getAttribute('target') === '_blank');
   t('open role shows its chips', await open.first().locator('.jchip').count() >= 2);
 
-  const blocked = page.locator('#jrows .job[data-s="blocked"]');
-  t('one blocked role', await blocked.count() === 1);
-  const bt = await blocked.first().textContent();
-  t('blocked role is the apprenticeship', /Apprentice/.test(bt));
-  t('blocked role names the date it opens', /12 Nov/.test(bt));
-  t('blocked role does not read as a rejection', !/reject|denied|failed/i.test(bt));
+  const working = page.locator('#jrows .job[data-s="working"]');
+  t('one role in flight', await working.count() === 1);
+  const bt = await working.first().textContent();
+  t('the in-flight role is the apprenticeship', /Apprentice/.test(bt));
+  t('it names the backstop date', /12 November/.test(bt));
+  // She is pushing on this now. The page must not imply she is sitting still until November.
+  t('it leads with the review, not the wait', /reviewing this with HR/.test(bt));
+  t('its heading says she is working on it', /Working on it/.test(
+    await page.locator('#jrows .jsect').nth(1).textContent()));
+  t('it does not read as a rejection', !/reject|denied|failed/i.test(bt));
 
   t('gated row explains the wall', /R\. EEG T\.|CAAHEP/.test(
     await page.locator('#jrows .job[data-s="gated"]').first().textContent()));

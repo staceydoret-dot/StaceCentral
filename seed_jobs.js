@@ -32,17 +32,17 @@ ST.jobs = {
       link: 'Open this posting'
     },
     {
-      s: 'blocked', mi: 12,
+      s: 'working', mi: 12,
       role: 'EEG Technician Apprentice — paid, 12 months',
       employer: 'Cleveland Clinic',
       where: 'Weston, FL',
       chips: [
         { t: 'Your own employer' },
-        { t: 'Opens to you 12 Nov', k: 'wait' },
+        { t: 'Under review now', k: 'key' },
         { t: 'Paid for 12 months', k: 'key' }
       ],
-      why: 'You meet every stated requirement — the education branch twice over. The only thing in the way is the 12 August corrective action, and it clears on 12 November.',
-      opens: 'This cohort closes 26 September and starts the 28th. The next cohort date has not been published yet — asking for it is part of the plan.',
+      why: 'The Senior Director of Ambulatory Operations is reviewing this with HR — you opened that on 2 September. You meet every stated requirement, the education branch twice over. If the review lands, this cohort is still open. If it does not, the 12 August corrective action clears on 12 November and you apply then.',
+      opens: 'This cohort closes 26 September and starts the 28th. The next cohort date has not been published yet — asking for it is part of the ask.',
       url: 'https://jobs.clevelandclinic.org/apprenticeships/',
       link: 'Open the cohort page'
     },
