@@ -1,0 +1,482 @@
+{
+  "_comment": "Single source of truth for Stacey's job board. Edit this file to change what the board prioritizes. board.py reads it; nothing is hardcoded in the engine.",
+  "version": 1,
+  "last_updated": "2026-09-03",
+  "owner": "Stacey",
+  "north_star": "Get paid clinical/neurodiagnostic experience that credibly builds toward psychiatry. Paid training beats prestige. A job that trains me is worth more than a job that just employs me.",
+  "career_path": {
+    "target": "psychiatry",
+    "current_stepping_stone": "EEG technologist / neurodiagnostic technologist",
+    "why": "EEG tech is one of the few clinical roles with real paid-apprenticeship pipelines, direct neuro exposure, and patient contact hours that matter on a psych/med application."
+  },
+  "role_tiers": {
+    "tier_1_core": {
+      "weight": 40,
+      "description": "Exactly the thing: EEG / neurodiagnostic roles that train you.",
+      "keywords": [
+        "eeg technologist",
+        "eeg tech",
+        "eeg technician",
+        "electroencephalograph",
+        "neurodiagnostic",
+        "neurodiagnostics",
+        "neurophysiology technologist",
+        "neuro monitoring",
+        "intraoperative neuromonitoring",
+        "ionm",
+        "polysomnography",
+        "polysomnographic",
+        "sleep technologist",
+        "sleep tech",
+        "evoked potential",
+        "epilepsy monitoring",
+        "emu tech",
+        "eeg trainee"
+      ]
+    },
+    "tier_2_clinical_adjacent": {
+      "weight": 25,
+      "description": "Real clinical patient contact that still counts toward a psych path.",
+      "keywords": [
+        "behavioral health technician",
+        "psychiatric technician",
+        "mental health technician",
+        "patient care technician",
+        "pct",
+        "medical assistant",
+        "clinical assistant",
+        "neurology",
+        "neuroscience",
+        "psychiatric",
+        "behavioral health",
+        "clinical research coordinator",
+        "research assistant",
+        "clinical research assistant",
+        "monitor technician",
+        "telemetry technician",
+        "ekg technician",
+        "ecg technician",
+        "cna",
+        "phlebotomist",
+        "rehabilitation technician",
+        "registered behavior technician",
+        "behavior technician",
+        "rbt",
+        "bt",
+        "aba therapist",
+        "behavior assistant",
+        "direct support professional",
+        "dsp",
+        "neurology technician",
+        "neuro technician",
+        "mental health tech",
+        "psychiatric tech",
+        "behavioral health tech",
+        "patient care tech"
+      ]
+    },
+    "tier_3_bridge": {
+      "weight": 8,
+      "description": "Pays the bills, keeps you near healthcare, but does not advance the path much.",
+      "keywords": [
+        "patient access",
+        "patient registration",
+        "medical receptionist",
+        "unit secretary",
+        "health unit coordinator",
+        "scheduler",
+        "medical scribe",
+        "scribe",
+        "data entry",
+        "research data",
+        "lab assistant",
+        "lab technician"
+      ]
+    }
+  },
+  "training_signals": {
+    "_comment": "The single biggest differentiator. Stacey has no EEG credential yet, so 'we will train you' is the whole ballgame.",
+    "weight": 30,
+    "strong": [
+      "apprenticeship",
+      "apprentice",
+      "paid training",
+      "will train",
+      "willing to train",
+      "we train",
+      "training provided",
+      "on-the-job training",
+      "on the job training",
+      "no experience necessary",
+      "no experience required",
+      "entry level",
+      "entry-level",
+      "trainee",
+      "in training",
+      "student technologist",
+      "earn while you learn",
+      "tuition reimbursement",
+      "certification support",
+      "cert reimbursement",
+      "abret",
+      "career ladder",
+      "residency program",
+      "fellowship",
+      "rbt certification",
+      "40 hour training",
+      "40-hour training",
+      "certification provided",
+      "we will certify",
+      "training and certification",
+      "paid certification",
+      "cert provided",
+      "training program"
+    ],
+    "moderate": [
+      "new grad",
+      "recent graduate",
+      "growth opportunity",
+      "mentorship",
+      "continuing education",
+      "professional development"
+    ]
+  },
+  "hard_filters": {
+    "_comment": "Anything matching these is disqualified outright and never shown as a suggestion.",
+    "must_be_paid": true,
+    "unpaid_markers": [
+      "unpaid",
+      "volunteer",
+      "no compensation",
+      "for college credit only",
+      "credit only",
+      "stipend not provided",
+      "non-paid"
+    ],
+    "scam_markers": [
+      "pay for training",
+      "training fee",
+      "purchase your own equipment",
+      "commission only",
+      "100% commission",
+      "must pay",
+      "wire transfer",
+      "cashier's check",
+      "mlm"
+    ],
+    "excluded_titles": [
+      "sales representative",
+      "insurance agent",
+      "door to door",
+      "driver",
+      "delivery driver",
+      "warehouse associate",
+      "cashier"
+    ],
+    "requires_credential_she_lacks": {
+      "_comment": "Soft-disqualify: hard credential requirements with NO training offered. Penalized, not auto-killed, because postings often overstate.",
+      "credentials": [
+        "r. eeg t.",
+        "r.eeg t",
+        "reegt",
+        "cnim",
+        "rpsgt",
+        "registered technologist",
+        "must be registered",
+        "licensed practical nurse",
+        "lpn",
+        "registered nurse",
+        "rn required"
+      ],
+      "penalty": 25
+    },
+    "min_years_experience_tolerated": 1
+  },
+  "location": {
+    "_comment": "Accepts in-person South Florida, hybrid South Florida, and fully remote anywhere in the US.",
+    "weight": 15,
+    "home_base": "Hollywood, FL 33021",
+    "accepted_modes": [
+      "onsite",
+      "hybrid",
+      "remote"
+    ],
+    "preferred_metros": [
+      "hollywood",
+      "pembroke pines",
+      "hollywood",
+      "miramar",
+      "davie",
+      "plantation",
+      "fort lauderdale",
+      "ft lauderdale",
+      "sunrise",
+      "weston",
+      "cooper city",
+      "hialeah",
+      "miami",
+      "miami lakes",
+      "aventura",
+      "coral gables",
+      "boca raton",
+      "deerfield beach",
+      "pompano beach",
+      "broward",
+      "miami-dade",
+      "miami dade",
+      "oakland park",
+      "hallandale beach",
+      "hallandale",
+      "dania",
+      "dania beach",
+      "lauderhill",
+      "margate",
+      "tamarac",
+      "coral springs",
+      "lauderdale lakes",
+      "north lauderdale",
+      "wilton manors",
+      "north miami beach",
+      "north miami",
+      "opa locka",
+      "doral",
+      "west park",
+      "pembroke park",
+      "southwest ranches",
+      "parkland",
+      "sea ranch lakes",
+      "lighthouse point",
+      "oakland"
+    ],
+    "state": "FL",
+    "country_code": "US",
+    "max_commute_minutes": 45,
+    "remote_is_equal_to_local": true,
+    "relocation": false,
+    "_metro_note": "Expanded 2026-09-03. Oakland Park (about 15 minutes from Hollywood) was scoring as 'likely a long commute' because only the larger cities were listed. Any Broward or north Miami-Dade municipality inside the 45-minute band belongs here."
+  },
+  "schedule": {
+    "weight": 10,
+    "accepted": [
+      "fulltime",
+      "parttime",
+      "contract",
+      "internship"
+    ],
+    "internship_must_be_paid": true,
+    "notes": "Full-time preferred for benefits, but part-time is genuinely fine if the training is real. Night/weekend EEG shifts are acceptable and often the easiest way in."
+  },
+  "compensation": {
+    "weight": 8,
+    "_comment": "Soft preference, not a filter. An apprenticeship at 18/hr that certifies her beats a 24/hr dead-end.",
+    "target_hourly_min": 18.0,
+    "acceptable_hourly_floor": 15.0,
+    "training_role_hourly_floor": 15.0,
+    "note": "Do not disqualify a Tier 1 apprenticeship for low pay. Flag it, don't kill it."
+  },
+  "freshness": {
+    "weight": 12,
+    "_comment": "Stale postings are usually already filled. Decay hard after two weeks.",
+    "fresh_days": 7,
+    "ok_days": 21,
+    "stale_days": 30,
+    "_note": "Archive window widened to 120 days on 2026-09-03 after real Indeed data showed CRO and hospital reqs stay posted for months. Decay still ranks anything over 30 days near the bottom.",
+    "_freshness_note": "ok_days raised from 14 to 21 on 2026-09-03. Hospital system and CRO requisitions routinely stay open three weeks or more; a 15-day-old Jackson Health req was losing 65% of its freshness points and dropping below newer, weaker listings."
+  },
+  "employers_of_interest": {
+    "_comment": "South Florida systems that actually run EEG/neurodiagnostic departments or known training pipelines. Bonus points, not a filter.",
+    "weight": 5,
+    "names": [
+      "nicklaus children's",
+      "nicklaus childrens",
+      "joe dimaggio",
+      "memorial healthcare",
+      "baptist health",
+      "cleveland clinic",
+      "jackson health",
+      "university of miami",
+      "um health",
+      "uhealth",
+      "broward health",
+      "holy cross",
+      "mount sinai medical center",
+      "hca florida",
+      "adventhealth",
+      "boca raton regional",
+      "nova southeastern"
+    ],
+    "personal_context": "Nicklaus Children's was an open lead from her Notion planning page. Dr. Robinson at Nova Southeastern was a possible temporary graduate-assistant contact."
+  },
+  "deal_breakers_soft": {
+    "_comment": "Not disqualifying, but subtract points.",
+    "penalties": {
+      "requires_2_plus_years": 15,
+      "no_salary_listed": 3,
+      "staffing_agency": 5,
+      "travel_role": 10
+    },
+    "staffing_markers": [
+      "staffing",
+      "staffing agency",
+      "recruiting",
+      "talent solutions",
+      "aya",
+      "cross country",
+      "travel contract",
+      "13 week",
+      "13-week"
+    ]
+  },
+  "search_queries": {
+    "_comment": "Feed these to Indeed. Ordered by expected value.",
+    "tier_1": [
+      "EEG technologist trainee",
+      "neurodiagnostic technologist apprentice",
+      "EEG technician no experience",
+      "polysomnography trainee",
+      "neurodiagnostic paid training",
+      "EEG tech entry level"
+    ],
+    "tier_2": [
+      "behavioral health technician",
+      "psychiatric technician entry level",
+      "patient care technician neurology",
+      "clinical research assistant psychiatry",
+      "monitor technician telemetry"
+    ],
+    "locations": [
+      {
+        "location": "Hollywood, FL",
+        "country_code": "US"
+      },
+      {
+        "location": "Miami, FL",
+        "country_code": "US"
+      },
+      {
+        "location": "Fort Lauderdale, FL",
+        "country_code": "US"
+      },
+      {
+        "location": "remote",
+        "country_code": "US"
+      }
+    ]
+  },
+  "scoring": {
+    "_comment": "Total possible is normalized to 0-100 in board.py. Weights above are relative contributions.",
+    "priority_bands": [
+      {
+        "name": "APPLY NOW",
+        "min_score": 75,
+        "action": "Apply today. This is the shape of job the whole board exists to find."
+      },
+      {
+        "name": "STRONG",
+        "min_score": 60,
+        "action": "Apply this week. Worth a tailored resume line."
+      },
+      {
+        "name": "WORTH A LOOK",
+        "min_score": 45,
+        "action": "Apply if you have energy left. Low cost, low certainty."
+      },
+      {
+        "name": "BACKUP",
+        "min_score": 30,
+        "action": "Only if the pipeline dries up."
+      },
+      {
+        "name": "SKIP",
+        "min_score": 0,
+        "action": "Not worth your time. Logged so we don't re-surface it."
+      }
+    ],
+    "max_suggestions_per_run": 10,
+    "_adhd_note": "Never show more than 10. A wall of 60 listings is the same as zero listings. Top 3 get the detail; the rest are one line each."
+  },
+  "application_tracking": {
+    "statuses": [
+      "new",
+      "saved",
+      "applied",
+      "interviewing",
+      "offer",
+      "rejected",
+      "closed",
+      "not_interested"
+    ],
+    "auto_archive_after_days": 120
+  },
+  "differentiators": {
+    "_comment": "Real, verifiable advantages from her CV. Score a listing UP when the posting asks for one of these.",
+    "weight": 12,
+    "assets": {
+      "haitian_creole_advanced": {
+        "bonus": 10,
+        "matches": [
+          "creole",
+          "haitian",
+          "bilingual",
+          "multilingual",
+          "spanish",
+          "french",
+          "language"
+        ],
+        "why": "Advanced Haitian Creole + intermediate Spanish/French. In Broward/Miami-Dade hospitals this is a genuine hiring edge, not a nice-to-have. Memorial, Jackson, Broward Health all serve large Creole-speaking patient populations."
+      },
+      "neuroscience_degree": {
+        "bonus": 8,
+        "matches": [
+          "neuroscience",
+          "neurology",
+          "anatomy",
+          "physiology",
+          "biology",
+          "science degree",
+          "bachelor"
+        ],
+        "why": "BS Neuroscience + Psychology (dual major). Most EEG apprenticeship postings ask for an associate's or 'science coursework'. She over-qualifies on paper."
+      },
+      "psychiatric_exposure": {
+        "bonus": 8,
+        "matches": [
+          "psychiatric",
+          "behavioral health",
+          "mental health",
+          "psychology",
+          "patient interview",
+          "assessment"
+        ],
+        "why": "Miami Summer Scholars psychiatry track at Jackson Behavioral Hospital: neuropsych assessments, therapeutic interviewing, shadowed psychiatrists in outpatient clinics."
+      },
+      "patient_contact_hours": {
+        "bonus": 6,
+        "matches": [
+          "patient care",
+          "direct care",
+          "bedside",
+          "compassion",
+          "customer service",
+          "geriatric",
+          "pediatric"
+        ],
+        "why": "70 documented shadowing hours + 2 yrs serving elderly residents at FiveStar Premier retirement home. Real patient-facing hours, not theoretical."
+      },
+      "research_and_data": {
+        "bonus": 5,
+        "matches": [
+          "research",
+          "data",
+          "excel",
+          "rstudio",
+          "statistical",
+          "documentation",
+          "protocol",
+          "irb"
+        ],
+        "why": "Two RA positions (one paid), PCR/ELISA/cell culture, RStudio, systematic literature review in Excel. Strong for clinical research coordinator roles."
+      }
+    }
+  }
+}
