@@ -1,4 +1,45 @@
-# HANDOFF — the plan page  (rev 17, 2026-09-02) — Jobs tab shipped. 335/335 + 27 + 20.
+# HANDOFF — the plan page  (rev 18, 2026-09-03) — one surface. 335/335 + 29 + 20.
+
+## Rev 18 — the three surfaces became one
+
+She said it plainly: "it's all connected." There were three places (plan page,
+a separate job-board artifact, the morning brief) and she only ever wanted one.
+
+- **The job board artifact `ac5f82a4-…` is RETIRED.** Do not publish to it, do
+  not rebuild it, do not create a replacement. The daily sweep
+  (`trig_01KdKj7M4XyK7KWxy37qXFTw`) now edits `STATE.jobs` on the plan page
+  instead, and its prompt carries the row schema plus a pre-publish check that
+  every top-level key other than `jobs`/`updated` is byte-identical to what it
+  read. It no longer builds HTML, so its old Playwright suite is gone with it.
+- **The morning brief (`trig_01PZMkQ3Nn12cXUQPAsCCSfk`) is daily, not weekdays**
+  — `0 11 * * *`. It carries a dated situation block and an agreed queue, and
+  hands her the top undone item only. It is told not to touch `jobs` or
+  `pipeline`. Verified end to end by a forced run at 2026-09-03 00:00Z: it wrote
+  the Senior Director email as the first task and left jobs, pipeline and the
+  tracker untouched.
+- **Jobs group renamed `blocked` -> `working`, heading "Working on it".** She
+  objected that "Yours in November" made it read as though she were sitting
+  still until the 12th. She is not — a review is open with the Senior Director
+  of Ambulatory Operations at Weston. Two assertions hold this: the row must
+  lead with the review, and the heading must say she is working on it. November
+  is the backstop, never the plan. Do not reword this back.
+- **`CLAUDE.md` now carries her working rules** — one thing, short, plain words,
+  no guilt, no emoji, her reply is the record. This session drifted badly
+  without them. Read it first.
+- A one-shot Routine on 2026-11-01 shifts all three crons for the end of DST and
+  chains the reverse for 2027-03-14. Crons are UTC and were set during EDT.
+
+### Her situation, as of 2026-09-03
+
+Rejected from the Cleveland Clinic EEG Apprentice 9/28 cohort — auto-rejected on
+a Corrective Action, Step 2 dated 8/12/2026, which bars internal applications
+until **2026-11-12**. Seventeen months in post, so no transfer waiver is needed;
+that corrective action is the only bar. Eight of eleven attendance events are
+late arrivals caused by the Hollywood-to-West-Palm-Beach train. Intermittent
+FMLA filed, certified 9/1/2026-9/1/2027, which does not reach the earlier
+occurrences. An accommodation request (8:30 shift, flexible arrival to 9:00) is
+the structural fix and is next in her queue. She holds BLS as of 8/31/2026,
+which was the missing requirement on the live Nicklaus trainee posting.
 
 ## Rev 17 — the job board moved in
 
