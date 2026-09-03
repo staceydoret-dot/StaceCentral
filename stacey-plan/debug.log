@@ -1,0 +1,401 @@
+# stacey-plan debug log
+#
+# Append-only. One entry per run, fix, or validation. The rule from the project
+# constraints: a fix stays only if this log shows it worked. If a later entry
+# shows it made things worse, revert it and record that too.
+#
+# format: [timestamp] EVENT   detail
+
+================================================================================
+SESSION 2026-09-03 -- system built from scratch
+================================================================================
+
+[2026-09-03 02:21] repo_state         StaceCentral contained only README.md. No job board existed.
+                                      "stacey-plan" was not present anywhere on disk or in Notion.
+                                      Built the system rather than maintaining one.
+
+[2026-09-03 02:30] inputs_gathered    Notion home page + College Completion planning page (Nicklaus
+                                      Children's lead, Dr. Robinson grad-assistant lead), Indeed
+                                      resume (thin), and Stacey_Doret_CV_Updated.pdf (rich).
+                                      CV extraction note: poppler and pypdf both unavailable in this
+                                      container (broken cryptography/_cffi_backend). Wrote a
+                                      stdlib-only extractor that inflates the content streams and
+                                      decodes CIDs through each font's ToUnicode CMap. Worked.
+                                      First attempt hung on a catastrophically backtracking regex;
+                                      replaced the single alternation with a linear tokenizer.
+
+[2026-09-03 02:35] scope_confirmed    Asked Stacey directly rather than guessing. Answers:
+                                      - target: EEG tech apprenticeships, neurodiagnostic paid
+                                        training, clinical roles that fit a path to psychiatry
+                                      - location: South Florida in-person + hybrid + remote
+                                      - home: this git repo
+                                      - hours: full-time, part-time, paid internships only
+
+--------------------------------------------------------------------------------
+BUG 1 -- analyst notes were being scored as employer evidence   [FIXED, KEPT]
+--------------------------------------------------------------------------------
+[2026-09-03 02:52] bug_found          The PSG / Sleep Tech listing scored 81/100 APPLY NOW with the
+                                      reason "Trains you: abret". The word "abret" appears nowhere
+                                      in that posting. It appeared only in a NOTE I had written
+                                      speculating the role might be ABRET-adjacent.
+                                      listing_text() was concatenating the notes field into the
+                                      text used for keyword matching, so the board was reading its
+                                      own commentary back as fact and promoting jobs on it.
+                                      Same contamination inflated every RBT listing: my note
+                                      "most ABA companies pay for the 40-hour RBT certification"
+                                      became a matched training signal.
+                                      Severity: high. This is the exact failure mode of a job board
+                                      that confidently recommends the wrong thing.
+
+[2026-09-03 02:55] test_written       test_notes_do_not_influence_score. Confirmed failing:
+                                      bare=67.8 vs noted=89.6, a 21.8-point phantom lift.
+
+[2026-09-03 02:58] fix_applied        Removed listing.get("notes") from listing_text(). Documented
+                                      the reason in the docstring so it is not re-added.
+
+[2026-09-03 02:58] fix_verified       61/61 tests pass. Phantom lift gone. Notes still render on the
+                                      board for Stacey to read; they just cannot move the number.
+                                      VERDICT: KEEP.
+
+--------------------------------------------------------------------------------
+BUG 2 -- Broward suburbs scored as long commutes                [FIXED, KEPT]
+--------------------------------------------------------------------------------
+[2026-09-03 02:52] bug_found          House of Hearts in Oakland Park was flagged "Location is
+                                      in-state but likely a long commute." Oakland Park is about
+                                      15 minutes from Hollywood. preferred_metros only listed the
+                                      larger cities, so every small Broward municipality fell to
+                                      the generic in-state branch and lost half its location points.
+                                      Affected at minimum: Oakland Park, Hallandale Beach, Dania,
+                                      Lauderhill, Margate, Tamarac, Coral Springs.
+
+[2026-09-03 02:55] test_written       test_broward_suburbs_are_local. 7 of 9 cities failing.
+
+[2026-09-03 02:58] fix_applied        Expanded preferred_metros from 24 to 45 entries covering
+                                      Broward and north Miami-Dade municipalities inside the
+                                      45-minute band. Data change only; no code change.
+
+[2026-09-03 02:58] fix_verified       61/61 pass. VERDICT: KEEP.
+
+--------------------------------------------------------------------------------
+BUG 3 -- freshness cliff at 14 days was too sharp               [FIXED, KEPT]
+--------------------------------------------------------------------------------
+[2026-09-03 02:52] bug_found          A 15-day-old Jackson Health System requisition was labelled
+                                      "may already be filled" and kept only 35% of its freshness
+                                      points, dropping it below newer but weaker listings. Hospital
+                                      and CRO reqs routinely stay open three weeks or more.
+
+[2026-09-03 02:55] test_written       test_two_week_old_is_still_fresh_enough. Confirmed failing
+                                      at raw=0.35.
+
+[2026-09-03 02:58] fix_applied        freshness.ok_days 14 -> 21 in preferences.json.
+
+[2026-09-03 02:58] fix_verified       61/61 pass. VERDICT: KEEP.
+
+--------------------------------------------------------------------------------
+TUNING -- not bugs, changes driven by what the live data showed
+--------------------------------------------------------------------------------
+[2026-09-03 02:45] prefs_extended     Real South Florida results showed the actual entry-level
+                                      behavioral pipeline here is RBT / ABA / Direct Support
+                                      Professional, and those employers pay for the 40-hour RBT
+                                      certification. That is the same "employer trains you into a
+                                      credential" shape the board hunts for, so added 14 keywords
+                                      to tier_2 and 9 to training_signals.strong.
+
+[2026-09-03 02:45] archive_widened    auto_archive_after_days 45 -> 120. At 45 days the board was
+                                      discarding the CenExel Clinical Research Assistant req in
+                                      Hollywood (her own city, psychiatry/CNS trials) purely on age.
+                                      Freshness decay already ranks old postings near the bottom;
+                                      hard-deleting them as well was double-counting age.
+
+--------------------------------------------------------------------------------
+SEARCH RESULTS -- honest record of what the market actually held
+--------------------------------------------------------------------------------
+[2026-09-03 02:48] search_run         6 Indeed searches across Hollywood / Miami / Fort Lauderdale.
+                                      "EEG technologist trainee" -> 0 results.
+                                      "neurodiagnostic technologist" -> 0 results.
+                                      "sleep technician polysomnography" -> 0 results.
+                                      FINDING: there are currently no EEG or neurodiagnostic
+                                      trainee postings in South Florida on Indeed. This is a real
+                                      market fact, not a system failure. The board must not paper
+                                      over it by promoting adjacent roles to Tier 1.
+                                      21 listings captured, 18 active.
+
+[2026-09-03 03:05] rate_limit         Indeed get_job_details is rate-limited to roughly one call
+                                      per minute on this account. Only some listings carry full
+                                      posting text. Listings with thin descriptions are scored on
+                                      title and metadata alone and will under-report training
+                                      signals. Flagged in JOB_BOARD.md rather than hidden.
+[2026-09-03 02:41:51] check_passed       21 listing(s)
+[2026-09-03 02:43:19] board_generated    18 active, 18 scoreable, 0 filtered
+[2026-09-03 02:44:02] check_passed       21 listing(s)
+[2026-09-03 02:44:02] board_generated    18 active, 18 scoreable, 0 filtered
+[2026-09-03 02:48:36] check_passed       30 listing(s)
+[2026-09-03 02:48:36] board_generated    27 active, 27 scoreable, 0 filtered
+
+--------------------------------------------------------------------------------
+BUG 4 -- our own data gap was reported as a fact about the employer  [FIXED, KEPT]
+--------------------------------------------------------------------------------
+[2026-09-03 03:20] bug_found          The board printed "Nothing in the posting says they will train
+                                      an unlicensed hire" for listings whose description had never
+                                      been fetched. That is a claim about the employer resting on a
+                                      gap in our own data. It could talk Stacey out of applying to a
+                                      job that does train.
+[2026-09-03 03:22] test_written       test_thin_data_is_not_reported_as_a_finding. Failed on a
+                                      missing data_quality key.
+[2026-09-03 03:24] fix_applied        Added MIN_DESCRIPTION_CHARS = 200 and a data_quality field
+                                      ("full" / "thin"). Thin listings now say the posting has not
+                                      been pulled, and JOB_BOARD.md marks them with a warning inline,
+                                      a table flag, and a footer count.
+[2026-09-03 03:24] fix_verified       67/67 pass. VERDICT: KEEP.
+
+--------------------------------------------------------------------------------
+MAJOR FINDING -- one job board is not the job market
+--------------------------------------------------------------------------------
+[2026-09-03 03:35] source_added       Searched ZipRecruiter with the SAME queries that returned zero
+                                      results on Indeed. ZipRecruiter returned 34 EEG matches within
+                                      40 miles of Hollywood and 12 neurodiagnostic matches, including:
+                                        - Cleveland Clinic "EEG Technician Apprentice", Weston FL,
+                                          $52.5k-$80k, 9 days old  -> scored 88, APPLY NOW
+                                        - Memorial Healthcare "EEG Technician", Joe DiMaggio
+                                          Children's Hospital, Hollywood FL (her own city), $50.5k-$77k
+                                        - Baptist Health "Neurophysiology Tech Assistant", Miami
+                                        - Baptist Health "Pool EEG Technician", Boca Raton
+                                      Earlier this log recorded "there are currently no EEG or
+                                      neurodiagnostic trainee postings in South Florida." That
+                                      conclusion was WRONG. It was true of Indeed and I generalised
+                                      it to the market.
+                                      PROCESS FIX: never conclude a category is empty from a single
+                                      source. Always cross-check at least two boards before reporting
+                                      a gap. 9 listings added; the board's top slot changed from a
+                                      62-point sleep-tech contract to an 88-point named apprenticeship.
+
+================================================================================
+REFLECTION -- 2026-09-03
+================================================================================
+WHAT WORKED
+  - Asking Stacey four questions up front instead of guessing. "EEG apprenticeships,
+    path to psychiatry" is not something I would have inferred from the CV alone.
+  - Keeping all judgement in preferences.json and none in board.py. Two of the four
+    bugs were fixed by editing data, with no code change and no risk.
+  - Writing the failing test first, every time. It proved each bug was real and
+    proved each fix worked, which is what debug.log is supposed to adjudicate.
+  - Reading the CV properly. Advanced Haitian Creole in Broward healthcare is a real
+    hiring edge and it is now a scored component, not a footnote.
+
+WHAT DID NOT WORK
+  - I let my own analyst notes into the scoring text. The board spent an hour
+    confidently recommending a job on evidence it had invented. This is the single
+    worst failure mode for this system and it shipped in the first version.
+  - I declared the EEG market empty after searching one source. Wrong, and it would
+    have cost Stacey the Cleveland Clinic apprenticeship.
+  - I burned real time retrying a rate-limited API instead of switching sources sooner.
+
+CHANGES TO MY OWN PROCESS, FOR NEXT SESSION
+  1. Evidence and commentary never share a field. If a value is used for scoring,
+     nothing subjective goes in it. Assume this bug will try to come back.
+  2. Two sources minimum before reporting that a category has no listings.
+  3. When an API rate-limits twice, switch sources or ship with the gap flagged.
+     Do not keep retrying.
+  4. Thin descriptions are the main thing still degrading accuracy. Next session:
+     pull full posting text for the top 5 before anything else. Training signals
+     live in the body, and that is the single heaviest component after role fit.
+  5. Concrete next action for Stacey that is NOT a job application: get the BLS/CPR
+     card. About $60-90, one day, and it removes a screening filter from a large
+     share of these postings.
+
+[2026-09-03 04:05] profile_corrected  Stacey confirmed she already holds a current BLS/CPR card.
+                                      profile.json listed it under credentials.target with a
+                                      "get this before applying" recommendation, and gaps_to_watch
+                                      carried a no_bls entry. Both were wrong and would have kept
+                                      resurfacing as advice she had already acted on.
+                                      Moved to credentials.holds, dropped the gap, stripped the
+                                      recommendation from README.md, and added bls_certified as a
+                                      scored differentiator (bonus 6) so postings that name BLS as a
+                                      requirement now score UP for her instead of being neutral.
+                                      Open item: BLS cards expire every 2 years and the issue date
+                                      is unrecorded. Ask her for it.
+                                      LESSON: profile.json is an assertion about a real person, not
+                                      a guess. Anything inferred from a document rather than stated
+                                      by her should be marked as inferred so it gets checked.
+[2026-09-03 02:51:17] check_passed       30 listing(s)
+[2026-09-03 02:51:17] board_generated    27 active, 27 scoreable, 0 filtered
+[2026-09-03 02:52:51] board_generated    27 active, 26 scoreable, 1 filtered
+[2026-09-03 02:55:38] check_passed       30 listing(s)
+[2026-09-03 02:55:38] board_generated    26 active, 25 scoreable, 1 filtered
+
+--------------------------------------------------------------------------------
+FEATURE -- exclude registration-gated postings          [ADDED, KEPT]
+--------------------------------------------------------------------------------
+[2026-09-03 04:30] request            Stacey: "just pull whatever legitimate positions that don't
+                                      ask for me to be registered."
+[2026-09-03 04:32] implemented        hard_filters.exclude_registration_required = true.
+                                      Postings demanding R. EEG T. / CNIM / RPSGT / RN / LPN are now
+                                      DISQUALIFIED, not merely penalised 25 points, UNLESS the
+                                      posting also carries a strong training signal -- because
+                                      "registered, or willing to train" is a real opening and must
+                                      survive. It is a toggle, so it can be turned off later.
+                                      One older test (credential gate applies a penalty) was
+                                      superseded and rewritten to assert disqualification instead.
+[2026-09-03 04:34] verified           73/73 pass.
+
+--------------------------------------------------------------------------------
+QUALIFICATIONS READ FROM SOURCE -- the highest-value pass yet
+--------------------------------------------------------------------------------
+[2026-09-03 04:40] tooling_note       Chromium is installed but this container's network blocks
+                                      jobs.mhs.net and jobs.baptisthealth.net outright (curl returns
+                                      000; Chromium returns ERR_TUNNEL_CONNECTION_FAILED even through
+                                      the agent proxy on 127.0.0.1:46393). Cleveland Clinic resolves
+                                      but 301-redirects. Switched to WebSearch/WebFetch, which route
+                                      outside the container network. LESSON: when the container's
+                                      network blocks a host, do not keep reconfiguring the browser.
+                                      Change tools.
+
+[2026-09-03 04:45] qualifications     Read the employers' own stated requirements for the top three
+                                      neuro roles. This changed the board more than any scoring
+                                      change has:
+
+                                      CLEVELAND CLINIC, EEG Technologist Apprentice, Weston -- OPEN.
+                                        HS diploma or GED; high-school-level science coursework;
+                                        medical terminology preferred; BLS required or within one
+                                        month of hire. NO ABRET registration required. 8-12 weeks of
+                                        paid training, then they prepare you for the ABRET exam.
+                                        She clears every line, BLS included. Score 89. No gap exists
+                                        between her and this job.
+
+                                      MEMORIAL, EEG Technician, Joe DiMaggio Children's -- GATED.
+                                        Reads "No prior work experience required", then requires
+                                        graduation from or enrolment in an ACCREDITED
+                                        Electroneurodiagnostic technology program AND ABRET Registry
+                                        Eligibility. She has neither and there is no way in without
+                                        them. Marked not_interested. This is precisely the posting
+                                        type she asked to stop seeing, and only reading the
+                                        qualifications revealed it -- the title and salary looked
+                                        like her best local option.
+
+                                      BAPTIST, Neurophysiology Tech Assistant, Miami -- OPEN.
+                                        HS diploma plus one year in "a related field". No credential
+                                        gate of any kind. Weekday 8:00-4:30.
+
+[2026-09-03 04:47] process_lesson     Title and salary metadata are close to worthless for judging
+                                      whether Stacey can actually get a job. Memorial and Cleveland
+                                      Clinic looked nearly identical on the board; one is wide open
+                                      and the other is impossible. READING THE QUALIFICATIONS IS THE
+                                      HIGHEST-VALUE ACTION AVAILABLE. Do it for the top 5 before any
+                                      further scoring work.
+[2026-09-03 03:02:30] check_passed       31 listing(s)
+[2026-09-03 03:03:30] check_passed       33 listing(s)
+[2026-09-03 03:03:30] board_generated    27 active, 26 scoreable, 1 filtered
+
+--------------------------------------------------------------------------------
+BREAKTHROUGH -- LinkedIn is fully readable without a login
+--------------------------------------------------------------------------------
+[2026-09-03 05:05] method_found      Stacey pasted a LinkedIn job search URL. Two endpoints turn out
+                                     to work through WebFetch with no authentication at all:
+                                       1. linkedin.com/jobs/view/<id>        -> full posting, full
+                                          qualifications section, verbatim.
+                                       2. linkedin.com/jobs/search?keywords=..&location=..&f_TPR=..
+                                          -> enumerated 60 Florida neurodiagnostic postings WITH
+                                          their numeric job IDs, which then feed endpoint 1.
+                                     This is the complete LinkedIn pipeline. No scraper, no Composio,
+                                     no MCP integration, no credentials. The earlier answer that
+                                     LinkedIn needed a login was wrong for reading postings; it is
+                                     only true for applying and for messaging.
+                                     WORKFLOW FOR EVERY FUTURE SESSION: guest search to get IDs, then
+                                     /jobs/view/<id> for the qualifications, then score.
+
+[2026-09-03 05:10] prefs_extended    Reading real postings exposed a hole in training_signals.strong:
+                                     it had "trainee" and "no experience necessary" but not "extern",
+                                     "externship", or "no prior work experience" -- which is the exact
+                                     phrasing hospital systems use for their on-ramp. Memorial's
+                                     Monitor Technician req scored as having NO training pathway when
+                                     it explicitly describes one. Added 8 keywords. That listing moved
+                                     from mid-table to second on the board.
+                                     LESSON: the keyword lists must be grown from real postings, not
+                                     from what I imagine a posting says.
+
+[2026-09-03 05:12] findings          Read qualifications for three more postings:
+
+                                     MEMORIAL, Monitor Technician I, Neurological/Stroke, Hollywood
+                                       -- OPEN, and strategically the best non-EEG option found.
+                                       Posting states: "If incumbent has no prior work experience,
+                                       they will be placed in the Monitor Technician - Extern role."
+                                       BLS required, which she holds. No registration, no accredited
+                                       program. Neuro/stroke floor at Memorial Regional in her own
+                                       city, day shift. Score 75.
+                                       STRATEGIC VALUE: Memorial has posted three EEG reqs in three
+                                       weeks, all gated behind a CAAHEP program. Getting inside
+                                       Memorial makes her an internal candidate, which is the normal
+                                       route into EEG without going back to school.
+
+                                     MEMORIAL, EEG Technician MRH (the job Stacey found)
+                                       -- GATED. Same CAAHEP + ABRET Registry Eligible wall as the
+                                       JDCH req. Her search term was "eeg apprentice" but this is not
+                                       an apprenticeship. Marked not_interested.
+
+                                     NICKLAUS CHILDREN'S, Polysomnographic Technician I
+                                       -- GATED by experience: minimum 2 years doing sleep studies,
+                                       despite the "Technician I" title. Marked not_interested.
+                                       BUT: Nicklaus is her long-standing open lead from Notion
+                                       ("until Nicklaus calls back") and has TWO neurodiagnostic reqs
+                                       open. Real department, real turnover. Worth a direct approach
+                                       asking about their trainee pathway.
+
+[2026-09-03 05:14] pattern           Third posting in a row where "No prior work experience required"
+                                     sits directly above a hard credential gate. Treat that phrase as
+                                     meaningless on its own; always read the line after it.
+[2026-09-03 03:05:50] check_passed       34 listing(s)
+[2026-09-03 03:06:24] board_generated    28 active, 27 scoreable, 1 filtered
+
+--------------------------------------------------------------------------------
+BUG 5 -- a bridge job reached STRONG on arithmetic alone     [FIXED, KEPT]
+--------------------------------------------------------------------------------
+[2026-09-03 05:35] bug_found         Stacey sent a Walgreens Pharmacy Technician Apprenticeship.
+                                     It scored 61.7 and landed in STRONG -> "Apply this week."
+                                     Every supporting component maxed: real DOL/ASHP paid
+                                     apprenticeship, posted 12 hours ago, in her metro, full-time.
+                                     role_fit gave it only 8 of 40, but the other 92 points of
+                                     weight carried it over the STRONG threshold anyway.
+                                     The NUMBER was defensible. The ADVICE was not. Telling her to
+                                     apply this week to a pharmacy apprenticeship, on the same board
+                                     whose stated purpose is a credential that compounds toward
+                                     psychiatry, inverts the entire point of the system.
+[2026-09-03 05:38] test_written      test_bridge_roles_cannot_reach_strong. Confirmed failing.
+[2026-09-03 05:40] fix_applied       scoring.tier_band_caps. Strategic fit now sets a ceiling on the
+                                     BAND while leaving the score untouched: tier_3_bridge caps at
+                                     WORTH A LOOK, no-tier caps at BACKUP, tiers 1 and 2 uncapped.
+                                     The cap is stated in the concerns list rather than applied
+                                     silently, so she can see it was a judgement and overrule it.
+[2026-09-03 05:41] fix_verified      78/78 pass. Walgreens now reads WORTH A LOOK with the reason
+                                     shown. VERDICT: KEEP.
+[2026-09-03 05:42] design_lesson     A weighted sum answers "how good is this listing." It does not
+                                     answer "should she spend her limited energy on it." Those are
+                                     different questions and the band is the one that reaches her.
+                                     Where they disagree, strategy wins and the disagreement gets
+                                     said out loud.
+
+[2026-09-03 05:45] search_insight    Searching LinkedIn for the WORD "apprentice" near Hollywood
+                                     returns 60 results that are almost entirely trades: electrician,
+                                     HVAC, plumber, jeweler, lineman, roofer, aviation, meat cutter,
+                                     plus about 20 Walgreens pharmacy reqs. Not one neurodiagnostic
+                                     role appears, including the Cleveland Clinic EEG apprenticeship
+                                     that IS live and DOES appear under "EEG apprentice".
+                                     CONCLUSION: clinical apprenticeships are not found by searching
+                                     the word apprentice. They are found by searching the ROLE and
+                                     then reading for training language. Recorded in README as the
+                                     standing search method.
+
+[2026-09-03 06:05] board_published    Live web version published as an Artifact:
+                                      https://claude.ai/code/artifact/b3e80b7a-9f16-4c9e-a4f8-84d38daa8c54
+                                      Source kept in stacey-plan/board.html so it is version-controlled
+                                      with the engine. Republish to the SAME url so her bookmark holds.
+                                      Design: requirement ledger on the lead role (their stated
+                                      requirement vs what her CV actually shows) rather than a summary
+                                      paragraph - the point of the page is "can she get this", so that
+                                      comparison is the primary information, not decoration.
+                                      The ruled-out section keeps the gated roles visible WITH the
+                                      specific blocker named, per ADHD rule 4: a dead end that
+                                      disappears gets re-researched next week.
+                                      "Applied" ticks persist in localStorage only. Deliberate: the
+                                      authoritative record is listings.json in git, and the artifact is
+                                      a view of it. Footer says so and tells her to ask Claude to mark
+                                      it, so the two do not silently diverge.

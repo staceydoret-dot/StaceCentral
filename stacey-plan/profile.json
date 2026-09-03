@@ -1,0 +1,206 @@
+{
+  "_comment": "Stacey's factual profile, extracted from Stacey_Doret_CV_Updated (uploaded 2026-09-03). board.py uses this to match listing requirements. Update when the CV changes.",
+  "name": "Stacey Doret",
+  "location": "Hollywood, FL 33021",
+  "email": "Sd1814@mynsu.nova.edu",
+  "phone": "954-798-2484",
+  "source": "Stacey_Doret_CV_Updated.pdf",
+  "extracted": "2026-09-03",
+  "education": [
+    {
+      "school": "Nova Southeastern University",
+      "city": "Davie, FL",
+      "degree": "B.S.",
+      "majors": [
+        "Neuroscience",
+        "Psychology"
+      ],
+      "dates": "August 2019 - December 2024",
+      "status": "completed"
+    },
+    {
+      "school": "Stranahan High School",
+      "city": "Fort Lauderdale, FL",
+      "dates": "Fall 2015 - Spring 2019"
+    }
+  ],
+  "clinical_exposure": [
+    {
+      "what": "Miami Summer Scholars Program, Psychiatry major",
+      "where": "University of Miami / Jackson Behavioral Hospital, Coral Gables & Miami, FL",
+      "when": "Summer 2018",
+      "details": "Three-week psychiatry and neuroscience enrichment program. Neuropsychological assessments, therapeutic interviewing under a geriatrics specialist, shadowed psychiatrists in outpatient clinics, schizophrenia case discussions."
+    },
+    {
+      "what": "ESE Support Facilitator Assistant (shadowing)",
+      "where": "Pines Charter Elementary & Pines Middle, Pembroke Pines, FL",
+      "when": "January 2024 - April 2024",
+      "hours": 70,
+      "details": "Direct work with children diagnosed with ADHD, ODD, and autism. Administered Dynamic Assessment of Reading. Implemented documented behavioral therapy/intervention plans. Participated in IEP reviews and parent conferences."
+    },
+    {
+      "what": "Server, FiveStar Premier Hollywood Retirement Home",
+      "where": "Hollywood, FL",
+      "when": "November 2018 - January 2021",
+      "details": "Two-plus years of daily direct contact with elderly residents. Managed up to 16 residents simultaneously; de-escalated complaints. Counts as genuine patient-adjacent geriatric experience."
+    }
+  ],
+  "research": [
+    {
+      "role": "Undergraduate Research Assistant",
+      "paid": false,
+      "pi": "Dr. James Munoz, PhD",
+      "lab": "Neuronal Cell Development, Proliferation, and Neurogenesis Lab, Nova Southeastern University",
+      "when": "October 2024 - Present",
+      "topic": "Synthetic psychedelic phenethylamines (MDMA, methamphetamine) and their effects on microtubule formation and neurogenesis in human neural progenitor cells",
+      "techniques": [
+        "cell culture",
+        "PCR",
+        "tubulin polymerization assays",
+        "protocol development"
+      ]
+    },
+    {
+      "role": "Undergraduate Research Assistant",
+      "paid": true,
+      "schedule": "part-time",
+      "pi": "Dr. Mark Sobell (PhD, ABPP, ABAP) & Dr. Linda Sobell (PhD)",
+      "lab": "Nova Southeastern University, Davie, FL",
+      "when": "December 2023 - September 2024",
+      "topic": "Timeline Followback (TLFB) methodology systematic literature review; contributing to a manuscript in development",
+      "techniques": [
+        "systematic literature review",
+        "Excel database construction",
+        "RStudio statistical analysis",
+        "APA/Medline/Web of Science searching"
+      ]
+    },
+    {
+      "role": "Neuroscience Summer Scholar",
+      "where": "Nova Southeastern University College of Psychology",
+      "when": "Summer 2018",
+      "details": "Two-week intensive: dissection, experimental design, Drosophila sleep-deprivation study, presented findings to faculty."
+    }
+  ],
+  "teaching": [
+    {
+      "role": "ESE Support Tutor",
+      "where": "Pines Charter Elementary & Pines Middle (NSU Community Practicum, Dr. Razza PsyD)",
+      "when": "April 2024"
+    },
+    {
+      "role": "Guest Lecturer, PSYC 1000 Introduction to Psychology",
+      "where": "Nova Southeastern University",
+      "when": "November 2023"
+    },
+    {
+      "role": "Social Emotional Learning (SEL) Program Volunteer",
+      "where": "NSU College of Psychology / Pines Charter High School",
+      "when": "September 2022 - January 2024"
+    },
+    {
+      "role": "Private Tutor",
+      "where": "Wyzant (remote)",
+      "when": "November 2020 - January 2022",
+      "subjects": [
+        "Algebra 1",
+        "Statistics",
+        "Anatomy/Physiology",
+        "Psychology",
+        "Biology",
+        "AP Biology",
+        "AP Psychology",
+        "College Biology",
+        "College Chemistry"
+      ]
+    }
+  ],
+  "employment": [
+    {
+      "role": "Social Media Assistant (Work Study)",
+      "where": "NSU College of Psychology, Davie, FL",
+      "when": "July 2023 - Present"
+    },
+    {
+      "role": "Florist",
+      "where": "Whole Foods Market, Aventura, FL",
+      "when": "December 2020 - July 2023"
+    },
+    {
+      "role": "Server",
+      "where": "FiveStar Premier Hollywood Retirement Home, Hollywood, FL",
+      "when": "November 2018 - January 2021"
+    }
+  ],
+  "presentations_count": 10,
+  "presentations_note": "10 SEL presentations delivered at Pines Charter High School and NSU (2022-2023), several as first author: Mindfulness; Overcoming Distractions; Anxiety.",
+  "skills": {
+    "software": [
+      "RStudio / R",
+      "Microsoft Excel",
+      "Microsoft Word",
+      "PowerPoint",
+      "Canva",
+      "Adobe Spark",
+      "Adobe Premiere Pro",
+      "iMovie",
+      "Google Docs"
+    ],
+    "laboratory": [
+      "Centrifugation",
+      "Pipetting",
+      "PCR",
+      "ELISA",
+      "Cell culture"
+    ],
+    "clinical_adjacent": [
+      "Neuropsychological assessment exposure",
+      "Therapeutic interviewing",
+      "Behavioral intervention plan implementation",
+      "Dynamic Assessment of Reading (D.A.R.)",
+      "IEP review"
+    ]
+  },
+  "languages": [
+    {
+      "language": "Haitian Creole",
+      "level": "Advanced"
+    },
+    {
+      "language": "Spanish",
+      "level": "Intermediate"
+    },
+    {
+      "language": "French",
+      "level": "Intermediate"
+    },
+    {
+      "language": "English",
+      "level": "Native"
+    }
+  ],
+  "credentials": {
+    "holds": [
+      {
+        "name": "BLS / CPR (Basic Life Support)",
+        "confirmed": "2026-09-03, by Stacey directly",
+        "expiry": "unknown - AHA BLS cards run 2 years; confirm the date on the card",
+        "why_it_matters": "Listed as required on a large share of South Florida clinical postings. She meets it, so those postings no longer screen her out. Put it on the resume near the top, not buried under Skills."
+      }
+    ],
+    "in_progress": [],
+    "target": [
+      {
+        "name": "CNIM / R. EEG T. (ABRET)",
+        "path": "Most South Florida hospitals will train an unlicensed hire into this. Requires accumulating supervised EEG records, then sitting the ABRET exam.",
+        "blocker": "Needs an employer willing to train. This is exactly what the job board is hunting for."
+      }
+    ]
+  },
+  "gaps_to_watch": {
+    "_comment": "Honest weaknesses the board should account for when scoring.",
+    "no_eeg_credential": "No ABRET registration and no EEG hours yet. Postings requiring R. EEG T. will screen her out unless they explicitly train.",
+    "no_hospital_employment": "Clinical exposure is via shadowing and summer programs, not paid hospital employment. Framing matters: the 70 documented shadowing hours and the Jackson Behavioral rotation are the strongest things to lead with.",
+    "recent_grad": "Graduated December 2024. Postings asking 2+ years of clinical experience are a stretch."
+  }
+}

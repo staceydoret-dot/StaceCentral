@@ -1,0 +1,539 @@
+<title>Stacey's Neuro Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
+<style>
+:root{
+  --ground:#F4F6F8;
+  --surface:#FFFFFF;
+  --sunk:#EAEEF2;
+  --ink:#141A21;
+  --ink-2:#3D4854;
+  --muted:#68757F;
+  --line:#D8DFE6;
+  --line-soft:#E7ECF1;
+  --accent:#0C6E7A;
+  --accent-soft:#E2F0F1;
+  --urgent:#A82E1B;
+  --urgent-soft:#F8E7E3;
+  --warm:#8A6512;
+  --warm-soft:#F7EEDB;
+  --calm:#3B5A6B;
+  --quiet:#78848E;
+  --open:#136B4E;
+  --open-soft:#E1F0E8;
+  --shut:#8A4A38;
+  --shut-soft:#F3E6E1;
+  --trace:#0C6E7A;
+  --shadow:0 1px 2px rgba(20,26,33,.05),0 8px 24px -16px rgba(20,26,33,.18);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#101519;
+    --surface:#171D23;
+    --sunk:#1E252C;
+    --ink:#E8EDF1;
+    --ink-2:#BAC5CE;
+    --muted:#8B99A4;
+    --line:#2B343C;
+    --line-soft:#232B33;
+    --accent:#4FBCC6;
+    --accent-soft:#143134;
+    --urgent:#F08D77;
+    --urgent-soft:#38201A;
+    --warm:#DDB264;
+    --warm-soft:#332814;
+    --calm:#9DB6C4;
+    --quiet:#7E8B95;
+    --open:#5FC495;
+    --open-soft:#12301F;
+    --shut:#E09D85;
+    --shut-soft:#33211B;
+    --trace:#4FBCC6;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#101519;
+  --surface:#171D23;
+  --sunk:#1E252C;
+  --ink:#E8EDF1;
+  --ink-2:#BAC5CE;
+  --muted:#8B99A4;
+  --line:#2B343C;
+  --line-soft:#232B33;
+  --accent:#4FBCC6;
+  --accent-soft:#143134;
+  --urgent:#F08D77;
+  --urgent-soft:#38201A;
+  --warm:#DDB264;
+  --warm-soft:#332814;
+  --calm:#9DB6C4;
+  --quiet:#7E8B95;
+  --open:#5FC495;
+  --open-soft:#12301F;
+  --shut:#E09D85;
+  --shut-soft:#33211B;
+  --trace:#4FBCC6;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 24px -16px rgba(0,0,0,.7);
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Newsreader",Georgia,"Times New Roman",serif;
+  font-size:17px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:980px;margin:0 auto;padding:36px 22px 90px}
+
+/* ---------- shared type roles ---------- */
+.label{
+  font-family:"IBM Plex Sans Condensed",'Arial Narrow',system-ui,sans-serif;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  font-size:11.5px;
+  color:var(--muted);
+}
+.num{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+h1,h2,h3,.sans{font-family:"IBM Plex Sans Condensed",'Arial Narrow',system-ui,sans-serif;text-wrap:balance}
+
+/* ---------- masthead ---------- */
+header{border-bottom:2px solid var(--ink);padding-bottom:14px;margin-bottom:6px}
+h1{font-size:clamp(30px,5.4vw,46px);font-weight:700;letter-spacing:-.015em;margin:0 0 4px;line-height:1.03}
+.sub{color:var(--muted);font-size:15px;margin:0;max-width:62ch}
+.stamp{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:12px}
+.stamp span{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.stamp b{color:var(--ink-2);font-weight:500}
+
+/* ---------- the trace ---------- */
+.trace{display:block;width:100%;height:34px;margin:18px 0 30px;overflow:visible}
+
+/* ---------- thesis ---------- */
+.thesis{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-left:4px solid var(--urgent);
+  border-radius:3px;
+  padding:22px 24px 24px;
+  box-shadow:var(--shadow);
+  margin-bottom:14px;
+}
+.thesis .eyebrow{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.thesis h2{font-size:clamp(21px,3.2vw,27px);font-weight:700;margin:0 0 2px;letter-spacing:-.01em;line-height:1.15}
+.thesis h2 a{color:var(--ink);text-decoration:none;border-bottom:2px solid var(--accent)}
+.thesis h2 a:hover{color:var(--accent)}
+.org{font-size:15px;color:var(--ink-2);margin:0 0 16px}
+.org b{font-weight:600}
+.verdict{font-size:17px;margin:0 0 18px;max-width:64ch}
+
+/* requirement ledger — the real information design */
+.ledger{width:100%;border-collapse:collapse;font-size:14.5px;margin-top:4px}
+.ledger caption{text-align:left;padding-bottom:8px}
+.ledger th{
+  font-family:"IBM Plex Sans Condensed",sans-serif;font-size:11.5px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.09em;color:var(--muted);
+  text-align:left;padding:0 10px 7px 0;border-bottom:1px solid var(--line);
+}
+.ledger td{padding:9px 10px 9px 0;border-bottom:1px solid var(--line-soft);vertical-align:top}
+.ledger tr:last-child td{border-bottom:none}
+.ledger .they{color:var(--ink-2);width:38%}
+.ledger .you{color:var(--ink)}
+.tick{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:19px;height:19px;border-radius:50%;flex:none;margin-right:9px;
+  background:var(--open-soft);color:var(--open);
+  font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:700;font-size:12px;
+}
+.you span{display:flex;align-items:flex-start}
+.you span>em{font-style:normal}
+
+/* ---------- section heads ---------- */
+.head{display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin:46px 0 4px;flex-wrap:wrap}
+.head h2{font-size:19px;font-weight:700;margin:0;letter-spacing:.005em}
+.head p{margin:0;font-size:14px;color:var(--muted);max-width:56ch}
+.rule{height:1px;background:var(--line);margin:12px 0 4px}
+
+/* ---------- listing rows ---------- */
+ol.rows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.row{
+  display:grid;
+  grid-template-columns:4px 1fr auto;
+  gap:0 16px;
+  align-items:start;
+  padding:16px 2px 16px 0;
+  border-bottom:1px solid var(--line-soft);
+}
+.row:last-child{border-bottom:none}
+.rail{width:4px;border-radius:2px;align-self:stretch;background:var(--quiet)}
+.row[data-band="APPLY NOW"] .rail{background:var(--urgent)}
+.row[data-band="STRONG"] .rail{background:var(--warm)}
+.row[data-band="WORTH A LOOK"] .rail{background:var(--accent)}
+.row[data-band="BACKUP"] .rail{background:var(--quiet)}
+.main .rtitle{font-family:"IBM Plex Sans Condensed",sans-serif;font-weight:600;font-size:17.5px;line-height:1.25;margin:0 0 3px}
+.main .rtitle a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.main .rtitle a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+.meta{font-size:13.5px;color:var(--muted);margin:0}
+.meta b{color:var(--ink-2);font-weight:500}
+.why{font-size:14.5px;color:var(--ink-2);margin:7px 0 0;max-width:64ch}
+.why em{font-style:italic;color:var(--muted)}
+
+.aside{display:flex;flex-direction:column;align-items:flex-end;gap:7px;min-width:118px}
+.score{font-family:"IBM Plex Mono",monospace;font-size:23px;font-weight:500;line-height:1;font-variant-numeric:tabular-nums}
+.score s{text-decoration:none;font-size:12px;color:var(--muted)}
+.band{
+  font-family:"IBM Plex Sans Condensed",sans-serif;font-size:10.5px;font-weight:700;
+  text-transform:uppercase;letter-spacing:.09em;padding:3px 7px;border-radius:2px;white-space:nowrap;
+}
+.row[data-band="APPLY NOW"] .band{background:var(--urgent-soft);color:var(--urgent)}
+.row[data-band="STRONG"] .band{background:var(--warm-soft);color:var(--warm)}
+.row[data-band="WORTH A LOOK"] .band{background:var(--accent-soft);color:var(--accent)}
+.row[data-band="BACKUP"] .band{background:var(--sunk);color:var(--quiet)}
+
+/* applied toggle */
+.applied{
+  display:inline-flex;align-items:center;gap:6px;cursor:pointer;
+  font-family:"IBM Plex Sans Condensed",sans-serif;font-size:11.5px;font-weight:600;
+  text-transform:uppercase;letter-spacing:.07em;color:var(--muted);
+  background:none;border:1px solid var(--line);border-radius:2px;padding:3px 8px;
+  transition:color .12s,border-color .12s,background .12s;
+}
+.applied:hover{color:var(--accent);border-color:var(--accent)}
+.applied:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.applied .box{
+  width:12px;height:12px;border:1.5px solid currentColor;border-radius:2px;
+  display:inline-flex;align-items:center;justify-content:center;font-size:9px;line-height:1;
+}
+.row.done{opacity:.55}
+.row.done .applied{color:var(--open);border-color:var(--open);background:var(--open-soft)}
+.row.done .rtitle a{text-decoration:line-through;text-decoration-thickness:1px}
+
+/* ---------- gated ---------- */
+.gated{background:var(--sunk);border:1px solid var(--line);border-radius:3px;padding:6px 20px 8px;margin-top:14px}
+.gate{padding:15px 0;border-bottom:1px solid var(--line-soft)}
+.gate:last-child{border-bottom:none}
+.gate h3{font-family:"IBM Plex Sans Condensed",sans-serif;font-size:15.5px;font-weight:600;margin:0 0 2px;line-height:1.25}
+.gate h3 a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line)}
+.gate h3 a:hover{color:var(--accent)}
+.gate .blocker{
+  display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:11.5px;
+  background:var(--shut-soft);color:var(--shut);padding:2px 7px;border-radius:2px;margin:6px 0 0;
+}
+.gate p{margin:6px 0 0;font-size:14.5px;color:var(--ink-2);max-width:66ch}
+
+/* ---------- notes ---------- */
+.note{
+  border-left:2px solid var(--accent);padding:2px 0 2px 16px;margin:16px 0 0;
+  font-size:15px;color:var(--ink-2);max-width:66ch;
+}
+.note b{color:var(--ink);font-weight:600}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:22px;margin-top:16px}
+.grid2 h3{font-size:14px;font-weight:700;margin:0 0 6px;letter-spacing:.02em}
+.grid2 p,.grid2 li{font-size:14.5px;color:var(--ink-2);margin:0 0 7px}
+.grid2 ul{margin:0;padding-left:17px}
+code{font-family:"IBM Plex Mono",monospace;font-size:12.5px;background:var(--sunk);padding:1px 5px;border-radius:2px;color:var(--ink-2);word-break:break-all}
+footer{margin-top:52px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+footer p{margin:0 0 5px;max-width:70ch}
+
+@media (max-width:620px){
+  body{font-size:16px}
+  .row{grid-template-columns:4px 1fr;gap:0 12px}
+  .aside{grid-column:2;flex-direction:row;align-items:center;justify-content:flex-start;gap:10px;margin-top:9px}
+  .ledger .they{width:auto}
+  .ledger,.ledger tbody,.ledger tr,.ledger td{display:block}
+  .ledger thead{display:none}
+  .ledger td{border-bottom:none;padding:2px 0}
+  .ledger tr{border-bottom:1px solid var(--line-soft);padding:9px 0}
+  .ledger .they{font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+
+  <header>
+    <h1>Stacey's Neuro Board</h1>
+    <p class="sub">Paid EEG and neurodiagnostic training that builds toward psychiatry. Ranked by whether you can actually get it — not by what the title says.</p>
+    <div class="stamp">
+      <span>GENERATED <b>3 SEP 2026</b></span>
+      <span>SCORED <b>28</b> ACTIVE OF <b>34</b> SEEN</span>
+      <span>SOURCES <b>LINKEDIN · ZIPRECRUITER · INDEED</b></span>
+      <span>ENGINE <b>78/78 TESTS GREEN</b></span>
+    </div>
+  </header>
+
+  <svg class="trace" viewBox="0 0 960 34" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="none" stroke="var(--trace)" stroke-width="1.1" stroke-linejoin="round" opacity=".5"
+      d="M0 17 L36 17 L44 9 L52 25 L60 15 L74 17 L110 17 L118 12 L126 21 L134 17 L170 17 L178 5 L186 29 L194 13 L202 18 L240 17 L248 11 L256 23 L264 16 L300 17 L308 14 L316 20 L324 17 L360 17 L368 8 L376 26 L384 14 L392 18 L430 17 L438 12 L446 22 L454 17 L490 17 L498 3 L506 31 L514 12 L522 19 L560 17 L568 13 L576 21 L584 17 L620 17 L628 10 L636 24 L644 15 L652 18 L690 17 L698 12 L706 22 L714 17 L750 17 L758 7 L766 27 L774 14 L782 18 L820 17 L828 13 L836 21 L844 17 L880 17 L888 11 L896 23 L904 16 L940 17 L960 17"/>
+  </svg>
+
+  <!-- ================= THE ONE ================= -->
+  <section class="thesis" aria-labelledby="lead">
+    <div class="eyebrow">
+      <span class="band" style="background:var(--urgent-soft);color:var(--urgent)">Apply today</span>
+      <span class="label">Score 89 / 100 · the highest this board has ever returned</span>
+    </div>
+    <h2 id="lead"><a href="https://www.linkedin.com/jobs/view/eeg-technologist-apprentice-at-cleveland-clinic-4457993643" target="_blank" rel="noopener">EEG Technologist Apprentice</a></h2>
+    <p class="org"><b>Cleveland Clinic</b> · Weston, FL · $52,500–$80,000 a year · full-time · posted 9 days ago</p>
+
+    <p class="verdict">A named apprenticeship, twenty-five minutes from Hollywood, that pays you while it trains you and then prepares you for the ABRET exam. Eight to twelve weeks of instruction in electrode application, the International&nbsp;10–20 system, epilepsy monitoring and equipment calibration. <b>There is no gap between you and this job.</b></p>
+
+    <table class="ledger">
+      <caption class="label">Their stated requirements, against your CV</caption>
+      <thead>
+        <tr><th scope="col">What they ask for</th><th scope="col">What you have</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="they">High school diploma or GED</td><td class="you"><span><em class="tick">✓</em><em>B.S. Neuroscience &amp; Psychology, Nova Southeastern</em></span></td></tr>
+        <tr><td class="they">Physical &amp; biological science coursework</td><td class="you"><span><em class="tick">✓</em><em>Neuroscience major; PCR, ELISA, cell culture, two research labs</em></span></td></tr>
+        <tr><td class="they">Medical terminology <em style="color:var(--muted)">(preferred)</em></td><td class="you"><span><em class="tick">✓</em><em>70 documented shadowing hours; psychiatry rotation at Jackson Behavioral</em></span></td></tr>
+        <tr><td class="they">BLS certification, or within one month of hire</td><td class="you"><span><em class="tick">✓</em><em>Already held — you clear it outright, no grace period needed</em></span></td></tr>
+        <tr><td class="they">ABRET registration</td><td class="you"><span><em class="tick">✓</em><em>Not required. The apprenticeship is what prepares you for it</em></span></td></tr>
+        <tr><td class="they">Prior EEG experience</td><td class="you"><span><em class="tick">✓</em><em>Not required</em></span></td></tr>
+      </tbody>
+    </table>
+
+    <p class="note"><b>Send the full CV, not the short résumé.</b> The posting explicitly asks for complete work history. Both shifts are open — days 7:30–4:00, or nights 11:00pm–7:30am. Nights is usually the easier one to be hired into.</p>
+  </section>
+
+  <!-- ================= RANKED ================= -->
+  <div class="head">
+    <h2>Then these, in order</h2>
+    <p>Ten shown, never more. Tick one when you've applied.</p>
+  </div>
+  <div class="rule"></div>
+
+  <ol class="rows" id="rows">
+
+    <li class="row" data-band="STRONG" data-id="memorial-monitor">
+      <div class="rail"></div>
+      <div class="main">
+        <p class="rtitle"><a href="https://www.linkedin.com/jobs/view/4457614397" target="_blank" rel="noopener">Monitor Technician I — Neurological / Stroke</a></p>
+        <p class="meta"><b>Memorial Healthcare System</b> · Hollywood, FL · pay not published · full-time days · 3 days ago</p>
+        <p class="why">The posting says it outright: <em>“If incumbent has no prior work experience, they will be placed in the Monitor Technician&nbsp;— Extern role.”</em> BLS is the only certification and you have it. Your own city. And Memorial keeps posting EEG jobs you can't reach — being inside makes you an internal candidate.</p>
+      </div>
+      <div class="aside">
+        <p class="score">74.8<s>/100</s></p>
+        <span class="band">Strong</span>
+        <button class="applied" type="button"><span class="box"></span>Applied</button>
+      </div>
+    </li>
+
+    <li class="row" data-band="STRONG" data-id="baptist-pool">
+      <div class="rail"></div>
+      <div class="main">
+        <p class="rtitle"><a href="https://www.ziprecruiter.com/jobs-search?search=Pool+EEG+Technician+Neurophysiology&location=Boca+Raton%2C+FL" target="_blank" rel="noopener">Pool EEG Technician, Neurophysiology — Per Diem</a></p>
+        <p class="meta"><b>Baptist Health South Florida</b> · Boca Raton, FL · from $57,000 a year · per diem, 6a–6:30p · 9 days ago</p>
+        <p class="why">Pool roles usually want someone already trained, but Baptist runs a large neurophysiology service and pool staff often convert to full-time. Worth an application even if the answer is “not yet.” <em>Full posting not pulled — open it and check for training language.</em></p>
+      </div>
+      <div class="aside">
+        <p class="score">68.9<s>/100</s></p>
+        <span class="band">Strong</span>
+        <button class="applied" type="button"><span class="box"></span>Applied</button>
+      </div>
+    </li>
+
+    <li class="row" data-band="STRONG" data-id="hispano-psg">
+      <div class="rail"></div>
+      <div class="main">
+        <p class="rtitle"><a href="https://to.indeed.com/aatg7jfdvxbk" target="_blank" rel="noopener">PSG / Sleep Tech</a></p>
+        <p class="meta"><b>Hispano Medical Center</b> · Miami, FL · from $25 an hour · contract · 26 days ago</p>
+        <p class="why">Polysomnography is EEG's sister discipline — the same electrode montages, a parallel credential track (RPSGT). If they train, it's a real entry point. <em>Ask that question first; the posting doesn't say.</em></p>
+      </div>
+      <div class="aside">
+        <p class="score">61.9<s>/100</s></p>
+        <span class="band">Strong</span>
+        <button class="applied" type="button"><span class="box"></span>Applied</button>
+      </div>
+    </li>
+
+    <li class="row" data-band="STRONG" data-id="fieldoftalent-eeg">
+      <div class="rail"></div>
+      <div class="main">
+        <p class="rtitle"><a href="https://www.ziprecruiter.com/jobs-search?search=EEG+Technician&location=Fort+Lauderdale%2C+FL" target="_blank" rel="noopener">EEG Technician</a></p>
+        <p class="meta"><b>Field of Talent</b> (staffing) · Fort Lauderdale, FL · $44,000–$52,000 a year · full-time · 14 days ago</p>
+        <p class="why">Discounted because it's an agency, but recruiters will sometimes place a candidate a hospital's own filters would reject. Low cost to send a CV.</p>
+      </div>
+      <div class="aside">
+        <p class="score">60.1<s>/100</s></p>
+        <span class="band">Strong</span>
+        <button class="applied" type="button"><span class="box"></span>Applied</button>
+      </div>
+    </li>
+
+    <li class="row" data-band="WORTH A LOOK" data-id="jackson-mht">
+      <div class="rail"></div>
+      <div class="main">
+        <p class="rtitle"><a href="https://to.indeed.com/aa9hy2qrzknq" target="_blank" rel="noopener">Mental Health Tech — Jackson Behavioral Health, Nights</a></p>
+        <p class="meta"><b>Jackson Health System</b> · Miami, FL · $45,375–$68,423 a year · full-time nights · 15 days ago</p>
+        <p class="why">This is the building where you did the Miami Summer Scholars psychiatry rotation in 2018. Put that in your first line. About $21.80/hr with a full hospital benefits package.</p>
+      </div>
+      <div class="aside">
+        <p class="score">59.2<s>/100</s></p>
+        <span class="band">Worth a look</span>
+        <button class="applied" type="button"><span class="box"></span>Applied</button>
+      </div>
+    </li>
+
+    <li class="row" data-band="WORTH A LOOK" data-id="compassion-bht">
+      <div class="rail"></div>
+      <div class="main">
+        <p class="rtitle"><a href="https://to.indeed.com/aasnkmtbvnt9" target="_blank" rel="noopener">Overnight Behavioral Health Technician</a></p>
+        <p class="meta"><b>Compassion Behavioral Health</b> · Fort Lauderdale, FL · $18 an hour · full-time overnight · 9 days ago</p>
+        <p class="why">Overnight BHT is the most reliably open door in South Florida behavioral health, and it rarely asks for a credential up front. Twenty-five minutes away.</p>
+      </div>
+      <div class="aside">
+        <p class="score">56.7<s>/100</s></p>
+        <span class="band">Worth a look</span>
+        <button class="applied" type="button"><span class="box"></span>Applied</button>
+      </div>
+    </li>
+
+    <li class="row" data-band="BACKUP" data-id="baptist-assistant">
+      <div class="rail"></div>
+      <div class="main">
+        <p class="rtitle"><a href="https://careers.baptisthealth.net/us/en/job/160958/Neurophysiology-Tech-Assistant-Neurophysiology-Office-FT-8-00am-4-30pm" target="_blank" rel="noopener">Neurophysiology Tech Assistant</a></p>
+        <p class="meta"><b>Baptist Health South Florida</b> · Miami, FL · $32,000–$38,760 posted · full-time, 8:00–4:30 · 12 days ago</p>
+        <p class="why">No credential gate of any kind — high school diploma plus a year in “a related field,” which your research posts, shadowing hours and elder care can carry. Weekday daytime hours, rare in this field. <em>The posted band looks low against Baptist's own range for the title; ask.</em></p>
+      </div>
+      <div class="aside">
+        <p class="score">56.7<s>/100</s></p>
+        <span class="band">Backup</span>
+        <button class="applied" type="button"><span class="box"></span>Applied</button>
+      </div>
+    </li>
+
+    <li class="row" data-band="WORTH A LOOK" data-id="limitless-rbt">
+      <div class="rail"></div>
+      <div class="main">
+        <p class="rtitle"><a href="https://to.indeed.com/aanwtrksxffb" target="_blank" rel="noopener">Registered Behavior Technician</a></p>
+        <p class="meta"><b>Limitless Kids ABA</b> · Fort Lauderdale, FL · $25–$28 an hour · part-time · 15 days ago</p>
+        <p class="why">Highest hourly rate on the board, and directly continuous with your ESE tutoring and 70 hours with ADHD, ODD and autistic students. Most ABA firms pay for the 40-hour RBT certification — <em>confirm that, because it's what turns this from a job into a credential.</em></p>
+      </div>
+      <div class="aside">
+        <p class="score">56.4<s>/100</s></p>
+        <span class="band">Worth a look</span>
+        <button class="applied" type="button"><span class="box"></span>Applied</button>
+      </div>
+    </li>
+
+    <li class="row" data-band="WORTH A LOOK" data-id="douglas-mht">
+      <div class="rail"></div>
+      <div class="main">
+        <p class="rtitle"><a href="https://to.indeed.com/aaylkwqypxt2" target="_blank" rel="noopener">Mental Health Technician</a></p>
+        <p class="meta"><b>Douglas Gardens Community Mental Health Center</b> · North Miami Beach, FL · from $15 an hour · full-time · 1 day ago</p>
+        <p class="why">Posted yesterday, so the application actually gets read. Broad psychiatric exposure at a community centre. Pay starts low — ask where the range tops out.</p>
+      </div>
+      <div class="aside">
+        <p class="score">56.1<s>/100</s></p>
+        <span class="band">Worth a look</span>
+        <button class="applied" type="button"><span class="box"></span>Applied</button>
+      </div>
+    </li>
+
+    <li class="row" data-band="WORTH A LOOK" data-id="walgreens-pharm">
+      <div class="rail"></div>
+      <div class="main">
+        <p class="rtitle"><a href="https://www.linkedin.com/jobs/view/4462424061" target="_blank" rel="noopener">Pharmacy Technician Apprenticeship</a></p>
+        <p class="meta"><b>Walgreens</b> · Miami, FL · $16.50–$20.00 an hour · full-time · posted today</p>
+        <p class="why">A genuine Department&nbsp;of&nbsp;Labor apprenticeship ending in a real PTCB certification, and you'd almost certainly get it. But it certifies you as a pharmacy technician. <em>Scored 61.7 and capped here on purpose: it pays, it may train you, and it does not move you toward psychiatry.</em></p>
+      </div>
+      <div class="aside">
+        <p class="score">61.7<s>/100</s></p>
+        <span class="band">Worth a look</span>
+        <button class="applied" type="button"><span class="box"></span>Applied</button>
+      </div>
+    </li>
+
+  </ol>
+
+  <!-- ================= GATED ================= -->
+  <div class="head">
+    <h2>Ruled out — and exactly why</h2>
+    <p>Kept visible so the same dead end doesn't get re-read next week.</p>
+  </div>
+
+  <div class="gated">
+    <div class="gate">
+      <h3><a href="https://www.linkedin.com/jobs/view/4441359585" target="_blank" rel="noopener">EEG Technician — Memorial Regional Hospital</a></h3>
+      <p class="meta"><b>Memorial Healthcare System</b> · Hollywood, FL · 3 days ago</p>
+      <span class="blocker">Requires CAAHEP-accredited ENDT program + ABRET Registry Eligible</span>
+      <p>The one you found. It opens with “No prior work experience required” and then, on the next line, requires enrolment in an accredited Electroneurodiagnostic programme. Your search said <em>apprentice</em>; this is not one.</p>
+    </div>
+    <div class="gate">
+      <h3><a href="https://memorialhealthcare.wd1.myworkdayjobs.com/en-US/MHS_Careers/job/EEG-Technician---FT---Days---JDCH_JR-20482" target="_blank" rel="noopener">EEG Technician — Joe DiMaggio Children's Hospital</a></h3>
+      <p class="meta"><b>Memorial Healthcare System</b> · Hollywood, FL · 16 days ago</p>
+      <span class="blocker">Same CAAHEP + ABRET wall</span>
+      <p>Third Memorial EEG posting in three weeks, all gated identically. Real local demand, and a $10K sign-on sitting on the registered version of the role. This is what the Cleveland Clinic apprenticeship leads to in about two years.</p>
+    </div>
+    <div class="gate">
+      <h3><a href="https://www.linkedin.com/jobs/view/4434668734" target="_blank" rel="noopener">Polysomnographic Technician I</a></h3>
+      <p class="meta"><b>Nicklaus Children's Health System</b> · Miami, FL · 30 days ago</p>
+      <span class="blocker">Minimum 2 years performing sleep studies</span>
+      <p>“Technician I” sounds entry-level; it isn't. But <b>Nicklaus is your standing lead</b> — the one you noted as “until Nicklaus calls back” — and they have two neurodiagnostic reqs open right now. That means a real department with turnover. If you have any contact there, this is the week to ask about their trainee pathway.</p>
+    </div>
+  </div>
+
+  <!-- ================= METHOD ================= -->
+  <div class="head">
+    <h2>How this board was built</h2>
+  </div>
+  <div class="rule"></div>
+
+  <div class="grid2">
+    <div>
+      <h3>Three things that changed the ranking</h3>
+      <ul>
+        <li><b>Indeed returned zero</b> EEG results. ZipRecruiter returned 34 for the identical search. Never call a market empty from one source.</li>
+        <li><b>“No prior work experience required”</b> appeared directly above a hard credential gate three times. Always read the line after it.</li>
+        <li><b>Searching the word “apprentice”</b> near Hollywood returns 60 results — electricians, plumbers, jewellers, meat cutters. Zero neuro. Search the <em>role</em>, then read for training language.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>What the engine weighs</h3>
+      <p>Eight components out of 100: role fit&nbsp;40, <b>will they train you&nbsp;30</b>, location&nbsp;15, freshness&nbsp;12, your own advantages&nbsp;12, schedule&nbsp;10, pay&nbsp;8, employer&nbsp;5. Then penalties.</p>
+      <p>Training carries the second-heaviest weight because it is the only thing that separates a door from a wall. A $15/hr apprenticeship that certifies you outranks a $24/hr job that doesn't.</p>
+      <p>Postings demanding registration you don't hold are excluded outright — unless they also offer to train, because “registered, or willing to train” is a real opening.</p>
+    </div>
+  </div>
+
+  <footer>
+    <p><b>Ticking “Applied” is a note to yourself</b> — it's saved in this browser only. The real record lives in <code>stacey-plan/listings.json</code>, so tell Claude “mark Cleveland Clinic applied” and it'll go in the repo where the next session can see it.</p>
+    <p>Generated by <code>board.py</code> from 34 listings and a preferences file that holds every keyword, weight and filter. The engine hardcodes nothing about what you want. 78 tests green.</p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var KEY = "stacey-neuro-board-applied-v1";
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { state = {}; }
+
+  function paint(row, on) {
+    var btn = row.querySelector(".applied");
+    var box = btn.querySelector(".box");
+    row.classList.toggle("done", on);
+    box.textContent = on ? "✓" : "";
+    btn.setAttribute("aria-pressed", on ? "true" : "false");
+    btn.lastChild.nodeValue = on ? "Applied" : "Applied";
+  }
+
+  var rows = document.querySelectorAll(".row[data-id]");
+  Array.prototype.forEach.call(rows, function (row) {
+    var id = row.getAttribute("data-id");
+    var btn = row.querySelector(".applied");
+    if (!btn) return;
+    paint(row, !!state[id]);
+    btn.addEventListener("click", function () {
+      state[id] = !state[id];
+      paint(row, !!state[id]);
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* private mode */ }
+    });
+  });
+})();
+</script>
