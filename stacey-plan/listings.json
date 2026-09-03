@@ -1,7 +1,7 @@
 {
   "_comment": "Every listing ever seen. Dead ones stay here with a terminal status so they never resurface as 'new'. posted_days_ago is relative to 'last_refreshed' below - re-run a search rather than hand-adjusting it.",
   "last_refreshed": "2026-09-03",
-  "source_note": "Pulled from Indeed on 2026-09-03 across 6 searches: EEG technologist trainee (Hollywood), neurodiagnostic technologist (Miami), EEG technician (Fort Lauderdale), EEG (Miami), behavioral health technician (Hollywood), psychiatric technician (Miami), clinical research coordinator neurology (Fort Lauderdale). The two purely neurodiagnostic searches returned zero results - South Florida is thin on EEG trainee postings right now. SECOND PASS via ZipRecruiter, same searches: 34 EEG matches and 12 neurodiagnostic matches within 40-45 miles, including a Cleveland Clinic EEG Technician Apprentice in Weston and an EEG Technician at Joe DiMaggio Children's Hospital in Hollywood. Indeed returned zero for the identical queries. Never conclude the market is empty from one board. THIRD PASS 2026-09-03: read the actual qualifications from employer sources for the top three neuro roles. Result: Cleveland Clinic confirmed fully open to her (BLS is the only certification and she holds it); Memorial JDCH confirmed GATED behind an accredited ENDT program plus ABRET registry eligibility, so it was marked not_interested; Baptist Neurophysiology Tech Assistant confirmed to have no credential gate at all. Reading qualifications changed the ranking more than any scoring tweak has.",
+  "source_note": "Pulled from Indeed on 2026-09-03 across 6 searches: EEG technologist trainee (Hollywood), neurodiagnostic technologist (Miami), EEG technician (Fort Lauderdale), EEG (Miami), behavioral health technician (Hollywood), psychiatric technician (Miami), clinical research coordinator neurology (Fort Lauderdale). The two purely neurodiagnostic searches returned zero results - South Florida is thin on EEG trainee postings right now. SECOND PASS via ZipRecruiter, same searches: 34 EEG matches and 12 neurodiagnostic matches within 40-45 miles, including a Cleveland Clinic EEG Technician Apprentice in Weston and an EEG Technician at Joe DiMaggio Children's Hospital in Hollywood. Indeed returned zero for the identical queries. Never conclude the market is empty from one board. THIRD PASS 2026-09-03: read the actual qualifications from employer sources for the top three neuro roles. Result: Cleveland Clinic confirmed fully open to her (BLS is the only certification and she holds it); Memorial JDCH confirmed GATED behind an accredited ENDT program plus ABRET registry eligibility, so it was marked not_interested; Baptist Neurophysiology Tech Assistant confirmed to have no credential gate at all. Reading qualifications changed the ranking more than any scoring tweak has. FOURTH PASS: LinkedIn job-view pages (linkedin.com/jobs/view/<id>) are readable without a login via WebFetch. Stacey can paste any LinkedIn job URL and the full qualifications can be read from it. This removes the need for any LinkedIn scraper or MCP integration for reading postings. FIFTH PASS: LinkedIn's guest job search (linkedin.com/jobs/search?keywords=...) enumerated 60 Florida neurodiagnostic postings with their job IDs, all without a login. Each ID is then readable at /jobs/view/<id>. This is the full LinkedIn pipeline, no MCP or scraper required.",
   "listings": [
     {
       "id": "indeed-JOBSEARCH_38",
@@ -482,6 +482,54 @@
       "added": "2026-09-03",
       "description": "Traveling EEG Technologist role covering a travel assignment, through Field of Talent staffing, based Miami FL.",
       "notes": "Travel assignment through a staffing firm. Both penalised, correctly. Listed for completeness."
+    },
+    {
+      "id": "linkedin-4441359585",
+      "title": "EEG Technician - FT - Days - MRH",
+      "company": "Memorial Healthcare System",
+      "location": "Hollywood, FL",
+      "remote": "onsite",
+      "salary_text": "",
+      "job_type": "fulltime",
+      "posted_days_ago": 3,
+      "url": "https://www.linkedin.com/jobs/view/4441359585",
+      "source": "linkedin",
+      "status": "not_interested",
+      "added": "2026-09-03",
+      "description": "EEG Technician, full-time, Memorial Regional Hospital (MRH), Memorial Healthcare System, Hollywood FL. QUALIFICATIONS VERIFIED FROM THE POSTING: High School Diploma or Equivalent (Required). Graduate of or enrolled in an Electro-neuro-diagnostic technology program accredited by the Commission on Accreditation of Allied Health Education Programs (CAAHEP), or a clinically equivalent program. ABRET Registry Eligible. No prior work experience required. Someone with EMU and LTM monitoring experience highly preferred. Duties: attaching electrodes, reviewing patient history, educating patients, monitoring conditions, identifying artifacts, forwarding results to physicians, long-term video EEG monitoring, data retrieval and reduction. Proficiency in the International 10-20 system and ASET neurodiagnostic monitoring guidelines required. Rotating weekends. Shift listed as nights in the body despite 'Days' in the title. No training offered to candidates outside an accredited program.",
+      "notes": "Stacey found this herself searching 'eeg apprentice' on LinkedIn. It is NOT an apprenticeship. It is Memorial Regional Hospital, a second Memorial site distinct from the Joe DiMaggio req already on file, and it carries the identical gate: CAAHEP-accredited Electroneurodiagnostic program plus ABRET Registry Eligibility. 'No prior work experience required' is again the line that makes it look open when it is not.\nTwo useful facts from it anyway: Memorial is actively hiring EEG techs at two sites in her own city within three weeks of each other, so the local demand is real; and the title says Days while the body says Nights, so verify the shift on any Memorial req before accepting."
+    },
+    {
+      "id": "linkedin-4457614397",
+      "title": "Monitor Technician I - Neurological/Stroke - FT Days - MRH",
+      "company": "Memorial Healthcare System",
+      "location": "Hollywood, FL",
+      "remote": "onsite",
+      "salary_text": "",
+      "job_type": "fulltime",
+      "posted_days_ago": 3,
+      "url": "https://www.linkedin.com/jobs/view/4457614397",
+      "source": "linkedin",
+      "status": "new",
+      "added": "2026-09-03",
+      "description": "Monitor Technician I, Neurological/Stroke unit, full-time days, Memorial Regional Hospital, Memorial Healthcare System, Hollywood FL. QUALIFICATIONS VERIFIED FROM THE POSTING: Vocational technical Electrocardiogram Competency required. BLS American Heart Association certification required. Monitor Technician certification required. ECG/EKG competency with successful completion of interpretation coursework. Minimum six months of experience required after completion of the Monitor Technician Extern program, or equivalent alternative experience. TRAINING PATHWAY STATED EXPLICITLY: 'New Hires minimum of six (6) months experience required: If incumbent has no prior work experience, they will be placed in the Monitor Technician - Extern role.' Responsibilities: continuous cardiac rhythm monitoring and surveillance, identifying arrhythmias and patient deterioration, attaching electrodes for ECG monitoring, documenting tracings, correcting artifacts, activating emergency response for cardiac events. No registration or licence required.",
+      "notes": "THE STRATEGIC PLAY, and the most useful thing found today after Cleveland Clinic.\nThe posting states outright that a candidate with no prior work experience is placed in the Monitor Technician EXTERN role. That is a built-in on-ramp, in writing, from an employer who will otherwise not touch her.\n  - BLS required -> she has it.\n  - No ABRET, no accredited program, no licence.\n  - ECG competency is coursework, and the extern route is how you get it.\n  - Neurological/Stroke unit at Memorial Regional, in Hollywood, her own city. Day shift.\nWHY IT MATTERS BEYOND THE JOB: Memorial has posted three EEG roles in three weeks that all gate behind a CAAHEP program she is not in. Getting inside Memorial on the neuro floor makes her an internal candidate, and internal transfer is the normal way people cross into EEG without going back to school. It is electrode work, artifact correction and waveform reading, which is genuinely adjacent to EEG rather than a detour.\nApply to this one AND to Cleveland Clinic. They are not competing; they are two different routes to the same place."
+    },
+    {
+      "id": "linkedin-4434668734",
+      "title": "Polysomnographic Technician I (Full Time, Nights)",
+      "company": "Nicklaus Children's Health System",
+      "location": "Miami, FL",
+      "remote": "onsite",
+      "salary_text": "",
+      "job_type": "fulltime",
+      "posted_days_ago": 30,
+      "url": "https://www.linkedin.com/jobs/view/4434668734",
+      "source": "linkedin",
+      "status": "not_interested",
+      "added": "2026-09-03",
+      "description": "Polysomnographic Technician I, full-time nights, Nicklaus Children's Health System, Miami FL. QUALIFICATIONS VERIFIED FROM THE POSTING: Minimum 2 years of experience doing sleep studies. CPR Healthcare Provider certification, maintained active and in good standing throughout employment. No RPSGT or ABRET registration explicitly required, and no training offered to candidates without experience. Responsibilities: performing polysomnograms, CPAP studies and MSLT procedures per American Academy guidelines, preparing the sleep laboratory and calibrating instruments, diagnosing and correcting minor equipment malfunctions, patient hook-up to sensor equipment, scoring and report preparation within three days, equipment maintenance and inventory, emergency response, electronic medical record documentation.",
+      "notes": "Nicklaus Children's is the lead she has been waiting on since her Notion planning page ('until Nicklaus calls back'). Worth knowing they are actively hiring.\nThis particular req is not hers: 'Technician I' sounds entry-level but it demands a minimum of two years doing sleep studies. Blocked by experience, not by a credential, so no amount of training language would rescue it.\nUSE IT ANYWAY: Nicklaus also has an EEG/LTM Tech III posted. Two open neurodiagnostic reqs at one hospital means a real department with turnover. If she has any contact there, this is the moment to ask what their entry-level or trainee pathway looks like. Set an alert on their careers page."
     }
   ]
 }

@@ -17,7 +17,17 @@ Why this one:
 - Trains you: "apprenticeship".
 - Cleveland Clinic is a system she already has a line into.
 
-### 2. 🟠 [Pool EEG Technician, Neurophysiology, Per Diem](https://www.ziprecruiter.com/job-redirect?match_token=CpQBChYwLVFFbUNUelQ4WGY5SFNjdmVELXN3EiQwMWEwNjUyOS02ZGMxLTcwNjktYjZjMS00ODM5NjE2NTNiYjIaUEFBRkdVcEVtUFZvRXVUMTJnVUVqTUNxVlJ5NUROcThIN0NUR0NGWDFpTmlYd1JDUHh6d093djJ2OFZfeEVwekhCZjRfT1pvWkVieW5pMjNMIMmtBRABGMmtBQ%3D%3D&tsid=100000502)
+### 2. 🟠 [Monitor Technician I - Neurological/Stroke - FT Days - MRH](https://www.linkedin.com/jobs/view/4457614397)
+
+**Memorial Healthcare System** · Hollywood, FL · pay not listed
+
+**Score 75/100 — STRONG.** Apply this week. Worth a tailored resume line.
+
+Why this one:
+- Trains you: "extern".
+- Memorial Healthcare is a system she already has a line into.
+
+### 3. 🟠 [Pool EEG Technician, Neurophysiology, Per Diem](https://www.ziprecruiter.com/job-redirect?match_token=CpQBChYwLVFFbUNUelQ4WGY5SFNjdmVELXN3EiQwMWEwNjUyOS02ZGMxLTcwNjktYjZjMS00ODM5NjE2NTNiYjIaUEFBRkdVcEVtUFZvRXVUMTJnVUVqTUNxVlJ5NUROcThIN0NUR0NGWDFpTmlYd1JDUHh6d093djJ2OFZfeEVwekhCZjRfT1pvWkVieW5pMjNMIMmtBRABGMmtBQ%3D%3D&tsid=100000502)
 
 **Baptist Health South Florida** · Boca Raton, FL · From $57,000 a year  
 _⚠ Full posting not yet pulled — scored on the title and metadata only._
@@ -31,31 +41,17 @@ Why this one:
 Watch out:
 - Full posting text has not been pulled, so we do not yet know whether they train. Open the link and check before ruling it out.
 
-### 3. 🟠 [PSG / Sleep Tech](https://to.indeed.com/aatg7jfdvxbk)
-
-**Hispano Medical Center** · Miami, FL · From $25 an hour  
-_⚠ Full posting not yet pulled — scored on the title and metadata only._
-
-**Score 62/100 — STRONG.** Apply this week. Worth a tailored resume line.
-
-Why this one:
-- Core neurodiagnostic role — this is the target, not a substitute for it.
-
-Watch out:
-- Full posting text has not been pulled, so we do not yet know whether they train. Open the link and check before ruling it out.
-- Over two weeks old.
-
 ## Then, if you have energy
 
 | | Role | Where | Score | Verdict |
 |---|---|---|---|---|
+| 🟠 | [PSG / Sleep Tech](https://to.indeed.com/aatg7jfdvxbk) | Hispano Medical Center, Miami, FL | 62 | STRONG ⚠ |
 | 🟠 | [Neurodiagnostic Tech II - EEG Tech](https://www.ziprecruiter.com/job-redirect?match_token=Cp8BChYtNGRweVBXWDZydzNKdUtiNWM4UWxBEiQwMWEwNjUyOS03MWI2LTdmMGYtODMzMy1jNTY3MzI3OWI2OTYaW0FBRXQ0UGVQc2ktcVh4WElTalVkcUs4eUtXNHlvVEJOUE8xZmNoV2hHUXA1VkFCbk5kWDE5Qkg0T1A4SXZpODdoWkM5OThoR2o2MnJnNkFFMUN4SW10LTluOVEgya0FEAEYya0F&tsid=100000502) | UNC Health, Miami, FL | 62 | STRONG ⚠ |
 | 🟠 | [Per Diem EEG Technologist](https://www.ziprecruiter.com/job-redirect?match_token=CpQBChZEaWVQbkJ5S2R6NWRtWlV2TjVBVTRnEiQwMWEwNjUyOS03MWI2LTdmMTAtYTYwOC01MDJmMTQzMzFhYTQaUEFBRkJCcUVvNkZ1VGFCcjlpRWlUWG9YTUxnNXBxVkgyYnBhVmZJY0NCRTQ0aWVjd0x4TkRrQ0NPWEh0c3ZHbl93cGp1NmNtVF8tZEZWWE5JIMmtBRABGMmtBQ%3D%3D&tsid=100000502) | Specialy Care, Fort Lauderdale, FL | 62 | STRONG ⚠ |
 | 🟠 | [EEG Technician](https://www.ziprecruiter.com/job-redirect?match_token=CpQBChZNN2tTSVN5RTNFalowZng3ZGsxbWhnEiQwMWEwNjUyOS02ZGMxLTcwNjQtYjg5ZC0xYTlkMjE0OTQ3MTUaUEFBRnhYM2M5dlpEYmJFQ1g3LUl2QTBDdnN2dmFXUUFLYy1ScVRfeEc3RHJnSXRGZDNGeGdoeEhXODlQOE5mZUp4WnVhSS1aZ0EwWVlqbzNkIMmtBRABGMmtBQ%3D%3D&tsid=100000502) | Field of Talent, Fort Lauderdale, FL | 60 | STRONG ⚠ |
 | 🟡 | [Mental Health Tech, Jackson Behavioral Health, State Civil Beds Unit, Full-Time, Nights](https://to.indeed.com/aa9hy2qrzknq) | Jackson Health System, Miami, FL | 59 | WORTH A LOOK ⚠ |
 | 🟡 | [OVERNIGHT Behavioral Health Technician](https://to.indeed.com/aasnkmtbvnt9) | Compassion Behavioral Health, Fort Lauderdale, FL | 57 | WORTH A LOOK ⚠ |
 | 🟡 | [Neurophysiology Tech Assistant, Neurophysiology Office, FT](https://careers.baptisthealth.net/us/en/job/160958/Neurophysiology-Tech-Assistant-Neurophysiology-Office-FT-8-00am-4-30pm) | Baptist Health South Florida, Miami, FL | 57 | WORTH A LOOK |
-| 🟡 | [Registered Behavior Technician RBT - Part Time](https://to.indeed.com/aacv7rjvmtbd) | Butterfly Effects, LLC, Boca Raton, FL | 56 | WORTH A LOOK ⚠ |
 
 ## Filtered out (logged so they don't come back)
 
@@ -63,6 +59,6 @@ Watch out:
 
 ---
 
-_26 active listing(s) scored, 10 shown, 1 filtered out._
+_27 active listing(s) scored, 10 shown, 1 filtered out._
 
-_⚠ 8 of the 10 shown have not had their full posting text pulled yet, so their training signals are unknown rather than absent. Open those links directly — a "we will train you" line in the body would move them up sharply._
+_⚠ 7 of the 10 shown have not had their full posting text pulled yet, so their training signals are unknown rather than absent. Open those links directly — a "we will train you" line in the body would move them up sharply._

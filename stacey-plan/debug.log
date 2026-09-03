@@ -282,3 +282,64 @@ QUALIFICATIONS READ FROM SOURCE -- the highest-value pass yet
                                       and the other is impossible. READING THE QUALIFICATIONS IS THE
                                       HIGHEST-VALUE ACTION AVAILABLE. Do it for the top 5 before any
                                       further scoring work.
+[2026-09-03 03:02:30] check_passed       31 listing(s)
+[2026-09-03 03:03:30] check_passed       33 listing(s)
+[2026-09-03 03:03:30] board_generated    27 active, 26 scoreable, 1 filtered
+
+--------------------------------------------------------------------------------
+BREAKTHROUGH -- LinkedIn is fully readable without a login
+--------------------------------------------------------------------------------
+[2026-09-03 05:05] method_found      Stacey pasted a LinkedIn job search URL. Two endpoints turn out
+                                     to work through WebFetch with no authentication at all:
+                                       1. linkedin.com/jobs/view/<id>        -> full posting, full
+                                          qualifications section, verbatim.
+                                       2. linkedin.com/jobs/search?keywords=..&location=..&f_TPR=..
+                                          -> enumerated 60 Florida neurodiagnostic postings WITH
+                                          their numeric job IDs, which then feed endpoint 1.
+                                     This is the complete LinkedIn pipeline. No scraper, no Composio,
+                                     no MCP integration, no credentials. The earlier answer that
+                                     LinkedIn needed a login was wrong for reading postings; it is
+                                     only true for applying and for messaging.
+                                     WORKFLOW FOR EVERY FUTURE SESSION: guest search to get IDs, then
+                                     /jobs/view/<id> for the qualifications, then score.
+
+[2026-09-03 05:10] prefs_extended    Reading real postings exposed a hole in training_signals.strong:
+                                     it had "trainee" and "no experience necessary" but not "extern",
+                                     "externship", or "no prior work experience" -- which is the exact
+                                     phrasing hospital systems use for their on-ramp. Memorial's
+                                     Monitor Technician req scored as having NO training pathway when
+                                     it explicitly describes one. Added 8 keywords. That listing moved
+                                     from mid-table to second on the board.
+                                     LESSON: the keyword lists must be grown from real postings, not
+                                     from what I imagine a posting says.
+
+[2026-09-03 05:12] findings          Read qualifications for three more postings:
+
+                                     MEMORIAL, Monitor Technician I, Neurological/Stroke, Hollywood
+                                       -- OPEN, and strategically the best non-EEG option found.
+                                       Posting states: "If incumbent has no prior work experience,
+                                       they will be placed in the Monitor Technician - Extern role."
+                                       BLS required, which she holds. No registration, no accredited
+                                       program. Neuro/stroke floor at Memorial Regional in her own
+                                       city, day shift. Score 75.
+                                       STRATEGIC VALUE: Memorial has posted three EEG reqs in three
+                                       weeks, all gated behind a CAAHEP program. Getting inside
+                                       Memorial makes her an internal candidate, which is the normal
+                                       route into EEG without going back to school.
+
+                                     MEMORIAL, EEG Technician MRH (the job Stacey found)
+                                       -- GATED. Same CAAHEP + ABRET Registry Eligible wall as the
+                                       JDCH req. Her search term was "eeg apprentice" but this is not
+                                       an apprenticeship. Marked not_interested.
+
+                                     NICKLAUS CHILDREN'S, Polysomnographic Technician I
+                                       -- GATED by experience: minimum 2 years doing sleep studies,
+                                       despite the "Technician I" title. Marked not_interested.
+                                       BUT: Nicklaus is her long-standing open lead from Notion
+                                       ("until Nicklaus calls back") and has TWO neurodiagnostic reqs
+                                       open. Real department, real turnover. Worth a direct approach
+                                       asking about their trainee pathway.
+
+[2026-09-03 05:14] pattern           Third posting in a row where "No prior work experience required"
+                                     sits directly above a hard credential gate. Treat that phrase as
+                                     meaningless on its own; always read the line after it.
