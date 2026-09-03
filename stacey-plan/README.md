@@ -109,6 +109,37 @@ That is deliberate, and `test_low_pay_tier1_survives` enforces it.
 
 ---
 
+## How to actually find these jobs
+
+Two things learned the hard way on 2026-09-03:
+
+**1. Never search the word "apprentice."** LinkedIn's 60 results for "apprentice"
+near Hollywood are electricians, HVAC, plumbers, jewelers, meat cutters and about
+twenty Walgreens pharmacy reqs. Zero neurodiagnostic roles — including the Cleveland
+Clinic EEG apprenticeship, which is live and does appear under "EEG apprentice."
+Search the **role**, then read the posting for training language.
+
+**2. LinkedIn needs no login to read.** Both endpoints work through WebFetch:
+
+```
+https://www.linkedin.com/jobs/search?keywords=EEG&location=Florida&f_TPR=r2592000
+  -> job titles, companies, and numeric job IDs
+
+https://www.linkedin.com/jobs/view/<id>
+  -> the full posting including the complete qualifications section
+```
+
+Enumerate with the first, read qualifications with the second. No scraper, no MCP,
+no credentials. Login is only needed to *apply*.
+
+**3. Always read the qualifications before ranking.** Three Memorial postings opened
+with "No prior work experience required" and then required a CAAHEP-accredited
+Electroneurodiagnostic program plus ABRET Registry Eligibility on the next line.
+Title and salary cannot tell you whether Stacey can get a job. Only the
+qualifications can.
+
+---
+
 ## Adding listings
 
 Append to the `listings` array in `listings.json`:

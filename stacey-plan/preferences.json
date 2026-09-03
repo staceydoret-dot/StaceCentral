@@ -90,8 +90,13 @@
         "data entry",
         "research data",
         "lab assistant",
-        "lab technician"
-      ]
+        "lab technician",
+        "pharmacy technician",
+        "pharmacy tech",
+        "pharm tech",
+        "ptcb"
+      ],
+      "_note": "Pharmacy technician added 2026-09-03. It is a real DOL-recognised paid apprenticeship with a real credential (PTCB), so it is not noise - but the credential is the wrong one for a psychiatry path, which is why it sits in tier 3 and not tier 1."
     }
   },
   "training_signals": {
@@ -403,7 +408,12 @@
       }
     ],
     "max_suggestions_per_run": 10,
-    "_adhd_note": "Never show more than 10. A wall of 60 listings is the same as zero listings. Top 3 get the detail; the rest are one line each."
+    "_adhd_note": "Never show more than 10. A wall of 60 listings is the same as zero listings. Top 3 get the detail; the rest are one line each.",
+    "tier_band_caps": {
+      "tier_3_bridge": "WORTH A LOOK",
+      "none": "BACKUP",
+      "_comment": "Ceiling on the ADVICE, not the score. A bridge job can max every supporting component and reach STRONG on arithmetic alone; telling her to 'apply this week' to a pharmacy apprenticeship over an EEG one inverts the whole point of the board. Tier 1 and tier 2 are uncapped."
+    }
   },
   "application_tracking": {
     "statuses": [

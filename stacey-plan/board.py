@@ -381,6 +381,26 @@ def score_listing(listing, prefs, profile=None):
     score = max(0.0, score - sum(p["points"] for p in penalties))
     band, action = band_for(score, prefs)
 
+    # Strategic fit sets the ceiling on the ADVICE, even when the arithmetic is high.
+    # A bridge job can max out every supporting component -- paid apprenticeship,
+    # posted today, in her metro, full-time -- and land in STRONG while contributing
+    # almost nothing toward psychiatry. The score stays as computed; only the band,
+    # which is what tells her when to apply, is capped. See
+    # test_bridge_roles_cannot_reach_strong.
+    caps = prefs.get("scoring", {}).get("tier_band_caps", {})
+    cap_name = caps.get(matched_tier or "none")
+    if cap_name:
+        order = [b.get("name") for b in sorted(prefs.get("scoring", {}).get("priority_bands", []),
+                                               key=lambda x: -x.get("min_score", 0))]
+        if band in order and cap_name in order and order.index(band) < order.index(cap_name):
+            band = cap_name
+            action = next((b.get("action", "") for b in prefs["scoring"]["priority_bands"]
+                           if b.get("name") == cap_name), action)
+            concerns.append(
+                "Scored %.0f, but it is a %s role rather than a neurodiagnostic one, so it is "
+                "capped at %s. It pays and it may train you, but it does not move you toward "
+                "psychiatry." % (score, "bridge" if matched_tier else "non-matching", cap_name))
+
     return {
         "id": listing.get("id"),
         "score": round(score, 1),

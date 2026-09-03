@@ -343,3 +343,43 @@ BREAKTHROUGH -- LinkedIn is fully readable without a login
 [2026-09-03 05:14] pattern           Third posting in a row where "No prior work experience required"
                                      sits directly above a hard credential gate. Treat that phrase as
                                      meaningless on its own; always read the line after it.
+[2026-09-03 03:05:50] check_passed       34 listing(s)
+[2026-09-03 03:06:24] board_generated    28 active, 27 scoreable, 1 filtered
+
+--------------------------------------------------------------------------------
+BUG 5 -- a bridge job reached STRONG on arithmetic alone     [FIXED, KEPT]
+--------------------------------------------------------------------------------
+[2026-09-03 05:35] bug_found         Stacey sent a Walgreens Pharmacy Technician Apprenticeship.
+                                     It scored 61.7 and landed in STRONG -> "Apply this week."
+                                     Every supporting component maxed: real DOL/ASHP paid
+                                     apprenticeship, posted 12 hours ago, in her metro, full-time.
+                                     role_fit gave it only 8 of 40, but the other 92 points of
+                                     weight carried it over the STRONG threshold anyway.
+                                     The NUMBER was defensible. The ADVICE was not. Telling her to
+                                     apply this week to a pharmacy apprenticeship, on the same board
+                                     whose stated purpose is a credential that compounds toward
+                                     psychiatry, inverts the entire point of the system.
+[2026-09-03 05:38] test_written      test_bridge_roles_cannot_reach_strong. Confirmed failing.
+[2026-09-03 05:40] fix_applied       scoring.tier_band_caps. Strategic fit now sets a ceiling on the
+                                     BAND while leaving the score untouched: tier_3_bridge caps at
+                                     WORTH A LOOK, no-tier caps at BACKUP, tiers 1 and 2 uncapped.
+                                     The cap is stated in the concerns list rather than applied
+                                     silently, so she can see it was a judgement and overrule it.
+[2026-09-03 05:41] fix_verified      78/78 pass. Walgreens now reads WORTH A LOOK with the reason
+                                     shown. VERDICT: KEEP.
+[2026-09-03 05:42] design_lesson     A weighted sum answers "how good is this listing." It does not
+                                     answer "should she spend her limited energy on it." Those are
+                                     different questions and the band is the one that reaches her.
+                                     Where they disagree, strategy wins and the disagreement gets
+                                     said out loud.
+
+[2026-09-03 05:45] search_insight    Searching LinkedIn for the WORD "apprentice" near Hollywood
+                                     returns 60 results that are almost entirely trades: electrician,
+                                     HVAC, plumber, jeweler, lineman, roofer, aviation, meat cutter,
+                                     plus about 20 Walgreens pharmacy reqs. Not one neurodiagnostic
+                                     role appears, including the Cleveland Clinic EEG apprenticeship
+                                     that IS live and DOES appear under "EEG apprentice".
+                                     CONCLUSION: clinical apprenticeships are not found by searching
+                                     the word apprentice. They are found by searching the ROLE and
+                                     then reading for training language. Recorded in README as the
+                                     standing search method.

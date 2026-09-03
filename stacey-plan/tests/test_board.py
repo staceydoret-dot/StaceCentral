@@ -423,6 +423,49 @@ def test_registration_required_is_excluded():
     check("toggling the filter off restores scoring", not r["disqualified"], str(r))
 
 
+
+def test_bridge_roles_cannot_reach_strong():
+    """Bug found 2026-09-03: the Walgreens pharmacy apprenticeship scored 61.7 and
+    landed in STRONG -- "Apply this week."
+
+    Every non-role component maxed out (real paid apprenticeship, posted today,
+    in her metro, full-time), so a tier-3 bridge job outscored genuine
+    neurodiagnostic roles on band even though role_fit gave it only 8 of 40.
+
+    The number was defensible; the ADVICE was not. A job that does not build
+    toward psychiatry must never tell her to apply this week. Bands now cap by
+    tier, so strategic fit sets the ceiling and the other components only decide
+    position within it.
+    """
+    perfect_bridge = make(title="Pharmacy Technician Apprenticeship", company="Walgreens",
+                          location="Miami, FL", posted_days_ago=0, job_type="fulltime",
+                          salary_text="$22.00 an hour",
+                          description="Paid apprenticeship, earn while you learn, training program, "
+                                      "no experience necessary. " * 6)
+    r = s_(perfect_bridge)
+    check("a perfect tier-3 role cannot reach STRONG", r["band"] not in ("APPLY NOW", "STRONG"),
+          "%s @ %.1f" % (r["band"], r["score"]))
+    check("a perfect tier-3 role is still visible", r["band"] == "WORTH A LOOK",
+          "%s @ %.1f" % (r["band"], r["score"]))
+    check("the cap is explained, not silent",
+          any("bridge" in c.lower() or "psychiatry" in c.lower() for c in r["concerns"]),
+          str(r["concerns"]))
+
+    # A tier-1 role with the same supporting signals must be unaffected.
+    t1 = s_(make(title="EEG Technologist Apprentice", posted_days_ago=0,
+                 description="Paid apprenticeship, no experience necessary. " * 6))
+    check("tier-1 roles are not capped", t1["band"] == "APPLY NOW",
+          "%s @ %.1f" % (t1["band"], t1["score"]))
+
+    # Raw score must be untouched -- only the band is capped.
+    check("capping changes the band, not the score", r["score"] > 55,
+          "score was %.1f" % r["score"])
+
+
+def s_(listing):
+    return board.score_listing(listing, PREFS, PROFILE)
+
+
 def main():
     for fn in [
         test_matching, test_years_required, test_parse_hourly,
@@ -435,6 +478,7 @@ def main():
         test_two_week_old_is_still_fresh_enough,
         test_thin_data_is_not_reported_as_a_finding,
         test_registration_required_is_excluded,
+        test_bridge_roles_cannot_reach_strong,
         test_live_data_is_valid,
     ]:
         print("\n-- %s" % fn.__name__)
