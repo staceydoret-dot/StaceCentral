@@ -148,9 +148,12 @@ def test_training_is_decisive():
     check("training role beats credential-gated role",
           trains["score"] > no_train["score"],
           "trains=%.1f gated=%.1f" % (trains["score"], no_train["score"]))
-    check("credential gate applies a penalty",
-          any(p["name"] == "credential_required" for p in no_train["penalties"]),
-          str(no_train["penalties"]))
+    check("training role itself survives", not trains["disqualified"])
+    # Since 2026-09-03 a credential gate with no training is disqualified outright
+    # rather than penalised, at Stacey's request. See
+    # test_registration_required_is_excluded.
+    check("credential gate with no training is disqualified",
+          no_train["disqualified"], str(no_train))
     check("credential penalty is waived when they train",
           not any(p["name"] == "credential_required" for p in trains["penalties"]),
           str(trains["penalties"]))
@@ -383,6 +386,43 @@ def test_thin_data_is_not_reported_as_a_finding():
           or True)  # score parity is not required; honesty of the message is
 
 
+
+def test_registration_required_is_excluded():
+    """Stacey's instruction, 2026-09-03: "pull whatever legitimate positions that
+    don't ask for me to be registered."
+
+    She holds no ABRET registration, so a posting that demands one is not a long
+    shot, it is a closed door. Previously these were only penalised 25 points and
+    still appeared on the board. Now they are disqualified outright -- UNLESS the
+    posting also offers training, because "R. EEG T. or willing to train" is a
+    genuine opening and must survive the filter.
+    """
+    gated = s(make(title="Registered Neurodiagnostic Technologist",
+                   description="R. EEG T. registration required. Must be registered."))
+    check("registration-required role is disqualified", gated["disqualified"], str(gated))
+    check("disqualify reason names the credential",
+          "registration" in (gated["disqualify_reason"] or "").lower(),
+          str(gated["disqualify_reason"]))
+
+    trains_anyway = s(make(title="EEG Technologist",
+                           description="R. EEG T. registration required, or we will train "
+                                       "the right candidate. Paid training provided."))
+    check("registration + training survives the filter",
+          not trains_anyway["disqualified"], str(trains_anyway.get("disqualify_reason")))
+
+    clean = s(make(title="EEG Technician Apprentice",
+                   description="Paid training, no experience necessary."))
+    check("ungated apprenticeship is untouched", not clean["disqualified"])
+
+    # The toggle must be honourable: turning it off restores the old behaviour.
+    import copy
+    off = copy.deepcopy(PREFS)
+    off["hard_filters"]["exclude_registration_required"] = False
+    r = board.score_listing(make(title="Registered Neurodiagnostic Technologist",
+                                description="Must be registered."), off, PROFILE)
+    check("toggling the filter off restores scoring", not r["disqualified"], str(r))
+
+
 def main():
     for fn in [
         test_matching, test_years_required, test_parse_hourly,
@@ -394,6 +434,7 @@ def main():
         test_notes_do_not_influence_score, test_broward_suburbs_are_local,
         test_two_week_old_is_still_fresh_enough,
         test_thin_data_is_not_reported_as_a_finding,
+        test_registration_required_is_excluded,
         test_live_data_is_valid,
     ]:
         print("\n-- %s" % fn.__name__)

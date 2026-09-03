@@ -1,7 +1,7 @@
 {
   "_comment": "Every listing ever seen. Dead ones stay here with a terminal status so they never resurface as 'new'. posted_days_ago is relative to 'last_refreshed' below - re-run a search rather than hand-adjusting it.",
   "last_refreshed": "2026-09-03",
-  "source_note": "Pulled from Indeed on 2026-09-03 across 6 searches: EEG technologist trainee (Hollywood), neurodiagnostic technologist (Miami), EEG technician (Fort Lauderdale), EEG (Miami), behavioral health technician (Hollywood), psychiatric technician (Miami), clinical research coordinator neurology (Fort Lauderdale). The two purely neurodiagnostic searches returned zero results - South Florida is thin on EEG trainee postings right now. SECOND PASS via ZipRecruiter, same searches: 34 EEG matches and 12 neurodiagnostic matches within 40-45 miles, including a Cleveland Clinic EEG Technician Apprentice in Weston and an EEG Technician at Joe DiMaggio Children's Hospital in Hollywood. Indeed returned zero for the identical queries. Never conclude the market is empty from one board.",
+  "source_note": "Pulled from Indeed on 2026-09-03 across 6 searches: EEG technologist trainee (Hollywood), neurodiagnostic technologist (Miami), EEG technician (Fort Lauderdale), EEG (Miami), behavioral health technician (Hollywood), psychiatric technician (Miami), clinical research coordinator neurology (Fort Lauderdale). The two purely neurodiagnostic searches returned zero results - South Florida is thin on EEG trainee postings right now. SECOND PASS via ZipRecruiter, same searches: 34 EEG matches and 12 neurodiagnostic matches within 40-45 miles, including a Cleveland Clinic EEG Technician Apprentice in Weston and an EEG Technician at Joe DiMaggio Children's Hospital in Hollywood. Indeed returned zero for the identical queries. Never conclude the market is empty from one board. THIRD PASS 2026-09-03: read the actual qualifications from employer sources for the top three neuro roles. Result: Cleveland Clinic confirmed fully open to her (BLS is the only certification and she holds it); Memorial JDCH confirmed GATED behind an accredited ENDT program plus ABRET registry eligibility, so it was marked not_interested; Baptist Neurophysiology Tech Assistant confirmed to have no credential gate at all. Reading qualifications changed the ranking more than any scoring tweak has.",
   "listings": [
     {
       "id": "indeed-JOBSEARCH_38",
@@ -341,19 +341,19 @@
     },
     {
       "id": "zip-cleveland-eeg-apprentice",
-      "title": "EEG Technician Apprentice",
+      "title": "EEG Technologist Apprentice",
       "company": "Cleveland Clinic",
       "location": "Weston, FL",
       "remote": "onsite",
       "salary_text": "$52,500 - $80,000 a year",
       "job_type": "fulltime",
       "posted_days_ago": 9,
-      "url": "https://www.ziprecruiter.com/job-redirect?match_token=CpQBChZnNUhYZ1BESDNJcXVROWowUXdYVTBnEiQwMWEwNjUyOS02ZGMxLTcwNjctYTliNC1hZjg4NTE1ZjRhMmYaUEFBR3kyN0FsN2lwTmR6UmUwRmx1Tjh3THhYekJ2QXhRRVlGUmQzQ29udkc3S0UwUlZUTHMtVGpPZmIwNDBSVk01UVBacWxNZVI3N3JpNWJ6IMmtBRABGMmtBQ%3D%3D&tsid=100000502",
+      "url": "https://www.linkedin.com/jobs/view/eeg-technologist-apprentice-at-cleveland-clinic-4457993643",
       "source": "ziprecruiter",
       "status": "new",
       "added": "2026-09-03",
-      "description": "EEG Technician Apprentice, Cleveland Clinic, Weston FL. Full-time on-site apprenticeship position in neurodiagnostics.",
-      "notes": "This is the job the entire board was built to find: a named apprenticeship, at a top-tier system, 25 minutes from Hollywood, paying $52.5k at the floor. Apply first and apply today. Lead with the BS in Neuroscience, the Munoz neurogenesis lab, and advanced Haitian Creole."
+      "description": "EEG Technologist Apprentice, Cleveland Clinic Florida, Weston FL. Full-time. QUALIFICATIONS VERIFIED FROM THE EMPLOYER'S OWN POSTING: High School Diploma or GED required. Knowledge of physical and biological sciences normally attained through high school coursework with emphasis in those areas. Knowledge of medical terminology preferred. Basic Life Support (BLS) certification required, or obtained within one month of hire. No prior EEG experience required and NO ABRET registration required on hire. Paid training and instruction provided in performing electroencephalographic examinations and epilepsy monitoring: calibrating and adjusting equipment, observing patients with video and digital recording equipment, applying electrodes, respiration monitors and EKG, obtaining relevant patient information from clinical records and questioning. The apprenticeship prepares you for the ABRET Registered EEG Technologist exam. Initial training runs 8-12 weeks on 1st shift 7:30am-4:00pm Monday-Friday, or nights 11pm-7:30am Sunday-Thursday. Candidates are recommended to submit a current resume with full work history.",
+      "notes": "QUALIFICATIONS CHECKED AGAINST HER CV LINE BY LINE. She clears every single one:\n  - HS diploma or GED -> she has a BS in Neuroscience and Psychology.\n  - Science coursework -> Neuroscience major, plus PCR, ELISA and cell culture.\n  - Medical terminology (preferred) -> two research assistantships and 70 clinical shadowing hours.\n  - BLS certification -> HELD, confirmed 2026-09-03. Meets it outright, no one-month grace needed.\n  - No registration required. They train you and prepare you for the ABRET exam.\nThere is no gap between her and this job. Apply today. Attach the full CV, not the short Indeed resume, because the work history is what they explicitly ask for. Both shift options are workable; the night shift is usually the easier one to get hired into."
     },
     {
       "id": "zip-memorial-eeg-jdch",
@@ -366,10 +366,10 @@
       "posted_days_ago": 16,
       "url": "https://www.ziprecruiter.com/job-redirect?match_token=Cp8BChZrZGVKMTh6OTFCM3loS3FPNDdxTGlBEiQwMWEwNjUyOS02ZGMxLTcyNTgtYWNhYS02NTRlNWY1ZWUwOTAaW0FBSEhid0FjRzd6ZXdDRVZ2MFRVRFRUWTREVkdLX1E5bW1DVFlmS1IzVXVhNk0wYm9FSVVxbTc0V09SU1poUFBzYVlpeEJaUllTdXJHN0tHMEhURnBCanZib1kgya0FEAEYya0F&tsid=100000502",
       "source": "ziprecruiter",
-      "status": "new",
+      "status": "not_interested",
       "added": "2026-09-03",
-      "description": "EEG Technician, full-time days, at Joe DiMaggio Children's Hospital (JDCH), Memorial Healthcare System, Hollywood FL. On-site pediatric neurodiagnostics.",
-      "notes": "JDCH is Joe DiMaggio Children's Hospital, in her own city. Memorial serves a large Haitian Creole-speaking population, so her advanced Creole is a genuine hiring edge here, not a footnote. Pediatric EEG also connects to her ESE work with ADHD and autistic children."
+      "description": "EEG Technician, full-time days, Joe DiMaggio Children's Hospital, Memorial Healthcare System, Hollywood FL. QUALIFICATIONS VERIFIED FROM THE EMPLOYER'S POSTING: No prior work experience required, BUT candidate must be a graduate of, or currently enrolled in, an accredited Electroneurodiagnostic technology program, and must be ABRET Registry Eligible. Prior EEG experience preferred. Duties include long-term video EEG monitoring, proficiency in the International 10-20 system, following ASET guidelines for EEG and long term neurodiagnostic monitoring in epilepsy, identifying and correcting artifacts, and editing and forwarding results to the attending physician. 8-10 hour days, 4-5 days per week, weekend on-call required. No training program offered to candidates outside an accredited ENDT program.",
+      "notes": "CHECKED AND RULED OUT, which is the correct outcome. 'No prior work experience required' reads like an open door, but the next line requires enrollment in an accredited Electroneurodiagnostic technology program AND ABRET Registry Eligibility. She has neither, and there is no path in without them. This is exactly the kind of posting she asked to stop seeing.\nKEEP THE EMPLOYER IN MIND ANYWAY: it is in Hollywood, her own city, and it is the same department as the $10K sign-on Registered Neurodiagnostic Technologist req. Finish the Cleveland Clinic apprenticeship and this becomes the obvious next move in about two years."
     },
     {
       "id": "zip-baptist-neurophys-assistant",
@@ -380,12 +380,12 @@
       "salary_text": "$32,000 - $38,760 a year",
       "job_type": "fulltime",
       "posted_days_ago": 12,
-      "url": "https://www.ziprecruiter.com/job-redirect?match_token=CpQBChZ3b2Z0UW5wbnJBSFFzZ3hRUGZkUzVnEiQwMWEwNjUyOS03MWI2LTdmMTEtYjY1YS00ZTc1YmNiNDA2ZTYaUEFBSE5XSUYtZkI3a0hmbF9kU1BQUkJla3V2QXpxUHVyWHBCZE1WMmF5bWpGbU1YR3p6Mmg4eHZhVnE3cVdMTkFxMFV3TzlRSm0zNjlyelMzIMmtBRABGMmtBQ%3D%3D&tsid=100000502",
+      "url": "https://careers.baptisthealth.net/us/en/job/160958/Neurophysiology-Tech-Assistant-Neurophysiology-Office-FT-8-00am-4-30pm",
       "source": "ziprecruiter",
       "status": "new",
       "added": "2026-09-03",
-      "description": "Neurophysiology Tech Assistant in the Neurophysiology Office at Baptist Health South Florida, Miami FL. Full-time, 8:00am to 4:30pm, on-site.",
-      "notes": "Lowest pay on the neuro list at about $15.38/hr, and deliberately not filtered out for it. 'Assistant' in a neurophysiology department is the classic side door into EEG at a system that promotes internally. Weekday daytime hours, which is rare in this field."
+      "description": "Neurophysiology Tech Assistant, Neurophysiology Office, Baptist Health South Florida, Miami FL. Full-time, 8:00am to 4:30pm. QUALIFICATIONS VERIFIED FROM THE EMPLOYER'S POSTING: High School Diploma or equivalent required. Minimum one year of experience as a Neurophysiology Tech Assistant or in a related field. NO registration, licence or ABRET credential required. Assists in performing neurophysiological procedures including EEGs, evoked potentials and intraoperative monitoring. Requires excellent interpersonal, organizational and communication skills to provide patient care.",
+      "notes": "No credential gate at all, which makes it one of the few genuinely open doors into a neurophysiology department. The one-year 'related field' requirement is arguable in her favour: two research assistantships, 70 documented clinical shadowing hours, and two years of direct elderly resident care. Say 'related field' explicitly in the application.\nWeekday 8-4:30 hours, which is rare in neurodiagnostics and much easier to build a life around than rotating nights. ZipRecruiter listed the band as $32k-$38.7k; Baptist's own market data for the title runs $20.56-$41.15/hr, so the posted floor may be low. Ask."
     },
     {
       "id": "zip-baptist-pool-eeg",

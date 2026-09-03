@@ -184,6 +184,22 @@ def score_listing(listing, prefs, profile=None):
     if title_hit:
         return _disqualified(listing, "Excluded role type in title (matched: %s)." % ", ".join(title_hit))
 
+    # ---- registration gate ----
+    # Stacey holds no ABRET registration, so a posting that demands one is a closed
+    # door rather than a long shot. She asked for these to be excluded outright.
+    # A posting that demands registration *and* offers training is still open, so
+    # the training signals are checked before the door is shut.
+    cred_cfg_early = hf.get("requires_credential_she_lacks", {})
+    if hf.get("exclude_registration_required", False):
+        cred_early = any_phrase(text, cred_cfg_early.get("credentials", []))
+        if cred_early:
+            ts_early = prefs.get("training_signals", {})
+            if not any_phrase(text, ts_early.get("strong", [])):
+                return _disqualified(
+                    listing,
+                    "Requires a registration/licence she does not hold (%s) and offers no "
+                    "training. Excluded at her request." % cred_early[0])
+
     # ---- role tier (the biggest single factor) ----
     tiers = prefs.get("role_tiers", {})
     tier_order = ["tier_1_core", "tier_2_clinical_adjacent", "tier_3_bridge"]

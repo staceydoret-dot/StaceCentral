@@ -219,3 +219,66 @@ CHANGES TO MY OWN PROCESS, FOR NEXT SESSION
                                       by her should be marked as inferred so it gets checked.
 [2026-09-03 02:51:17] check_passed       30 listing(s)
 [2026-09-03 02:51:17] board_generated    27 active, 27 scoreable, 0 filtered
+[2026-09-03 02:52:51] board_generated    27 active, 26 scoreable, 1 filtered
+[2026-09-03 02:55:38] check_passed       30 listing(s)
+[2026-09-03 02:55:38] board_generated    26 active, 25 scoreable, 1 filtered
+
+--------------------------------------------------------------------------------
+FEATURE -- exclude registration-gated postings          [ADDED, KEPT]
+--------------------------------------------------------------------------------
+[2026-09-03 04:30] request            Stacey: "just pull whatever legitimate positions that don't
+                                      ask for me to be registered."
+[2026-09-03 04:32] implemented        hard_filters.exclude_registration_required = true.
+                                      Postings demanding R. EEG T. / CNIM / RPSGT / RN / LPN are now
+                                      DISQUALIFIED, not merely penalised 25 points, UNLESS the
+                                      posting also carries a strong training signal -- because
+                                      "registered, or willing to train" is a real opening and must
+                                      survive. It is a toggle, so it can be turned off later.
+                                      One older test (credential gate applies a penalty) was
+                                      superseded and rewritten to assert disqualification instead.
+[2026-09-03 04:34] verified           73/73 pass.
+
+--------------------------------------------------------------------------------
+QUALIFICATIONS READ FROM SOURCE -- the highest-value pass yet
+--------------------------------------------------------------------------------
+[2026-09-03 04:40] tooling_note       Chromium is installed but this container's network blocks
+                                      jobs.mhs.net and jobs.baptisthealth.net outright (curl returns
+                                      000; Chromium returns ERR_TUNNEL_CONNECTION_FAILED even through
+                                      the agent proxy on 127.0.0.1:46393). Cleveland Clinic resolves
+                                      but 301-redirects. Switched to WebSearch/WebFetch, which route
+                                      outside the container network. LESSON: when the container's
+                                      network blocks a host, do not keep reconfiguring the browser.
+                                      Change tools.
+
+[2026-09-03 04:45] qualifications     Read the employers' own stated requirements for the top three
+                                      neuro roles. This changed the board more than any scoring
+                                      change has:
+
+                                      CLEVELAND CLINIC, EEG Technologist Apprentice, Weston -- OPEN.
+                                        HS diploma or GED; high-school-level science coursework;
+                                        medical terminology preferred; BLS required or within one
+                                        month of hire. NO ABRET registration required. 8-12 weeks of
+                                        paid training, then they prepare you for the ABRET exam.
+                                        She clears every line, BLS included. Score 89. No gap exists
+                                        between her and this job.
+
+                                      MEMORIAL, EEG Technician, Joe DiMaggio Children's -- GATED.
+                                        Reads "No prior work experience required", then requires
+                                        graduation from or enrolment in an ACCREDITED
+                                        Electroneurodiagnostic technology program AND ABRET Registry
+                                        Eligibility. She has neither and there is no way in without
+                                        them. Marked not_interested. This is precisely the posting
+                                        type she asked to stop seeing, and only reading the
+                                        qualifications revealed it -- the title and salary looked
+                                        like her best local option.
+
+                                      BAPTIST, Neurophysiology Tech Assistant, Miami -- OPEN.
+                                        HS diploma plus one year in "a related field". No credential
+                                        gate of any kind. Weekday 8:00-4:30.
+
+[2026-09-03 04:47] process_lesson     Title and salary metadata are close to worthless for judging
+                                      whether Stacey can actually get a job. Memorial and Cleveland
+                                      Clinic looked nearly identical on the board; one is wide open
+                                      and the other is impossible. READING THE QUALIFICATIONS IS THE
+                                      HIGHEST-VALUE ACTION AVAILABLE. Do it for the top 5 before any
+                                      further scoring work.

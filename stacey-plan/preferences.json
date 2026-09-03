@@ -190,7 +190,9 @@
       ],
       "penalty": 25
     },
-    "min_years_experience_tolerated": 1
+    "min_years_experience_tolerated": 1,
+    "exclude_registration_required": true,
+    "_registration_note": "Set true on 2026-09-03 at Stacey's request: 'pull whatever legitimate positions that don't ask for me to be registered.' Postings demanding R. EEG T., CNIM, RPSGT, RN or LPN are now disqualified rather than merely penalised - UNLESS they also offer training, since 'registered or willing to train' is a real opening. Set false to go back to scoring them."
   },
   "location": {
     "_comment": "Accepts in-person South Florida, hybrid South Florida, and fully remote anywhere in the US.",
