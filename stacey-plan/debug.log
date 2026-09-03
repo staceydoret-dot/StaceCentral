@@ -383,3 +383,19 @@ BUG 5 -- a bridge job reached STRONG on arithmetic alone     [FIXED, KEPT]
                                      the word apprentice. They are found by searching the ROLE and
                                      then reading for training language. Recorded in README as the
                                      standing search method.
+
+[2026-09-03 06:05] board_published    Live web version published as an Artifact:
+                                      https://claude.ai/code/artifact/b3e80b7a-9f16-4c9e-a4f8-84d38daa8c54
+                                      Source kept in stacey-plan/board.html so it is version-controlled
+                                      with the engine. Republish to the SAME url so her bookmark holds.
+                                      Design: requirement ledger on the lead role (their stated
+                                      requirement vs what her CV actually shows) rather than a summary
+                                      paragraph - the point of the page is "can she get this", so that
+                                      comparison is the primary information, not decoration.
+                                      The ruled-out section keeps the gated roles visible WITH the
+                                      specific blocker named, per ADHD rule 4: a dead end that
+                                      disappears gets re-researched next week.
+                                      "Applied" ticks persist in localStorage only. Deliberate: the
+                                      authoritative record is listings.json in git, and the artifact is
+                                      a view of it. Footer says so and tells her to ask Claude to mark
+                                      it, so the two do not silently diverge.

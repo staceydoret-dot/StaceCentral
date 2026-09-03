@@ -2,6 +2,10 @@
 
 **Read this file first, every session.** It is the contract for how this system works.
 
+**Live board:** https://claude.ai/code/artifact/b3e80b7a-9f16-4c9e-a4f8-84d38daa8c54 
+Republish it by passing that URL to the Artifact tool with `stacey-plan/board.html`. Same URL, so
+Stacey's bookmark never breaks. Update it whenever the rankings change materially.
+
 ---
 
 ## What this is
@@ -28,6 +32,7 @@ Everything in this folder exists to serve that one sentence.
 | `JOB_BOARD.md` | Generated output. The thing Stacey actually reads. | **Never by hand** — regenerate it |
 | `tests/test_board.py` | 67 tests. The safe environment. | Claude, alongside any logic change |
 | `debug.log` | Append-only record of runs, fixes, and whether they worked. | Claude |
+| `board.html` | The live web version, published as an Artifact. | Regenerate alongside `JOB_BOARD.md` |
 
 The separation is the point: **`board.py` never hardcodes what Stacey wants.**
 If the board is surfacing the wrong things, the fix is almost always in
