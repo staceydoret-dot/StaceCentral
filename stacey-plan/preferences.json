@@ -476,6 +476,18 @@
           "irb"
         ],
         "why": "Two RA positions (one paid), PCR/ELISA/cell culture, RStudio, systematic literature review in Excel. Strong for clinical research coordinator roles."
+      },
+      "bls_certified": {
+        "bonus": 6,
+        "matches": [
+          "bls",
+          "cpr",
+          "basic life support",
+          "aha certification",
+          "american heart association",
+          "life support"
+        ],
+        "why": "Holds a current BLS/CPR card (confirmed 2026-09-03). When a posting names it as a requirement she clears it outright, which is exactly the kind of checkbox that gets an entry-level clinical application auto-filtered."
       }
     }
   }

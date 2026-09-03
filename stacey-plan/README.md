@@ -26,7 +26,7 @@ Everything in this folder exists to serve that one sentence.
 | `listings.json` | Every listing ever seen, with status. The memory. | Claude, on each search run |
 | `board.py` | The engine. Scores and ranks. Contains **no** job data and **no** preferences. | Claude, tested first |
 | `JOB_BOARD.md` | Generated output. The thing Stacey actually reads. | **Never by hand** — regenerate it |
-| `tests/test_board.py` | 48 tests. The safe environment. | Claude, alongside any logic change |
+| `tests/test_board.py` | 67 tests. The safe environment. | Claude, alongside any logic change |
 | `debug.log` | Append-only record of runs, fixes, and whether they worked. | Claude |
 
 The separation is the point: **`board.py` never hardcodes what Stacey wants.**
@@ -161,9 +161,6 @@ A fix that breaks an existing test is a wrong fix, not a test that needs updatin
 ## Known gaps in Stacey's profile (the board accounts for these)
 
 - **No ABRET / R. EEG T. registration, no EEG hours.** The thing the whole board is trying to solve.
-- **No current BLS/CPR card.** One day, roughly $60–90 in Broward. This is the
-  single cheapest thing she can do to unlock more postings. It should probably
-  happen before the next application round.
 - **Clinical exposure is shadowing and summer programs, not paid hospital work.**
   Framing matters: lead with the 70 documented hours and the Jackson Behavioral
   psychiatry rotation, not with "recent graduate."
@@ -181,3 +178,5 @@ A fix that breaks an existing test is a wrong fix, not a test that needs updatin
 - **PCR, ELISA, cell culture, RStudio.** Strong for clinical research coordinator roles.
 - **Two years serving elderly residents** at FiveStar Premier. Real patient-facing
   hours that most new grads don't have.
+- **Current BLS/CPR card** (confirmed 2026-09-03). Clears a hard requirement that
+  appears on a large share of these postings.

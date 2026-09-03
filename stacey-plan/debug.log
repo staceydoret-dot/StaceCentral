@@ -202,3 +202,20 @@ CHANGES TO MY OWN PROCESS, FOR NEXT SESSION
   5. Concrete next action for Stacey that is NOT a job application: get the BLS/CPR
      card. About $60-90, one day, and it removes a screening filter from a large
      share of these postings.
+
+[2026-09-03 04:05] profile_corrected  Stacey confirmed she already holds a current BLS/CPR card.
+                                      profile.json listed it under credentials.target with a
+                                      "get this before applying" recommendation, and gaps_to_watch
+                                      carried a no_bls entry. Both were wrong and would have kept
+                                      resurfacing as advice she had already acted on.
+                                      Moved to credentials.holds, dropped the gap, stripped the
+                                      recommendation from README.md, and added bls_certified as a
+                                      scored differentiator (bonus 6) so postings that name BLS as a
+                                      requirement now score UP for her instead of being neutral.
+                                      Open item: BLS cards expire every 2 years and the issue date
+                                      is unrecorded. Ask her for it.
+                                      LESSON: profile.json is an assertion about a real person, not
+                                      a guess. Anything inferred from a document rather than stated
+                                      by her should be marked as inferred so it gets checked.
+[2026-09-03 02:51:17] check_passed       30 listing(s)
+[2026-09-03 02:51:17] board_generated    27 active, 27 scoreable, 0 filtered
