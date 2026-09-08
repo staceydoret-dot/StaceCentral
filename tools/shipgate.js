@@ -32,22 +32,23 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
     hasBox: !!l.querySelector('.tkbox'),
     hasDel: !!l.querySelector('.tkdel'),
   })));
-  check(items.length === 5, `exactly 5 rows (got ${items.length})`);
-  const want = [/Senior Director at Weston/, /9\/14 — APRN appointment/, /Submit the completed ADA form/,
-                /Call Absence Management/, /FMLA/];
+  check(items.length === 6, `exactly 6 rows (got ${items.length})`);
+  const want = [/^Text the Senior Director at Weston/, /9\/14 — APRN appointment/,
+                /Submit the completed ADA form/, /Call Absence Management/,
+                /9\/17 — Follow up with the Senior Director/, /FMLA/];
   want.forEach((re, i) => check(items[i] && re.test(items[i].text), `row ${i + 1} matches ${re}`));
 
   console.log('\n[3] the FMLA row is a note, not a to-do');
-  const fmla = items[4] || {};
+  const fmla = items[5] || {};
   check(fmla.info === true,  'FMLA row marked data-info');
   check(fmla.hasBox === false, 'FMLA row has NO checkbox');
   check(fmla.hasDel === false, 'FMLA row has no remove button');
-  const others = items.slice(0, 4);
-  check(others.every(x => x.hasBox), 'the other 4 rows DO have checkboxes');
+  const others = items.slice(0, 5);
+  check(others.every(x => x.hasBox), 'the other 5 rows DO have checkboxes');
 
   console.log('\n[4] "Start here" picks the Senior Director message');
   let focus = await page.textContent('#focus .fmain');
-  check(/Senior Director at Weston/.test(focus), 'focus card = item 1');
+  check(/^Text the Senior Director at Weston/.test(focus.trim()), 'focus card = item 1');
 
   console.log('\n[5] tracker tap data survived (the whole point of the merge)');
   const checked = await page.evaluate(() => {
@@ -67,8 +68,8 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
   await page.click('.switch button[data-view="today"]');
   await page.waitForTimeout(300);
 
-  console.log('\n[6] ticking all 4 real tasks never promotes the FMLA note');
-  for (let i = 0; i < 4; i++) {
+  console.log('\n[6] ticking all 5 real tasks never promotes the FMLA note');
+  for (let i = 0; i < 5; i++) {
     await page.click('#tasklist li[data-done="false"] .tkbox');
     await page.waitForTimeout(150);
   }
@@ -77,6 +78,15 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
   check(/Nothing left on today/.test(focus), 'focus shows the cleared state instead');
   const stillThere = await page.$$eval('#tasklist li[data-info="true"]', l => l.length);
   check(stillThere === 1, 'FMLA note still listed after everything else is done');
+
+  console.log('\n[6b] the drafted text is saved on the page');
+  const note = await page.evaluate(() => {
+    const s = JSON.parse(document.getElementById('app-state').textContent);
+    return (s.today.tasks.find(t => t.id === 't1') || {}).why || '';
+  });
+  check(/just following up on the EEG apprentice application/.test(note), 'message body saved in the note');
+  check(/checked back on the 17th/.test(note), 'asks to check back on the 17th');
+  check(/\[Name\]/.test(note), 'name placeholder present so she fills it in');
 
   console.log('\n[7] completed work from today was preserved as wins');
   const wins = await page.evaluate(() => {

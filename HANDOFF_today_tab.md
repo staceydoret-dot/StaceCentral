@@ -135,14 +135,21 @@ those out of its console-error check.
 
 ## Current queue (set 2026-09-08)
 
-1. `t1` Message the Senior Director at Weston — where her HR conversation landed (9/26 cohort close)
+1. `t1` Text the Senior Director at Weston — the drafted message is in the task's `why`, so it
+   renders on the "Start here" focus card ready to copy. `[Name]` is a deliberate placeholder.
 2. `t2` 9/14 — APRN appointment: bring the ADA form + Q2–Q5 talking points
 3. `t3` After 9/14 — submit the completed ADA form (fax 216-444-7385 / AMOforms@ccf.org)
 4. `t4` After submission — call Absence Management (216-448-2247) re: interim flexibility
-5. `t5` FMLA — `info: true`, no action needed
+5. `t6` 9/17 — follow up with the Senior Director (the date she asked for in the text, so
+   it is pre-agreed rather than a chase)
+6. `t5` FMLA — `info: true`, no action needed
 
-Promoted to `wins` in the same change: "Follow up with Ruth…" and "Ruth sent me the
-accomodation request form!" (both completed 2026-09-08).
+Note the ids are not in list order (`t6` sits before `t5`). That is intentional and harmless —
+ids are stable handles the in-page coach refers to, and order lives in the array. Do not
+renumber them to "tidy up"; the coach's `complete_task` calls reference them by id.
+
+Promoted to `wins` on 2026-09-08: "Follow up with Ruth…" and "Ruth sent me the accomodation
+request form!" (both completed that day, promoted before the queue was replaced).
 
 `checked` at time of writing — 7 entries, unchanged:
 `m06` 08-31 · `a01` `m01` `m05` `a02` `a03` `m11` all 09-05
