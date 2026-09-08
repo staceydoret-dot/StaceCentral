@@ -1,0 +1,6 @@
+{
+  "name": "stacecentral-tools",
+  "private": true,
+  "scripts": { "shipgate": "node shipgate.js" },
+  "dependencies": { "playwright": "^1.55.0" }
+}
