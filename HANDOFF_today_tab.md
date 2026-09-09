@@ -133,32 +133,40 @@ those out of its console-error check.
 
 ---
 
-## Current queue (as of 2026-09-09)
+## Current queue (rebuilt 2026-09-09, appeal-first)
 
-1. `t1` Text the Senior Director at Weston — drafted message in the task's `why`, so it renders
-   on the "Start here" focus card ready to copy. `[Name]` is a deliberate placeholder.
-   **Stale as of 9/9** — after a third corrective action landed on 9/8 (3-month internal-application
-   lockout to 12/8), the advice became "do not contact her until the appeal resolves". The task
-   still sits at position 1 and therefore still drives the focus card. Ask before demoting it.
-2. `t2` 9/14 — APRN appointment: bring the ADA form + Q2–Q5 talking points
-3. `t3` After 9/14 — submit the completed ADA form (fax 216-444-7385 / AMOforms@ccf.org)
-4. `t4` After submission — call Absence Management (216-448-2247) re: interim flexibility
-5. `t6` 9/17 — follow up with the Senior Director
-6. `t7` Call FAU Financial Aid, 561-297-3530 — full question script and phone hours in `why`
-7. `t8` Accept the $119/month Parent PLUS rehabilitation agreement on studentaid.gov
-8. `t5` FMLA — `info: true`, no action needed
+Intermittent FMLA was **approved 9/9/2026** (Notice of Eligibility + Designation Notice). The
+Absence Management email documents a route for **closed/historical pay periods** — a timecard
+correction request in Workday — which is why the appeal now leads the queue.
 
-Ids are not in list order (`t6`, `t7`, `t8` then `t5`). Intentional — ids are stable handles the
-in-page coach refers to via `complete_task`; order lives in the array. Do not renumber to tidy up.
+1. `t9` Open the FMLA Designation Notice, read the certified frequency and duration — gates everything
+2. `t10` Email HR for the dates behind the 9/8 corrective action
+3. `t11` Workday timecard corrections for covered late arrivals (ILL-1 for current/future)
+4. `t12` Submit the written appeal to HR — target Fri 9/11, hard deadline **Tue 9/15**
+   (7 calendar days from 9/8, weekend included)
+5. `t2` 9/14 APRN appointment · 6. `t3` submit ADA form · 7. `t4` Absence Management call
+8. `t7` FAU financial aid · 9. `t8` Parent PLUS rehab agreement
+10. `t1` Text the Senior Director — **demoted to position 10 and marked ON HOLD** until the appeal
+    resolves; the drafted message is preserved intact in its `why`
+11. `t6` 9/17 Director follow-up — conditional on the appeal resolving
+12. `t5` FMLA — `info: true`, rewritten from "sitting in their queue" to "approved 9/9"
 
-**Open discrepancy on `t8`:** `scheduledOnce.rehab-check` records the rehabilitation agreement as
-**$5/month**, but the agreement she was offered is **$119/month** — about $1,026 more across the
-nine payments. Federal rehab payments use an income-based formula and can be recalculated on
-request. The task's `why` flags this; it is unresolved.
+Ids are not in list order. Intentional — they are stable handles the in-page coach uses via
+`complete_task`; order lives in the array. Do not renumber.
 
-Promoted to `wins` on 2026-09-08: "Follow up with Ruth…" and "Ruth sent me the accomodation
-request form!" `rollToday()` advanced the date to 2026-09-09 on her own page load — always re-read
-before editing.
+### Corrections worth remembering
+- FMLA was first assessed as a **weak** lever ("late is not absent", pattern looked chronic rather
+  than episodic). The 9/9 intermittent approval plus the documented retroactive correction path
+  reversed that. It is now the strongest ground.
+- One occurrence has an external, verifiable cause: a homicide investigation closed the train
+  tracks at Cypress Creek on a Thursday. Evidence decays — transit alerts and news coverage should
+  be captured early.
+- Her manager moved the start time 8:15 → 8:30 informally. It does not close the gap (arrival is
+  8:40–8:45) and further change must go through HR, not the manager.
+- The real commute bottleneck is the **last mile** from station to site, not the timetable.
+
+**Open discrepancy on `t8`:** `scheduledOnce.rehab-check` records $5/month; the offered agreement
+is $119/month — about $1,026 more across nine payments. Unresolved.
 
 `checked` — 7 entries, unchanged throughout:
 `m06` 08-31 · `a01` `m01` `m05` `a02` `a03` `m11` all 09-05

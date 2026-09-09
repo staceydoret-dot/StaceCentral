@@ -32,24 +32,26 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
     hasBox: !!l.querySelector('.tkbox'),
     hasDel: !!l.querySelector('.tkdel'),
   })));
-  check(items.length === 8, `exactly 8 rows (got ${items.length})`);
-  const want = [/^Text the Senior Director at Weston/, /9\/14 — APRN appointment/,
-                /Submit the completed ADA form/, /Call Absence Management/,
-                /9\/17 — Follow up with the Senior Director/,
-                /^Call FAU Financial Aid/, /^Accept the \$119\/month Parent PLUS/, /FMLA/];
+  check(items.length === 12, `exactly 12 rows (got ${items.length})`);
+  const want = [/^Open the FMLA Designation Notice/, /^Email HR for the dates/,
+                /^Submit Workday timecard corrections/, /^Submit the written appeal to HR/,
+                /9\/14 — APRN appointment/, /Submit the completed ADA form/,
+                /Call Absence Management/, /^Call FAU Financial Aid/,
+                /^Accept the \$119\/month Parent PLUS/, /^Text the Senior Director/,
+                /9\/17 — Follow up with the Senior Director/, /FMLA — approved 9\/9/];
   want.forEach((re, i) => check(items[i] && re.test(items[i].text), `row ${i + 1} matches ${re}`));
 
   console.log('\n[3] the FMLA row is a note, not a to-do');
-  const fmla = items[7] || {};
+  const fmla = items[11] || {};
   check(fmla.info === true,  'FMLA row marked data-info');
   check(fmla.hasBox === false, 'FMLA row has NO checkbox');
   check(fmla.hasDel === false, 'FMLA row has no remove button');
-  const others = items.slice(0, 7);
-  check(others.every(x => x.hasBox), 'the other 7 rows DO have checkboxes');
+  const others = items.slice(0, 11);
+  check(others.every(x => x.hasBox), 'the other 11 rows DO have checkboxes');
 
   console.log('\n[4] "Start here" picks the Senior Director message');
   let focus = await page.textContent('#focus .fmain');
-  check(/^Text the Senior Director at Weston/.test(focus.trim()), 'focus card = item 1');
+  check(/^Open the FMLA Designation Notice/.test(focus.trim()), 'focus card = read the Designation Notice');
 
   console.log('\n[5] tracker tap data survived (the whole point of the merge)');
   const checked = await page.evaluate(() => {
@@ -69,8 +71,8 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
   await page.click('.switch button[data-view="today"]');
   await page.waitForTimeout(300);
 
-  console.log('\n[6] ticking all 7 real tasks never promotes the FMLA note');
-  for (let i = 0; i < 7; i++) {
+  console.log('\n[6] ticking all 11 real tasks never promotes the FMLA note');
+  for (let i = 0; i < 11; i++) {
     await page.click('#tasklist li[data-done="false"] .tkbox');
     await page.waitForTimeout(150);
   }
@@ -90,6 +92,26 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
   check(/\[Name\]/.test(note), 'name placeholder present so she fills it in');
   check(!/9\/26/.test(note), 'the 9/26 cohort-close line is gone, as she asked');
 
+  console.log('\n[6d] the Senior Director thread is parked, not lost');
+  const t1 = await page.evaluate(() => {
+    const s = JSON.parse(document.getElementById('app-state').textContent);
+    const q = s.today.tasks; const t = q.find(x => x.id === 't1');
+    return { pos: q.indexOf(t), why: (t || {}).why || '' };
+  });
+  check(t1.pos === 9, `Director text demoted to position 10 (got ${t1.pos + 1})`);
+  check(/ON HOLD until the appeal resolves/.test(t1.why), 'carries the hold reason');
+  check(/checked back on the 17th/.test(t1.why), 'drafted message still preserved');
+
+  console.log('\n[6e] the FMLA row reflects the 9/9 approval');
+  const t5 = await page.evaluate(() => {
+    const s = JSON.parse(document.getElementById('app-state').textContent);
+    const t = s.today.tasks.find(x => x.id === 't5') || {};
+    return (t.text || '') + ' ' + (t.why || '');
+  });
+  check(/approved 9\/9/.test(t5), 'says approved, not pending');
+  check(/ILL-1/.test(t5), 'records the ILL-1 timecard code');
+  check(!/sitting in their queue/.test(t5), 'stale "in their queue" wording gone');
+
   console.log('\n[6c] the FAU call script is saved on the page');
   const fau = await page.evaluate(() => {
     const s = JSON.parse(document.getElementById('app-state').textContent);
@@ -106,6 +128,11 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
   });
   check(wins.some(t => /Ruth sent me the accomodation request form/.test(t)), 'win: Ruth sent the form');
   check(wins.some(t => /Follow up with Ruth/.test(t)), 'win: followed up with Ruth');
+  const w9 = await page.evaluate(() => {
+    const s = JSON.parse(document.getElementById('app-state').textContent);
+    return s.wins.filter(w => w.at === '2026-09-09').map(w => w.text);
+  });
+  check(w9.some(t => /Intermittent FMLA approved/.test(t)), 'win: FMLA approved banked');
 
   await browser.close();
   console.log(`\n${'='.repeat(46)}\n  ${pass} passed, ${fail} failed\n${'='.repeat(46)}`);
