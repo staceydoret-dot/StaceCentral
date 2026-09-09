@@ -133,23 +133,32 @@ those out of its console-error check.
 
 ---
 
-## Current queue (set 2026-09-08)
+## Current queue (as of 2026-09-09)
 
-1. `t1` Text the Senior Director at Weston — the drafted message is in the task's `why`, so it
-   renders on the "Start here" focus card ready to copy. `[Name]` is a deliberate placeholder.
+1. `t1` Text the Senior Director at Weston — drafted message in the task's `why`, so it renders
+   on the "Start here" focus card ready to copy. `[Name]` is a deliberate placeholder.
+   **Stale as of 9/9** — after a third corrective action landed on 9/8 (3-month internal-application
+   lockout to 12/8), the advice became "do not contact her until the appeal resolves". The task
+   still sits at position 1 and therefore still drives the focus card. Ask before demoting it.
 2. `t2` 9/14 — APRN appointment: bring the ADA form + Q2–Q5 talking points
 3. `t3` After 9/14 — submit the completed ADA form (fax 216-444-7385 / AMOforms@ccf.org)
 4. `t4` After submission — call Absence Management (216-448-2247) re: interim flexibility
-5. `t6` 9/17 — follow up with the Senior Director (the date she asked for in the text, so
-   it is pre-agreed rather than a chase)
-6. `t5` FMLA — `info: true`, no action needed
+5. `t6` 9/17 — follow up with the Senior Director
+6. `t7` Call FAU Financial Aid, 561-297-3530 — full question script and phone hours in `why`
+7. `t8` Accept the $119/month Parent PLUS rehabilitation agreement on studentaid.gov
+8. `t5` FMLA — `info: true`, no action needed
 
-Note the ids are not in list order (`t6` sits before `t5`). That is intentional and harmless —
-ids are stable handles the in-page coach refers to, and order lives in the array. Do not
-renumber them to "tidy up"; the coach's `complete_task` calls reference them by id.
+Ids are not in list order (`t6`, `t7`, `t8` then `t5`). Intentional — ids are stable handles the
+in-page coach refers to via `complete_task`; order lives in the array. Do not renumber to tidy up.
+
+**Open discrepancy on `t8`:** `scheduledOnce.rehab-check` records the rehabilitation agreement as
+**$5/month**, but the agreement she was offered is **$119/month** — about $1,026 more across the
+nine payments. Federal rehab payments use an income-based formula and can be recalculated on
+request. The task's `why` flags this; it is unresolved.
 
 Promoted to `wins` on 2026-09-08: "Follow up with Ruth…" and "Ruth sent me the accomodation
-request form!" (both completed that day, promoted before the queue was replaced).
+request form!" `rollToday()` advanced the date to 2026-09-09 on her own page load — always re-read
+before editing.
 
-`checked` at time of writing — 7 entries, unchanged:
+`checked` — 7 entries, unchanged throughout:
 `m06` 08-31 · `a01` `m01` `m05` `a02` `a03` `m11` all 09-05
