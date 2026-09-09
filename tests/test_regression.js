@@ -79,7 +79,9 @@ const SIG=(sel)=>{
   const brandNew=[...new Set(selB.filter(s=>!selA.has(s)))];
   console.log('     new top-level selectors:',JSON.stringify(brandNew));
   ok(brandNew.every(s=>/^\.(lane|jstatus)/.test(s)),'all new selectors are namespaced to the feature');
-  ok(cssA.length < cssB.length && cssB.includes(cssA.slice(0,5000)),'original CSS preserved verbatim (additive only)');
+  /* additive-or-unchanged: a round that adds no CSS is just as valid as one that appends */
+  ok(cssB.length >= cssA.length && cssB.includes(cssA.slice(0,5000)),
+     'original CSS preserved verbatim (additive or unchanged; '+cssA.length+' -> '+cssB.length+')');
 
   console.log('\n[5] untouched tabs still interactive (modified build)');
   // Today: toggle a task

@@ -53,9 +53,11 @@ const STUB=()=>{
   ok(tr[0].track.applied==='2026-08-30','applied date preserved');
 
   console.log('\n[4] lanes survived the republish');
-  ok(s.jobs.rows.filter(r=>r.lane).length===11,'all 11 row lanes survived');
+  ok(s.jobs.rows.filter(r=>r.lane).length===18,'all 18 row lanes survived');
   ok(s.pipeline.filter(p=>p.lane).length===3,'all 3 pipeline lanes survived');
   ok(s.jobs.rows.filter(r=>r.laneGuess).length===2,'row guess flags survived');
+  ok(s.jobs.rows.filter(r=>r.lane==='ionm').length===2,'the new IONM lane survived');
+  ok(s.jobs.rows.some(r=>r.checked&&r.checked.via==='employer'),'employer-verified flag survived');
   ok(s.pipeline.filter(p=>p.laneGuess).length===1,'pipeline guess flag survived');
   ok(!s.phases.some(p=>'lane' in p||p.milestones.some(m=>'lane' in m)),'still no lane leaked into phases');
 
@@ -64,7 +66,7 @@ const STUB=()=>{
   await p2.waitForTimeout(300);
   ok(await p2.isVisible('#lanefilter'),'lane filter present after republish');
   ok(await p2.$eval('#lanefilter',d=>!d.open),'still collapsed by default');
-  ok(await p2.$$eval('.lanechip',n=>n.length)===12,'12 chips after republish');
+  ok(await p2.$$eval('.lanechip',n=>n.length)===13,'13 chips after republish');
   await p2.click('#lanefilter > summary'); await p2.waitForTimeout(150);
   await p2.click('.lanechip[data-lane="sleep"]'); await p2.waitForTimeout(300);
   await p2.click('.jparked > summary').catch(()=>{}); await p2.waitForTimeout(150);

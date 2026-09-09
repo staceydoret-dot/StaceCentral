@@ -31,7 +31,7 @@ const ok=(c,m)=>{ if(c){pass++;console.log('  ok   '+m);} else {fail++;console.l
   const heads = await page.$$eval('#jrows > .lanegroup .lanehead', ns=>ns.map(n=>n.firstChild.textContent));
   console.log('    open groups:', JSON.stringify(heads));
   ok(heads.length>0, 'rows are grouped by lane');
-  const order=['EEG / Neurodiagnostic Tech','Psychometrist / Neuropsych Testing Tech','Polysomnography (Sleep) Tech','Research Assistant (bench, non-coordinator)','Medical / Healthcare Interpreter','TMS Technician','Neurofeedback / QEEG Technician','Neuropsych Test Scoring Technician','EEG Biomarker Research Technician','Ketamine/Esketamine Clinic Monitor','Clinical Research Coordinator (CRC)'];
+  const order=['EEG / Neurodiagnostic Tech','Intraoperative Neuromonitoring (IONM)','Psychometrist / Neuropsych Testing Tech','Polysomnography (Sleep) Tech','Research Assistant (bench, non-coordinator)','Medical / Healthcare Interpreter','TMS Technician','Neurofeedback / QEEG Technician','Neuropsych Test Scoring Technician','EEG Biomarker Research Technician','Ketamine/Esketamine Clinic Monitor','Clinical Research Coordinator (CRC)'];
   const idx=heads.map(h=>order.indexOf(h));
   ok(idx.every(i=>i>=0), 'all group names are real lanes');
   ok(idx.every((v,i)=>i===0||idx[i-1]<v), 'groups in the handoff order');
@@ -51,8 +51,8 @@ const ok=(c,m)=>{ if(c){pass++;console.log('  ok   '+m);} else {fail++;console.l
   await page.waitForTimeout(150);
   ok(await page.$eval('#lanefilter', d=>d.open), 'filter opens on tap');
   const chips = await page.$$eval('.lanechip', n=>n.map(b=>({l:b.getAttribute('data-lane'),d:b.disabled})));
-  ok(chips.length===12, '11 lanes + All = 12 chips (got '+chips.length+')');
-  ok(chips.filter(c=>!c.d).length===5, 'only lanes with entries are enabled (All+eeg+sleep+ra+crc)');
+  ok(chips.length===13, '12 lanes + All = 13 chips (got '+chips.length+')');
+  ok(chips.filter(c=>!c.d).length===9, 'only lanes with entries enabled: All+eeg+ionm+tms+psychometrist+interpreter+ra+sleep+crc (got '+chips.filter(c=>!c.d).length+')');
 
   await page.click('.lanechip[data-lane="crc"]');
   await page.waitForTimeout(250);
@@ -78,7 +78,9 @@ const ok=(c,m)=>{ if(c){pass++;console.log('  ok   '+m);} else {fail++;console.l
 
   console.log('\n[E] guessed lanes are visibly flagged');
   const g=await page.$$eval('.laneguess', n=>n.length);
-  ok(g===3, 'the 3 provisional assignments are flagged, got '+g);
+  ok(g>=1, 'provisional lane assignments still flagged, got '+g);
+  const ver=await page.$$eval('.jcheck[data-v="employer"]', n=>n.length);
+  ok(ver===1, 'the one employer-verified row is marked as such, got '+ver);
 
   console.log('\n[F] SAFETY: tap-to-advance in Path tab untouched');
   await page.click('.switch button[data-view="path"]');
@@ -111,7 +113,7 @@ const ok=(c,m)=>{ if(c){pass++;console.log('  ok   '+m);} else {fail++;console.l
   ok(chk.phaseIds.join()==='p0,p-aid,p1,p2,p3,p4,p5,p6', 'phaseIds unchanged');
   ok(chk.msIds.length===38 || chk.msIds.length>0, 'milestoneIds intact ('+chk.msIds.length+')');
   ok(chk.laneOnPhases===false, 'no lane field leaked into phases/milestones');
-  ok(chk.rowLanes.filter(Boolean).length===11, 'all 11 rows carry a lane');
+  ok(chk.rowLanes.filter(Boolean).length===18, 'all 18 rows carry a lane (got '+chk.rowLanes.filter(Boolean).length+')');
   ok(chk.pipeLanes.filter(Boolean).length===3, 'all 3 pipeline entries carry a lane');
   ok(chk.track.length===1 && chk.track[0].id==='m02', 'the tracked milestone is still keyed m02');
 

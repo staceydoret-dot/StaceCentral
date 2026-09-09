@@ -124,8 +124,80 @@ Sandbox notes from the handoff still apply: `fonts.googleapis.com` is stubbed
 in-test, and Chromium comes from `PLAYWRIGHT_BROWSERS_PATH=/opt/pw-browsers` —
 do not run `playwright install`.
 
+## Round 2 — IONM lane and seven new roles
+
+### A 12th lane
+
+Stace approved adding **Intraoperative Neuromonitoring (IONM)** as a lane. It
+sits directly after EEG — same neurodiagnostic family — so CRC stays last and
+every other lane keeps its relative position.
+
+It earned the slot: the IONM industry hires bachelor's graduates with *no*
+experience and trains them toward CNIM. The credential comes after hire rather
+than being the wall in front of it, which is the opposite of every other EEG
+route on this board.
+
+### Why the board looked empty
+
+Seven of eleven lanes read 0. Not because those jobs do not exist locally —
+because no sweep had ever searched for them. Five of the seven had real,
+local, entry-appropriate openings on the first look.
+
+Also worth knowing: **Indeed's search returned zero results for every query
+this run** while its resume endpoint worked fine. Every row on the board links
+to an Indeed search URL. That is a plausible cause of thin sweeps and is worth
+re-checking before blaming the market.
+
+### Scoring discipline
+
+Seven rows added. Exactly one carries a verified requirement line:
+
+- **EEG Technician 1, University of Miami** — "High School Diploma or
+  equivalent/relevant experience... Minimum 1 year of relevant experience."
+  No CAAHEP programme, no ABRET registry. Marked with the board's own
+  `checked: {via:"employer"}`, which renders "Verified on the employer's own site".
+
+The other six carry **no `fit`/`ats` at all** rather than invented numbers.
+`fitHTML()` returns "" when `fit` is not a number, and `parked()` requires both
+to be numbers, so an unscored row renders cleanly and stays in the main list
+instead of being buried. Each carries a "Requirements not verified this run"
+chip, matching the convention the DermCare and BRCR rows already used.
+
+A useful negative result: **Memorial Healthcare's EEG Technician is gated**
+(CAAHEP programme + ABRET Part I or 1-3 years EEG, weekend call) and that
+posting is the Joe DiMaggio row already on the board. It was not a new door,
+and it was not added.
+
+### The conflict, and why it mattered
+
+The first publish attempt was **refused**: a newer version had been published
+at 18:37:40Z. Stace had been using the app — `today` had grown from 2.4KB to
+6KB and `wins` had grown too.
+
+Publishing over it would have destroyed that. The merge took her live version
+as the base and applied only the lane and the new rows onto it, asserting
+afterwards that `today`, `wins` and the tracker's tap data were byte-identical
+to hers before writing anything.
+
+This is the failure mode the handoff warned about, and it arrived for real.
+The conflict check is what caught it.
+
+### A test that was wrong, and one that was right
+
+Re-running the differential suite after the merge flagged `#view-today` as
+changed. That was a **true report of changed content but not a regression** —
+her new tasks. Re-pointing the baseline at her live version isolated the actual
+change: today/vision/path/therapy all identical again (266/251/1148/194 nodes).
+
+One assertion was genuinely stale: it required the stylesheet to *grow*. This
+round added no CSS at all, so "additive only" became "additive or unchanged".
+
+72 assertions passing. Published as Version 29.
+
 ## Still open for Stace
 
-The three `laneGuess` entries are flagged in the UI, not resolved. Correcting
-one means changing its `lane` in `STATE.jobs.rows` / `STATE.pipeline` and
-dropping the `laneGuess` key.
+- Six of the seven new rows still need their requirement lines read. UM's own
+  career pages truncate on fetch and Baptist's posting would not open.
+- The three `laneGuess` entries are flagged in the UI, not resolved.
+- Neurofeedback/QEEG and Ketamine Monitor are genuinely empty locally — those
+  two zeros are real, not an artifact of not looking.
