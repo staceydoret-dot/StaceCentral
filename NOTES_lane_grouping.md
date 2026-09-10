@@ -274,3 +274,25 @@ requisition number and the new search terms, so it regenerates them **with**
 honest scores, which is what the pipeline wants and better than unscored rows.
 
 Published as Version 30. 72 assertions passing.
+
+## Round 4 — the Level 2 row removed
+
+`Intraop Neurophysiology Tech 2` (Baptist Health, ionm, gated) is gone. Pass
+1's standing instruction is IONM "entry rungs only ('Technologist 1', trainee,
+associate), **never Level 2 or CNIM-required**". It was added in round 2 on the
+reasoning that showing the ladder was useful. The standing rule disagrees, and
+it has been right longer.
+
+17 rows now; the IONM lane holds UM's `IOM Technologist 1` alone, which is the
+entry rung the rule actually wants.
+
+Two rows still match a naive "Tech 2 / CNIM" grep and are deliberately kept:
+
+- `IOM Technologist 1` — matches only because its `why` text explains the lane
+  trains toward CNIM. It is an entry rung.
+- `Polysomnographic Tech 2` — a pre-existing board row in the sleep lane, not
+  one of mine. The "never Level 2" rule sits inside pass 1's IONM clause and
+  does not reach sleep roles, and the row is parked on its own numbers
+  (fit 20 / ats 30). Left alone rather than quietly widening the rule.
+
+Published as Version 31. 72 assertions passing.

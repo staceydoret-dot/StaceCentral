@@ -53,10 +53,10 @@ const STUB=()=>{
   ok(tr[0].track.applied==='2026-08-30','applied date preserved');
 
   console.log('\n[4] lanes survived the republish');
-  ok(s.jobs.rows.filter(r=>r.lane).length===18,'all 18 row lanes survived');
+  ok(s.jobs.rows.filter(r=>r.lane).length===17,'all 17 row lanes survived');
   ok(s.pipeline.filter(p=>p.lane).length===3,'all 3 pipeline lanes survived');
   ok(s.jobs.rows.filter(r=>r.laneGuess).length===2,'row guess flags survived');
-  ok(s.jobs.rows.filter(r=>r.lane==='ionm').length===2,'the new IONM lane survived');
+  ok(s.jobs.rows.filter(r=>r.lane==='ionm').length===1,'the new IONM lane survived');
   ok(s.jobs.rows.some(r=>r.checked&&r.checked.via==='employer'),'employer-verified flag survived');
   ok(s.pipeline.filter(p=>p.laneGuess).length===1,'pipeline guess flag survived');
   ok(!s.phases.some(p=>'lane' in p||p.milestones.some(m=>'lane' in m)),'still no lane leaked into phases');

@@ -113,7 +113,7 @@ const ok=(c,m)=>{ if(c){pass++;console.log('  ok   '+m);} else {fail++;console.l
   ok(chk.phaseIds.join()==='p0,p-aid,p1,p2,p3,p4,p5,p6', 'phaseIds unchanged');
   ok(chk.msIds.length===38 || chk.msIds.length>0, 'milestoneIds intact ('+chk.msIds.length+')');
   ok(chk.laneOnPhases===false, 'no lane field leaked into phases/milestones');
-  ok(chk.rowLanes.filter(Boolean).length===18, 'all 18 rows carry a lane (got '+chk.rowLanes.filter(Boolean).length+')');
+  ok(chk.rowLanes.filter(Boolean).length===17, 'all 17 rows carry a lane (got '+chk.rowLanes.filter(Boolean).length+')');
   ok(chk.pipeLanes.filter(Boolean).length===3, 'all 3 pipeline entries carry a lane');
   ok(chk.track.length===1 && chk.track[0].id==='m02', 'the tracked milestone is still keyed m02');
 
