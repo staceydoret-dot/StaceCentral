@@ -201,3 +201,76 @@ round added no CSS at all, so "additive only" became "additive or unchanged".
 - The three `laneGuess` entries are flagged in the UI, not resolved.
 - Neurofeedback/QEEG and Ketamine Monitor are genuinely empty locally — those
   two zeros are real, not an artifact of not looking.
+
+## Round 3 — the pipeline, and a bug I had introduced
+
+### The lane feature was going to break on its own
+
+The board is not hand-maintained. Two Routines drive it:
+
+- `trig_01KdKj7M4XyK7KWxy37qXFTw` **pass 1 — search**, 11:15 UTC daily. Writes
+  `claude/next_rows.json` and `claude/job_board_state.md` (Claude *project*
+  files — unreachable from Claude Code, same store as `merge_state.js`).
+- `trig_01MpsMhY6VSKpPvVZShaBCDb` **pass 2 — write**, 15:15 UTC daily. Reads
+  only `next_rows.json` and republishes the artifact.
+
+Pass 2 replaces `STATE.jobs.rows` **wholesale**. Pass 1's row schema had no
+`lane` field. So at the next 15:15 UTC run, every row would have lost its lane
+and dropped into the "Needs a lane" bucket — the feature would have looked
+broken within a day of shipping, and the cause would have been the shipping.
+
+Adding a field the generator does not know about is the bug. Fixed by teaching
+pass 1's schema the twelve lane ids, marked REQUIRED.
+
+### What the routine already did
+
+Pass 1 was already searching IONM (naming "Technologist 1, trainee, associate"
+and "never Level 2"), psychometrist, sleep, CRC and neurology-practice roles.
+The claim that "nobody ever searched these lanes" was wrong — it came from the
+board's one-line display summary ("Hunts new EEG and neurodiagnostic
+openings"), not from the routine. Only TMS and interpreter were genuinely
+absent.
+
+### Why the board still looked empty
+
+Not a broken connector. Indeed works — "registered nurse" in Miami returns ten
+rows. But `"EEG"` in Miami returns **two**, and neither is UM's open EEG
+Technician 1, which ZipRecruiter surfaces immediately along with UM's IOM
+Technologist 1. The sweep was single-sourced on Indeed, whose coverage of this
+niche is thin.
+
+### Edits made to pass 1 (surgical; zero original lines dropped, 9146 -> 11071 chars)
+
+1. `lane` added to the STEP 5 row schema, REQUIRED, with the twelve ids.
+2. STEP 3 now runs each sweep through **both** Indeed and ZipRecruiter and
+   checks careers.miami.edu directly, with the evidence for why.
+3. STEP 3A gains TMS / interventional psychiatry and medical interpreter
+   (Haitian Creole first).
+4. CANDIDATE STATUS records the verified UM EEG Technician 1 requirement line
+   so it is carried until filled rather than rediscovered or lost.
+
+A copy of the full new prompt is in `routine_pass1_search.prompt.txt`.
+
+`STATE.jobs.searchTerms` in the artifact gained the same two lanes so the
+board's standing list matches what the routine is actually told to do. Pass 2
+preserves that key byte-for-byte, so it survives.
+
+### Standing instructions I had violated
+
+The routine records that she applied to EEG trainee postings at Memorial,
+Nicklaus, HCA and Baptist with zero interviews, and says never to present
+those as fresh leads. Round 2 presented Memorial and Nicklaus in conversation
+as new employers. They were not added as rows, but the framing was wrong.
+
+It also says IONM entry rungs only, "never Level 2 or CNIM-required". Round 2
+added Baptist's Intraop Neurophys Tech **2**. Still to be removed.
+
+### What happens to the seven manual rows
+
+They have no `fit`/`ats`, so pass 2's validation would reject them anyway, and
+`next_rows.json` is unreachable from here — they will be replaced at the next
+15:15 UTC run. That is the right outcome: pass 1 now knows the UM roles by
+requisition number and the new search terms, so it regenerates them **with**
+honest scores, which is what the pipeline wants and better than unscored rows.
+
+Published as Version 30. 72 assertions passing.
