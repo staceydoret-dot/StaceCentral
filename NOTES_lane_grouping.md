@@ -592,3 +592,24 @@ requirement lines from Indeed get_job_details only; 3B/3C/3D/3E no longer
 point at apprenticeship.gov, aset.org, or "find the manager's name"; the
 connector rule names WebFetch and WebSearch as forbidden and says why.
 Re-fired at ~16:20 UTC.
+
+### 16:38 UTC — Drive handoff also blocks; one routine now does both halves
+
+Pass 1 v7 ran clean through the search (no web fetch this time) and then
+stalled at 16:34 on `mcp__Google_Drive__create_file` — a granted connector,
+but a *writing* tool, and writing MCP tools need a human approval inside a
+routine. Read tools do not. So no cross-project handoff through Drive is
+possible unattended either. Session interrupted.
+
+The stalled call carried the JSON it was about to write: 8 rows, all
+"carried forward, not re-checked", note "could not reach the project's
+board file or the Indeed connector". Publishing that would have replaced
+the 17 rows on the page (including the TMS, interpreter, psychometrist and
+sleep rows added 09-09) with 8, so it was not published.
+
+Fix: pass 1 is now the whole pipeline (`routine_daily_job_search.prompt.txt`):
+search with Indeed and project files as before, then read the page, edit
+only jobs.updated/note/rows, verify by script, publish, log. No handoff.
+Pass 2 disabled and renamed "retired". Two new rules: the page's current
+rows are part of the system of record and carry forward unless proven
+gone; the row cap is 20, dropping parked rows first, never an open one.
