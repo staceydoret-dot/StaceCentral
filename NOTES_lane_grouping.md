@@ -420,3 +420,64 @@ which v5 is already live. The 02:06 check inspects the session first for
 exactly this.
 
 Third manual fire: 2026-09-11T01:59:37Z, `cse_01Vaxsh9DFECAUxxN8PkVcVk`.
+
+## Round 8 — pass 1 v5 completed; pass 2 refused; the page had lost its stylesheet
+
+### The manual run
+
+- Pass 1 v5 (`cse_01Vaxsh9DFECAUxxN8PkVcVk`) fired 01:59:37 UTC and finished
+  **IDLE / REVIEW_READY at 02:05:07 — 5.5 minutes**, 108k tokens, no
+  permission block. So the freezes on attempts 1 and 2 were entirely the
+  extra tools (ZipRecruiter, then WebFetch to new URLs); the manual-fire
+  path itself is fine. v5 is the right prompt.
+- Pass 2 (`cse_01Vunivb95D2yU1UitH6jMh2`) fired 02:06:54, finished 02:08:33,
+  1.6 min — and **did not publish**: `jobs.updated` stayed 2026-09-09 and
+  the rows are still round 2's 17. Its STEP 1 date guard fired, meaning
+  pass 1 either did not write `claude/next_rows.json` or wrote it without
+  `generated=2026-09-11`. The file is a project file and cannot be read
+  from here; pass 2's own one-line report (visible to Stace) says which.
+  Not re-fired tonight: firing again without knowing why would be a guess.
+
+### The page was unstyled — and it was not the routines
+
+The 02:16 read showed the body starting at `<div class="wrap">` with no
+`<title>`, no font `<link>`, no `<style id="sheet">`. Every CSS rule
+(`.todaywin{`, `.switch{`, `.job{`, `--display:`) was absent outside the
+JS template literal. Playwright confirmed `.switch` had no `position:sticky`
+/ `display:flex` — the dashboard was rendering unstyled.
+
+Pass 2 never published, so it was not the cause. The `today` diff showed
+task `t9` marked done at 2026-09-10 — a tap that triggers the page's own
+`buildDoc()` → `artifact.publish()`. `buildDoc()` emitted the title, link and
+sheet inside an author `<head>`; the platform keeps body content verbatim
+but appears to drop an author-supplied `<head>`, so that self-save shipped a
+page with no styles. (Version count went 31 → 43 between the last styled
+read and this one, so the page had been self-saving freely.)
+
+### The repair (published as Version 43)
+
+- Base: the current live file, so her `t9` tap and everything else she did
+  is kept.
+- The real `<title>`, `<link>` and `<style id="sheet">` block re-inserted
+  before `.wrap`, lifted from the last styled version — verified
+  **byte-identical** (144,373 chars).
+- `buildDoc()` patched to emit those three inside `<body>` (right after the
+  `<body>` tag, before `SKELETON`) instead of in `<head>`, so a self-save
+  can no longer drop them. Browsers accept them there, and every version
+  published from this session already had them in the body.
+
+Verified before publishing: all five views structurally identical to her
+current live state (267/589/251/1148/194 nodes); repaired page styled;
+the live-before-repair page confirmed unstyled; `#sheet` present with the
+lane rules; `test_lanes` 34/34 and `test_roundtrip` 18/18 (the round-trip
+suite reloads `buildDoc()`'s output and checks the sheet survives — that is
+the direct proof of the fix). `test_regression`'s "jobs tab must differ"
+assertion is stale for a CSS-only repair and was not relied on.
+
+### Still open
+
+- Why pass 1 v5 did not leave a file pass 2 would accept. Pass 2's report
+  line says; the next cron cycle (11:15 / 15:15 UTC) is the cheapest test.
+- Pass 1 still lacks the ZipRecruiter grant that pass 2 has (a per-routine
+  connector setting, Routines UI). Adding it is what would make a real
+  second source possible without touching the prompt.
