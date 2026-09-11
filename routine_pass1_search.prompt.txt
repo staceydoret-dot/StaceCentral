@@ -1,6 +1,6 @@
-PASS 1 OF 2 — SEARCH ONLY. You do NOT touch Stacey's plan page. Your entire output is two project files. A second routine ("Job search — pass 2 of 2: write") runs four hours after you and publishes what you leave behind. This split exists because the old single routine was ABANDONED mid-run on 2026-09-06 after six hours; keep this run tight and finish.
+PASS 1 OF 2 — SEARCH ONLY. You do NOT touch Stacey's plan page. Your entire output is two project files plus ONE Google Drive copy of the handoff (STEP 5B) — the Drive copy is the one pass 2 actually reads. A second routine ("Job search — pass 2 of 2: write") runs four hours after you and publishes what you leave behind. This split exists because the old single routine was ABANDONED mid-run on 2026-09-06 after six hours; keep this run tight and finish.
 
-CONNECTOR RULE — use only the tools the original version of this routine used: the Indeed connector and the project files. Do NOT call the ZipRecruiter connector: it is not granted to this routine, and on 2026-09-10 and 2026-09-11 the run froze at a permission prompt for it within 30 seconds and never wrote `claude/next_rows.json`, so nothing reached her board either day. STEP 5 is not optional, and its `generated` field must be today's date.
+CONNECTOR RULE — use only the tools the original version of this routine used: the Indeed connector and the project files — plus the Google Drive connector, which IS granted to this routine, for the single handoff copy in STEP 5B. Do NOT call the ZipRecruiter connector: it is not granted to this routine, and on 2026-09-10 and 2026-09-11 the run froze at a permission prompt for it within 30 seconds and never wrote `claude/next_rows.json`, so nothing reached her board either day. STEP 5 is not optional, and its `generated` field must be today's date.
 
 CANDIDATE STATUS — read before searching.
 - NO R. EEG T. / RPSGT registry, NO CAAHEP graduation. That is the binding constraint. Roles gated on either are unreachable, not merely hard.
@@ -24,7 +24,7 @@ E. For every reachable row find the NAME of the EEG/neurodiagnostic lab manager 
 
 STEP 4 — Rewrite `claude/job_board_state.md`: refreshed tables, today as Last refresh, re-prioritised action list, and KEEP the "Rejected / already applied" and Retired tables. Prefer the shortest gate opening the NEAREST job over the shortest gate overall. Re-read the file immediately before writing it.
 
-STEP 5 — Write `claude/next_rows.json`. This is the handoff and the only thing pass 2 reads. It must be valid JSON and nothing else — no prose, no code fence. Write it even if a step was skipped or a tool was unavailable, and say so in `note` in one calm clause. Shape:
+STEP 5 — Write `claude/next_rows.json`. This is the handoff (pass 2 reads the Drive copy of it from STEP 5B). It must be valid JSON and nothing else — no prose, no code fence. Write it even if a step was skipped or a tool was unavailable, and say so in `note` in one calm clause. Shape:
 {"generated":"YYYY-MM-DD","note":"one calm sentence, no guilt, no counts","action":"the single most useful thing she could do today, one sentence","rows":[ ... ]}
 Each row:
   s        "open" | "working" | "gated"  REQUIRED. open = she can apply today. working = real but not reachable yet, including every internal Cleveland Clinic row before 2026-11-12. gated = needs a registry or accredited programme first.
@@ -49,8 +49,14 @@ Each row:
   fix      the specific resume edit that would move `ats` for THIS posting — exact words to change, not general advice. HARD RULE: never propose adding a skill, tool, procedure or credential she has not actually done. If no wording moves it, say so and say what would (usually enrolment). A number raised by a false claim is worse than a low number; it collapses in the first conversation.
 Order "open" rows first. At most 14 rows. Rows under 60 fit AND under 45 ats are parked automatically by the page into a "Not worth your time yet" drawer — you do not filter them out, you score them honestly and let the page park them. Too few genuinely applicable jobs is the failure mode she has named; keep the ladder visible.
 
-STEP 6 — Verify before you finish: `claude/next_rows.json` parses as JSON; every row has s/role/employer; every s is one of the three values; opens first; ≤14 rows; every actual job carries fit and ats; no `fix` invents experience she does not have. Fix and re-check on failure.
+STEP 5B — Mirror the handoff to Google Drive. Pass 2 runs in a DIFFERENT Claude Project (confirmed 2026-09-11 from the two sessions' project ids), so it cannot see this project's files — on 2026-09-10 and 2026-09-11 it found nothing and refused. Drive is the one store both routines can reach. With the Google Drive connector:
+  1. create_file — title EXACTLY `StaceCentral next_rows YYYY-MM-DD` (today's date, UTC), textContent = the exact JSON you wrote to `claude/next_rows.json`, contentMimeType `text/plain`. Let it convert to a Google Doc; pass 2 reads Docs. No folder needed (My Drive root).
+  2. search_files with query `title contains 'StaceCentral next_rows'` and confirm today's title is listed.
+  3. ONLY after that confirmation, trash_file each OLDER `StaceCentral next_rows …` file so they do not pile up. Never trash before confirming today's copy is indexed.
+If any Drive call fails, keep going — the project file still exists — and say so in your one-line report.
+
+STEP 6 — Verify before you finish: `claude/next_rows.json` parses as JSON; search_files shows today's `StaceCentral next_rows` Drive file; every row has s/role/employer; every s is one of the three values; opens first; ≤14 rows; every actual job carries fit and ats; no `fix` invents experience she does not have. Fix and re-check on failure.
 
 DO NOT open, read or publish the artifact at https://claude.ai/code/artifact/b5d65276-7b55-4114-a415-3205e0c128eb. That is pass 2's job. Do not rewrite `claude/debug.log`.
 
-Report back ONE short line: "Search done — N rows ready" or, if you could not finish the search, one line saying what is missing. She reads pass 2's message, not yours. Do not ask clarifying questions; this run is unattended.
+Report back ONE short line: "Search done — N rows ready, Drive copy ok" or, if you could not finish the search, one line saying what is missing. She reads pass 2's message, not yours. Do not ask clarifying questions; this run is unattended.
