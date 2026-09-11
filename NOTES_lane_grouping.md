@@ -481,3 +481,53 @@ assertion is stale for a CSS-only repair and was not relied on.
 - Pass 1 still lacks the ZipRecruiter grant that pass 2 has (a per-routine
   connector setting, Routines UI). Adding it is what would make a real
   second source possible without touching the prompt.
+
+## Round 9 — health check, routine panel, reflection (2026-09-11)
+
+### What was checked (11:39 UTC)
+
+- Morning brief ran 11:04 and self-published Version 44 (styled, sheet
+  intact, `buildDoc` body patch in place — the round-8 fix held through a
+  real self-save).
+- Link check ran 06:21 clean. Weekly and monthly routines armed. One-shot
+  reminders armed: Neurologic Wellness follow-up (09-11 13:00 UTC), IBR
+  (09-18), Mom's rehab (09-25).
+- Job search pass 1 (v5 prompt) ran under cron 11:16:33–11:24:06, 7.5 min,
+  ended IDLE with no pending permission prompt. Pass 2 due 15:15 UTC.
+- Eight of this session's own fired one-shot check-in routines deleted.
+  One kept: "Verify cron run + stylesheet" at 16:00 UTC.
+
+### Routine panel (published as Version 45)
+
+`STATE.scheduled[].lastRun` now carries the real last-run times from
+`list_triggers` instead of "Nothing since". The sweep entry's `what` and
+`lands` text now describe the two-pass shape (7:15am hunt across twelve
+lanes, 11:15am rewrite of the Jobs tab, and what happens when the morning
+pass does not finish). First publish was refused because the morning brief
+had published Version 44 in the meantime; the panel edits were merged onto
+Version 44 and re-verified (lanes 34/34, round-trip 18/18, other views
+structurally identical) before publishing. Never forced.
+
+### Reflection — what to do differently
+
+1. **Inspect the failing session before editing the prompt.** Three prompt
+   rewrites for pass 1 (time budget, structural split, WebFetch) were all
+   wrong; one `get_session` call showed the real cause was an ungranted
+   connector holding a permission prompt. Diagnose first, edit second.
+2. **Find the generator before adding a field.** The lane feature would have
+   silently produced unlaned rows because pass 1's schema did not know the
+   field existed. Any new field on `jobs.rows` needs the routine prompt's
+   schema updated in the same change.
+3. **Instructions need mechanisms.** "Spend at most 20 minutes" does nothing
+   for a model with no clock. Constrain by tool surface and step count
+   instead.
+4. **Earlier sessions' fired one-shots still clutter her Routines list**
+   (about twenty). Not deleted — they are not this session's to remove
+   without asking.
+
+### Still open
+
+- Pass 2's refusal on 09-10 is undiagnosed; its one-line report (or
+  `sweep_log.md`) says why. Today's 15:15 run is the test.
+- Pass 1 still lacks the ZipRecruiter grant (Routines UI, per-routine
+  connectors). Stace can add it without a prompt change.
