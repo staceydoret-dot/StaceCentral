@@ -336,3 +336,47 @@ Stacey asked for it to be run now. Pass 1 was fired manually at
 2026-09-11T00:18:37Z — 11 hours before its cron, so no collision. A check-in
 at 00:55 UTC confirms pass 1 finished, fires pass 2 manually (its own date
 guard still applies), and verifies the publish ~10 minutes later.
+
+## Round 6 — the real root cause, and a correction
+
+### Round 5's diagnosis was wrong
+
+The "20-minute time budget" theory, and the structural three-routine split
+proposed on its back, were both wrong. `get_session` on the stuck run
+(`cse_01Ugco4zQaacJX3F61YLsk5A`) showed:
+
+- `session_status: SESSION_STATUS_REQUIRES_ACTION`, bucket `BLOCKED`
+- `pending_action: mcp__ZipRecruiter__search_jobs` ("EEG Technician",
+  33021, 45 mi)
+- `updated_at` 28 seconds after start; `used_tokens: 0`
+
+The run was never slow. It was **frozen at a permission prompt** for a
+connector the routine has no standing grant for. Its `mcp_connections` are
+Google Drive, Spotify, Gmail and Claude Code Remote — not ZipRecruiter.
+Round 3 told an unattended routine to call a tool it cannot call unattended.
+
+Yesterday's "29-minute SUCCEEDED" run was almost certainly the same freeze,
+reaped and reported as success. So the cause of both non-publishes was the
+round-3 edit, not the connectors' coverage and not run length.
+
+### The fix (pass 1 prompt v4; surgical, zero lines dropped)
+
+1. The time-budget paragraph is replaced by a **CONNECTOR RULE**: use only
+   Indeed, WebFetch/WebSearch and project files; never call ZipRecruiter; if
+   any tool prompts for permission, skip it and keep going.
+2. STEP 3 goes back to Indeed, plus a direct `careers.miami.edu` fetch and a
+   web search per sweep term — both need no connector grant, and the direct
+   UM check is how the two best local roles were found in the first place.
+3. STEP 5's cut-short clause now names the true cause (skipped step / tool
+   unavailable) rather than a budget.
+
+A second source through ZipRecruiter is still worth having. It has to be
+granted at the routine level (Routines UI → connectors), which cannot be done
+from here; `update_trigger` does not take `mcp_connections`, and this
+session's own ZipRecruiter connector was down (503) at the time anyway.
+
+### The run
+
+The frozen session was interrupted. Pass 1 v4 fired at 2026-09-11T01:37:35Z
+(`cse_016BSQ4nCaERZ4wDe9m6x8sR`). A check-in at 01:56 inspects that session
+for any *new* blocked tool call first, then hands off to pass 2 and verifies.
