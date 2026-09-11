@@ -613,3 +613,35 @@ only jobs.updated/note/rows, verify by script, publish, log. No handoff.
 Pass 2 disabled and renamed "retired". Two new rules: the page's current
 rows are part of the system of record and carry forward unless proven
 gone; the row cap is 20, dropping parked rows first, never an open one.
+
+### 16:57 UTC — the single routine works end to end
+
+The combined routine (fired 16:42, session `cse_01Hzr4h95sdqVtnMtd6utN4B`)
+ran 2 min 48 s, ended IDLE with no pending action, and published
+Version 47 at 16:44:43. Verified against the 16:00 snapshot by script:
+
+- exactly one real app-state block; stylesheet in the body before
+  app-code with `.todaywin` and `.lanechip`;
+- 17 rows in, 17 rows out — every 09-09 row (TMS, interpreter,
+  psychometrist, sleep, UM EEG Technician 1, IOM Technologist 1) still
+  present, every lane valid;
+- `jobs.docs`, `jobs.fitNote`, `jobs.searchTerms` byte-identical; every
+  other top-level key identical; outside the state block only one blank
+  line at the top and one at the bottom;
+- `jobs.note` replaced with an honest one: the Indeed connector was down
+  (the same -32429 this session saw), so rows carried forward, plus a
+  warning that the link checker thinks the UM EEG requisition may have
+  closed. `jobs.updated` stayed 2026-09-09 (the run judged the rows were
+  still the 9th's — acceptable, the note explains it).
+
+test_lanes 34/34 and test_roundtrip 18/18 on the published file.
+
+Routine panel updated and published as Version 48: the sweep entry now
+describes one 7:15am run that reads the board, searches Indeed and
+rewrites the Jobs tab itself; lastRun 16:45:09. Other views structurally
+identical (verify_repair 8/9; the one failure is the stale "baseline must
+be unstyled" assertion).
+
+What is now true: one routine, one project, no handoff, no web tools, no
+writing connectors. The next real test is the 11:15 UTC cron run on
+2026-09-12, ideally with Indeed reachable.
