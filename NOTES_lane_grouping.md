@@ -296,3 +296,43 @@ Two rows still match a naive "Tech 2 / CNIM" grep and are deliberately kept:
   (fit 20 / ats 30). Left alone rather than quietly widening the rule.
 
 Published as Version 31. 72 assertions passing.
+
+## Round 5 — the first two-source run did not publish; time-budgeted and re-run
+
+### What happened on 2026-09-10
+
+Both routines reported SUCCEEDED, but `jobs.updated` on the board stayed at
+2026-09-09 and the note was still round 2's. Pass 1 ran **29 minutes**
+(11:17 → 11:46 UTC) against ~6 the day before; pass 2 ran 2 minutes, which is
+what its own STEP 1 looks like when it *deliberately* stops because
+`next_rows.json` is missing or not dated today. Reporting that cleanly is
+success, not a crash.
+
+Most likely cause: doubling the sources (Indeed + ZipRecruiter) with no bound
+pushed pass 1 long enough that STEP 5 — writing the hand-off file — either did
+not happen or carried the wrong date. The file itself is a Claude project
+file and cannot be read from here, so this is the best-supported reading, not
+a confirmed one.
+
+The lane fix itself held: all 17 rows on the board carried a valid lane, and
+`searchTerms`, `docs`, the tracker and her `today`/`wins` were intact.
+
+### The fix (pass 1 prompt v3, surgical, zero lines dropped, 11071 → 11788 chars)
+
+1. **HARD TIME BUDGET** paragraph after the opener: 20 minutes of searching,
+   then stop and go straight to STEP 4/5 with what you have, carrying forward
+   unchanged rows. A partial sweep that writes the file beats a thorough one
+   that never does; `generated` must be today.
+2. STEP 3 bounds the second source: one ZipRecruiter call per sweep, radius
+   45, first page only, never paginate.
+3. STEP 5 says explicitly to write the file even on a cut-short run and to say
+   so in `note`.
+
+Applied at 2026-09-11T00:18:21Z. Full text in `routine_pass1_search.prompt.txt`.
+
+### Manual run
+
+Stacey asked for it to be run now. Pass 1 was fired manually at
+2026-09-11T00:18:37Z — 11 hours before its cron, so no collision. A check-in
+at 00:55 UTC confirms pass 1 finished, fires pass 2 manually (its own date
+guard still applies), and verifies the publish ~10 minutes later.
