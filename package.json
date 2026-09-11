@@ -1,0 +1,32 @@
+{
+  "name": "@stacecentral/apple-reminders-mcp",
+  "version": "0.1.0",
+  "description": "MCP connector for Apple Reminders. Local-first via AppleScript on macOS, with an iCloud CalDAV fallback that works anywhere.",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "apple-reminders-mcp": "dist/index.js"
+  },
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "start": "node dist/index.js",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "tsdav": "^2.3.3",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "^5.7.0"
+  }
+}
