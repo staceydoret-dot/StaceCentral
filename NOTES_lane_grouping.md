@@ -531,3 +531,49 @@ structurally identical) before publishing. Never forced.
   `sweep_log.md`) says why. Today's 15:15 run is the test.
 - Pass 1 still lacks the ZipRecruiter grant (Routines UI, per-routine
   connectors). Stace can add it without a prompt change.
+
+## Round 10 — the real reason pass 2 kept refusing (2026-09-11, 16:00 UTC check)
+
+### Verified at 16:00
+
+- Stylesheet: the live page (Version 45) still has the real `<style id="sheet">`
+  before `app-code`, with `.todaywin` and `.lanechip` rules present. The
+  body-emitted sheet survived another morning-brief self-save.
+- Board: `jobs.updated` still 2026-09-09, 17 rows, every row carries a valid
+  lane (eeg 4, crc 6, tms 2, ionm/psychometrist/interpreter/ra/sleep 1 each).
+  Pass 2 refused again.
+- Pass 1 (cron, 11:16–11:24, 7.5 min) and pass 2 (cron, 15:15–15:17, 2 min)
+  both ended IDLE with no pending action. Two clean completions, no accepted
+  file — so the problem is between them, not in either.
+
+### Root cause
+
+`get_session` on the two routine sessions shows different
+`chat_project_id` values: pass 1 runs in project `01a0429e-…`, pass 2 in
+`01a04a78-…`. Project files are per project. Pass 1 has been writing
+`claude/next_rows.json` into a project pass 2 cannot see, every day. The
+date guard in pass 2 then correctly refuses. Pass 1's session title is
+still "Daily job board refresh" — it was created 08-29 from the original
+combined routine; pass 2 was created 09-07 from a different chat.
+
+### Fix (both prompts updated 16:05 UTC, committed as `routine_pass*.prompt.txt`)
+
+Google Drive is granted to both routines, so the handoff now goes through
+Drive: pass 1 STEP 5B creates a Google Doc titled
+`StaceCentral next_rows YYYY-MM-DD` with the raw JSON, confirms it is
+indexed via `search_files`, and only then trashes older copies (upload,
+confirm, then delete — never the other way round). Pass 2 STEP 1 searches
+Drive for today's title, parses the body from the first `{` to the last
+`}`, and falls back to the project file under the same date rule. Drive's
+`update_file` only edits metadata, hence one dated doc per day.
+
+Pass 1 v6 fired manually at 16:06 UTC (session `cse_01Xi1RVubMmtrCHSXuRpaCb9`)
+as the end-to-end test; a 16:17 check-in verifies the Drive file from this
+session, then fires pass 2.
+
+### Lesson
+
+Three prompt rewrites earlier this week targeted the wrong pass. The
+one-line question that would have found this on day one: "are the two
+routines even looking at the same place?" Check the sessions' project ids
+before assuming a routine did not do its job.
