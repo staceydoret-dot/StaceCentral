@@ -577,3 +577,18 @@ Three prompt rewrites earlier this week targeted the wrong pass. The
 one-line question that would have found this on day one: "are the two
 routines even looking at the same place?" Check the sessions' project ids
 before assuming a routine did not do its job.
+
+### 16:17 UTC — the v6 test run blocked on WebFetch
+
+The manual pass 1 v6 run (session `cse_01Xi1RVubMmtrCHSXuRpaCb9`) stalled at
+16:17 with two pending WebFetch calls (aset.org programme list, a UM
+Workday page). Same failure as the v4 run on 09-10: built-in web tools have
+no standing approval in a routine, so one call stops the run for good.
+Whether a run trips it is luck — the v5 cron run at 11:16 happened not to.
+Session interrupted; nothing reached Drive.
+
+Pass 1 v7 removes every line that invited a fetch: STEP 2 quotes
+requirement lines from Indeed get_job_details only; 3B/3C/3D/3E no longer
+point at apprenticeship.gov, aset.org, or "find the manager's name"; the
+connector rule names WebFetch and WebSearch as forbidden and says why.
+Re-fired at ~16:20 UTC.
