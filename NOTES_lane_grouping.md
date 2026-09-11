@@ -380,3 +380,43 @@ session's own ZipRecruiter connector was down (503) at the time anyway.
 The frozen session was interrupted. Pass 1 v4 fired at 2026-09-11T01:37:35Z
 (`cse_016BSQ4nCaERZ4wDe9m6x8sR`). A check-in at 01:56 inspects that session
 for any *new* blocked tool call first, then hands off to pass 2 and verifies.
+
+## Round 7 — WebFetch prompts too; back to the original's tool surface
+
+### v4 blocked as well
+
+The second manual run (`cse_016BSQ4nCaERZ4wDe9m6x8sR`) froze `BLOCKED` with
+three queued **WebFetch** calls (an Indeed search page, the UM IOM posting,
+the UM search results). WebFetch is permission-gated in this routine's
+environment too. Round 6 called it a "no grant needed" second source — true
+that it is not a connector, false that it runs unattended.
+
+Two of the round 5/6 instructions were hollow for the same reason: "stop at
+20 minutes" and "if a tool prompts for permission, skip it". The model has no
+clock, and the harness blocks a gated call *before* the model sees anything.
+Neither could ever have done anything. Instructions need a mechanism behind
+them; those had none.
+
+### v5 (surgical; zero original lines lost)
+
+- STEP 3 opener reverted to the original's exact wording ("Four Indeed
+  sweeps, not seven.") — no WebFetch/WebSearch second source.
+- CONNECTOR RULE narrowed to "the Indeed connector and the project files";
+  the unenforceable "skip permission prompts" clause removed; the real
+  constraint (never call ZipRecruiter) kept.
+- The only `WebFetch` mention left is the original's own STEP 2 line, untouched.
+- All pure-data edits stay: the `lane` field, TMS and interpreter search
+  terms, the verified UM requirement line.
+
+So v5's tool surface **equals** the original's. The original completed and
+published under cron on 2026-09-09.
+
+### The open question this run answers
+
+If v5 *still* blocks on the original's STEP 2 WebFetch when fired by hand,
+the manual `fire_trigger` path carries a stricter permission mode than cron,
+and the fix is to stop firing by hand and let the 11:15 UTC cron run — for
+which v5 is already live. The 02:06 check inspects the session first for
+exactly this.
+
+Third manual fire: 2026-09-11T01:59:37Z, `cse_01Vaxsh9DFECAUxxN8PkVcVk`.
