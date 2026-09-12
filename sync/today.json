@@ -1,0 +1,102 @@
+{
+ "exported_at": "2026-09-12T18:40:10Z",
+ "date": "2026-09-12",
+ "tasks": [
+  {
+   "id": "t12",
+   "text": "Send your written appeal to HR — the draft is ready in our chat. Deadline Tuesday 9/15.",
+   "why": "The appeal asks for the internal-application ineligibility period (12/8) to be lifted. Filing inside the window is what counts — you can supplement with dates and corrected timecards afterwards. Review the draft, make it yours, send.",
+   "done": false,
+   "info": false,
+   "since": "2026-09-09"
+  },
+  {
+   "id": "t10",
+   "text": "Email HR for the dates behind the 9/8 corrective action.",
+   "why": "You cannot match absences to the certification without them. Ask: “Could you send me the attendance record behind the corrective action issued 9/8, including the specific dates and occurrences it is based on? I am preparing a written appeal within the seven-day window.” Naming the window tends to speed up the reply.",
+   "done": false,
+   "info": false,
+   "since": "2026-09-09"
+  },
+  {
+   "id": "t11",
+   "text": "Submit Workday timecard corrections for any late arrivals the FMLA covers.",
+   "why": "Absence Management's own email spells out the route: past pay periods go through a timecard correction request in Workday (see the Timecard Correction Job Aid attached). Current and future ones get coded ILL-1. Do this for every date that falls inside the certified frequency — a corrected timecard is the strongest possible evidence for the appeal.",
+   "done": false,
+   "info": false,
+   "since": "2026-09-09"
+  },
+  {
+   "id": "t2",
+   "text": "9/14 — APRN appointment: bring the ADA accommodation form + talking points for Q2–Q5.",
+   "why": "The form is only useful if it comes back completed. Walk in with it and the Q2–Q5 talking points already written so nothing depends on remembering it in the room.",
+   "done": false,
+   "info": false,
+   "since": "2026-09-08"
+  },
+  {
+   "id": "t3",
+   "text": "After 9/14 — Submit the completed ADA form to Absence Management.",
+   "why": "Fax 216-444-7385, or email AMOforms@ccf.org. Dated paperwork going in is what starts the clock and protects you later.",
+   "done": false,
+   "info": false,
+   "since": "2026-09-08"
+  },
+  {
+   "id": "t4",
+   "text": "After submission — Call Absence Management: ask about interim schedule flexibility while the accommodation is under review.",
+   "why": "Review takes time, and you need the mornings to work in the meantime. Asking for interim flexibility is a separate, smaller ask than the accommodation itself.",
+   "done": false,
+   "info": false,
+   "since": "2026-09-08"
+  },
+  {
+   "id": "t7",
+   "text": "Call FAU Financial Aid — 561-297-3530.",
+   "why": "Mon–Thu 8am–6pm, Fri 8am–5pm ET. Have your Z number ready. Ask: “I have a hold on my account — registration, financial aid, and transcript — from a Parent PLUS loan default. My mother is entering a loan rehabilitation agreement with the loan servicer. Does signing an active rehabilitation agreement release these holds, or does the loan need to be fully out of default first?”",
+   "done": false,
+   "info": false,
+   "since": "2026-09-09"
+  },
+  {
+   "id": "t1",
+   "text": "Text the Senior Director at Weston.",
+   "why": "ON HOLD until the appeal resolves — she cannot place you in this cohort while the 12/8 lockout stands, so there is nothing for her to act on yet. When it is time, put her name in first and send between 9am and 4pm. “Hi [Name] — it's Stacey Doret, just following up on the EEG apprentice application we spoke about. I know it's not a quick yes-or-no on your end — it sits with HR and has its own steps, and I appreciate you carrying it. No rush on a final answer — would it be alright if I checked back on the 17th?”",
+   "done": false,
+   "info": false,
+   "since": "2026-09-08"
+  },
+  {
+   "id": "t6",
+   "text": "9/17 — Follow up with the Senior Director if she hasn't come back to you.",
+   "why": "Only if the appeal has resolved by then. If it has not, this waits — you go to her with your eligibility restored, or in late November about December. Open with “Circling back as promised —”.",
+   "done": false,
+   "info": false,
+   "since": "2026-09-08"
+  },
+  {
+   "id": "t5",
+   "text": "FMLA — approved 9/9. Intermittent, no further paperwork from you.",
+   "why": "Notice of Eligibility and Designation Notice both issued 9/9/2026. Going forward, intermittent absences get coded ILL-1 on the timecard; past pay periods go through Workday. Keep following your department's normal call-off procedure.",
+   "done": false,
+   "info": true,
+   "since": "2026-09-08"
+  },
+  {
+   "id": "t13",
+   "text": "Put Mom’s $119 on a payment plan preferably the day after payday and for every two weeks",
+   "why": "",
+   "done": false,
+   "info": false,
+   "since": "2026-09-09"
+  },
+  {
+   "id": "t8",
+   "text": "Make Lori do at least ONE session of grow therapy by the end of September 2026",
+   "why": "",
+   "done": false,
+   "info": false,
+   "since": "2026-09-12"
+  }
+ ]
+}
