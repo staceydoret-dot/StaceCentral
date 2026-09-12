@@ -243,9 +243,43 @@ export class CalDavBackend implements RemindersBackend {
         defaultAccountType: "caldav",
       });
     } catch (error) {
-      throw describeAuthFailure(error, this.serverUrl);
+      throw await this.explainConnectFailure(error);
     }
     return this.client;
+  }
+
+  /**
+   * tsdav reports a rejected login as "cannot find principalUrl", which says
+   * nothing useful. Probe the server once more with the same credentials so
+   * the person sees whether iCloud said no (401/403) or was unreachable.
+   */
+  private async explainConnectFailure(error: unknown): Promise<Error> {
+    const message = error instanceof Error ? error.message : String(error);
+    if (!/principalUrl/i.test(message)) {
+      return describeAuthFailure(error, this.serverUrl);
+    }
+    try {
+      const auth = Buffer.from(`${this.username}:${this.password}`).toString("base64");
+      const res = await fetch(this.serverUrl, {
+        method: "PROPFIND",
+        headers: { Depth: "0", Authorization: `Basic ${auth}` },
+      });
+      if (res.status === 401 || res.status === 403) {
+        return new BackendUnavailableError(
+          `iCloud rejected the CalDAV login (HTTP ${res.status}). Check that ` +
+            "ICLOUD_USERNAME is the email address you sign in to Apple with " +
+            "(not an alias or a Hide My Email relay address) and that " +
+            "ICLOUD_APP_PASSWORD is an app-specific password from " +
+            "account.apple.com, typed exactly, dashes included.",
+        );
+      }
+      return new BackendUnavailableError(
+        `iCloud answered HTTP ${res.status} at ${this.serverUrl} but did not ` +
+          "return an account principal, so the CalDAV login could not complete.",
+      );
+    } catch (probeError) {
+      return describeAuthFailure(probeError, this.serverUrl);
+    }
   }
 
   private async getCalendars(force = false): Promise<DAVCalendar[]> {
