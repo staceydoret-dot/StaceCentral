@@ -645,3 +645,30 @@ be unstyled" assertion).
 What is now true: one routine, one project, no handoff, no web tools, no
 writing connectors. The next real test is the 11:15 UTC cron run on
 2026-09-12, ideally with Indeed reachable.
+
+## Round 11 — first scheduled run of the single routine (2026-09-12)
+
+- Morning brief: 11:04–11:07 UTC, SUCCEEDED, self-save kept the sheet.
+- Link check: 06:21–06:24 UTC, SUCCEEDED.
+- Daily job search: 11:15:42–11:17:36 UTC, SUCCEEDED, no pending action,
+  published with `jobs.updated` 2026-09-12 and `updated` 2026-09-12.
+
+Verified by script against the 09-11 16:44 file: one real app-state
+block; sheet in the body before app-code; 17 rows in, 17 out, none added
+or removed, every lane valid; `jobs.docs`, `jobs.fitNote`,
+`jobs.searchTerms` byte-identical; the only other top-level changes are
+`today` (the morning brief's) and `scheduled` (this session's Version 48
+panel edit); outside the state block only added blank lines.
+test_lanes 34/34, test_roundtrip 18/18.
+
+The note says the search tool was down again, so rows carried forward a
+second day. The Indeed MCP has returned -32429 from this session since
+09-11 afternoon too. That is now the one thing standing between her and
+new listings, and it is a connector outage, not the routine. If it
+persists, reconnecting Indeed under claude.ai Settings → Connectors, or
+granting ZipRecruiter to the routine in the Routines UI, are the two
+levers — both hers, neither reachable from here.
+
+Pipeline status: working. No further daily check-ins armed; the
+routine's own push notification covers her from here. PR #2 open and
+clean at 664513b.
