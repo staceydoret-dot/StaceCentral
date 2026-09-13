@@ -1,6 +1,6 @@
 # HANDOFF — Today tab / path-to-psychiatry artifact
 
-**Last updated:** 2026-09-13
+**Last updated:** 2026-09-13 (late)
 
 This file exists because it didn't. A previous session's tooling was never committed, so
 a later session had no way to find the artifact, merge into it safely, or verify a change
@@ -194,3 +194,52 @@ index, which is the pattern to follow.
 
 `checked` — 7 entries, unchanged throughout:
 `m06` 08-31 · `a01` `m01` `m05` `a02` `a03` `m11` all 09-05
+
+---
+
+## The ADA accommodation request (added 2026-09-13)
+
+The employer form is **"Medical Statement in Support of an Accommodation Request"** (fax
+216-444-7385 / AMOforms@ccf.org). Structure matters: **Q1–Q9 are the provider's**, Stacey only
+signs the page-3 release. That release **excludes psychotherapy notes** — worth repeating to
+her, she was worried about it.
+
+- Her **PCP** certified the FMLA. Her **Grow Therapy psychiatric APRN** is the one *actively
+  treating* the condition, which is what this form asks for — so the APRN signs it. Different
+  practices, different charts, so consistency is **not** automatic: she sends the FMLA
+  Designation Notice along with the form.
+- Treatment history: ongoing **medication adjustments targeting attention and focus for work**.
+  That supports Q3 *Concentrating / Thinking / Working*.
+- **The ask is two accommodations, deliberately separated:** noise-reducing headphones, and a
+  **flexible arrival window 8:30–8:50** (not counted as tardiness). They must be described as
+  addressing *distinct* limitations — otherwise the employer grants the headphones and closes
+  the request. She genuinely wants both.
+- **A fixed 9:00 start was ruled out**: her shift end cannot move, so a later start is a pay
+  cut (~2.5 hrs/week). The window keeps her whole; make-up time via a shorter unpaid meal
+  period, or another day inside the same workweek (FLSA: same week only).
+- **Feasibility facts, for the HR conversation and not the medical form:** her role is covered
+  from **8:00** and she starts at **8:30** — she is not the opener — and her manager already
+  moved her 8:15→8:30 without disruption.
+- **Do not coach the clinical basis.** Three candidates were offered to her APRN — medication
+  onset, morning functional capacity, time perception — for the provider to pick. Time
+  blindness alone is the weakest (the "she'd be late at 9:00 too" rebuttal); it only holds
+  with the bounded-margin argument, since her miss is a consistent 10–15 minutes.
+
+## Why the appeal is worth more than it looks
+
+The **EEG Technologist Apprentice** at Cleveland Clinic scores **62**, her highest fit. Its
+internal window opens **12 Nov**, cohort starts **16 Nov** — and the corrective action locks
+her out of internal applications until **12/8**. The lockout outlasts the cohort, so the 9/8
+write-up costs her that apprenticeship outright. That is the concrete stake in the appeal.
+
+Locally, **Joe DiMaggio EEG Technician** (2 miles, no experience required) accepts *enrolment*
+in a CAAHEP programme rather than graduation. Enrolment is the single highest-leverage
+unticked box on her whole jobs board.
+
+## Publishing while she is using the page
+
+She taps the page while we work, and `queueSave()` republishes 1.4 s later — a publish built
+on a stale read is **refused**, not merged. Re-read immediately before every publish, keep
+`jobs`, `jobFeedback`, `log` and `view` in the untouched-assertion list, and merge onto her
+version. Never `force`. Her `log` entries are hers — on 9/12 she wrote *"We drafted the Appeal
+form! Woohoo!"* and the in-page coach answered it.
