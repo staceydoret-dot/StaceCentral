@@ -33,10 +33,10 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
     hasDel: !!l.querySelector('.tkdel'),
   })));
   check(items.length === 12, `exactly 12 rows (got ${items.length})`);
-  const want = [/^Monday 9\/14 — send the appeal/, /^Email HR for the dates/,
-                /^Submit Workday timecard corrections/, /9\/14 — APRN appointment/,
-                /Submit the completed ADA form/, /Call Absence Management/,
-                /^Call FAU Financial Aid/, /^Text the Senior Director/,
+  const want = [/^Monday 9\/14 — send the appeal/, /^Text the Senior Director/,
+                /^Email HR for the dates/, /^Submit Workday timecard corrections/,
+                /9\/14 — APRN appointment/, /Submit the completed ADA form/,
+                /Call Absence Management/, /^Call FAU Financial Aid/,
                 /9\/17 — Follow up with the Senior Director/, /FMLA — approved 9\/9/,
                 /\$119.*payment plan/, /Lori.*grow therapy/i];
   want.forEach((re, i) => check(items[i] && re.test(items[i].text), `row ${i + 1} matches ${re}`));
@@ -91,20 +91,28 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
     const s = JSON.parse(document.getElementById('app-state').textContent);
     return (s.today.tasks.find(t => t.id === 't1') || {}).why || '';
   });
-  check(/just following up on the EEG apprentice application/.test(note), 'message body saved in the note');
-  check(/checked back on the 17th/.test(note), 'asks to check back on the 17th');
+  check(/Quick update on the EEG apprentice application/.test(note), 'message body saved in the note');
+  check(/FMLA was approved 9\/9, backdated to 8\/26/.test(note), 'leads with the FMLA approval');
+  check(/filed a written appeal of the attendance action/.test(note), 'carries the second line she asked for');
   check(/\[Name\]/.test(note), 'name placeholder present so she fills it in');
-  check(!/9\/26/.test(note), 'the 9/26 cohort-close line is gone, as she asked');
+  /* she asked for 9/26 out of the MESSAGE, not out of her own coaching note —
+     so check only the quoted text between the smart quotes */
+  const quoted = (note.match(/\u201C([\s\S]*)\u201D/) || [])[1] || '';
+  check(quoted.length > 80, 'the quoted message is actually in the note');
+  check(!/9\/26/.test(quoted), 'the 9/26 cohort-close date stays out of the message, as she asked');
+  check(/before the cohort closes/.test(quoted), 'it still asks about the closing window, without the date');
 
-  console.log('\n[6d] the Senior Director thread is parked, not lost');
+  console.log('\n[6d] the Senior Director thread is live again, not parked');
   const t1 = await page.evaluate(() => {
     const s = JSON.parse(document.getElementById('app-state').textContent);
     const q = s.today.tasks; const t = q.find(x => x.id === 't1');
-    return { pos: q.indexOf(t), why: (t || {}).why || '' };
+    return { pos: q.indexOf(t), why: (t || {}).why || '', url: (t || {}).url || '' };
   });
-  check(t1.pos === 7, `Director text parked behind the appeal work (got position ${t1.pos + 1})`);
-  check(/ON HOLD until the appeal resolves/.test(t1.why), 'carries the hold reason');
-  check(/checked back on the 17th/.test(t1.why), 'drafted message still preserved');
+  check(t1.pos === 1, `Director follow-up sits beside the appeal (got position ${t1.pos + 1})`);
+  check(!/ON HOLD until the appeal resolves/.test(t1.why), 'the old hold reason is gone');
+  check(/NO LONGER ON HOLD/.test(t1.why), 'the note says plainly that it is live again');
+  check(/cohort closes 9\/26/.test(t1.why), 'her note still tells her the deadline');
+  check(/docs\.google\.com/.test(t1.url), 'links out to the drafts doc');
 
   console.log('\n[6e] the FMLA row reflects the 9/9 approval');
   const t5 = await page.evaluate(() => {
