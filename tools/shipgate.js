@@ -33,13 +33,28 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
     hasDel: !!l.querySelector('.tkdel'),
   })));
   check(items.length === 12, `exactly 12 rows (got ${items.length})`);
-  const want = [/^Monday 9\/14 — send the appeal/, /^Text the Senior Director/,
+  /* The in-page coach reorders the queue and rewrites task text on its own — it did
+     both on 13 Sep. So assert that every row is PRESENT, not where it sits; only the
+     handful of positions that actually matter get pinned below. */
+  const want = [/send the appeal/i, /^Text the Senior Director/,
                 /^Email HR for the dates/, /^Submit Workday timecard corrections/,
                 /9\/14 — APRN appointment/, /Submit the completed ADA form/,
                 /Call Absence Management/, /^Call FAU Financial Aid/,
                 /9\/17 — Follow up with the Senior Director/, /FMLA — approved 9\/9/,
                 /\$119.*payment plan/, /Lori.*grow therapy/i];
-  want.forEach((re, i) => check(items[i] && re.test(items[i].text), `row ${i + 1} matches ${re}`));
+  want.forEach(re => check(items.some(x => re.test(x.text)), `a row matches ${re}`));
+
+  /* what position DOES matter: the appeal is the thing with a hard deadline, so it
+     must stay the first open row and therefore the focus card */
+  const firstOpen = items.find(x => !x.info);
+  check(firstOpen && /send the appeal/i.test(firstOpen.text), 'the appeal is the first open row');
+
+  /* the two clock-bound rows stay above the money and long-range rows */
+  const posOf = re => items.findIndex(x => re.test(x.text));
+  check(posOf(/^Text the Senior Director/) < posOf(/^Call FAU Financial Aid/),
+        'Weston follow-up sits above the financial-aid call');
+  check(posOf(/9\/14 — APRN appointment/) < posOf(/^Call FAU Financial Aid/),
+        'APRN appointment sits above the financial-aid call');
 
   console.log('\n[3] the FMLA row is a note, not a to-do');
   /* locate the note by its flag, not by position — the queue reorders often */
@@ -55,7 +70,7 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
 
   console.log('\n[4] "Start here" picks the appeal send-off');
   let focus = await page.textContent('#focus .fmain');
-  check(/^Monday 9\/14 — send the appeal/.test(focus.trim()), 'focus card = send the appeal');
+  check(/send the appeal/i.test(focus.trim()), 'focus card = send the appeal');
 
   console.log('\n[5] tracker tap data survived (the whole point of the merge)');
   const checked = await page.evaluate(() => {
@@ -108,7 +123,7 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
     const q = s.today.tasks; const t = q.find(x => x.id === 't1');
     return { pos: q.indexOf(t), why: (t || {}).why || '', url: (t || {}).url || '' };
   });
-  check(t1.pos === 1, `Director follow-up sits beside the appeal (got position ${t1.pos + 1})`);
+  check(t1.pos > 0 && t1.pos <= 3, `Director follow-up is near the top (got position ${t1.pos + 1})`);
   check(!/ON HOLD until the appeal resolves/.test(t1.why), 'the old hold reason is gone');
   check(/NO LONGER ON HOLD/.test(t1.why), 'the note says plainly that it is live again');
   check(/cohort closes 9\/26/.test(t1.why), 'her note still tells her the deadline');

@@ -243,3 +243,18 @@ on a stale read is **refused**, not merged. Re-read immediately before every pub
 `jobs`, `jobFeedback`, `log` and `view` in the untouched-assertion list, and merge onto her
 version. Never `force`. Her `log` entries are hers — on 9/12 she wrote *"We drafted the Appeal
 form! Woohoo!"* and the in-page coach answered it.
+
+## The in-page coach edits the queue too (learned 2026-09-13)
+
+It is not only Stacey tapping. When she logs something in the "talk to me" box, the
+**in-page coach rewrites task text and reorders the queue** on its own. Overnight on 13 Sep it
+rewrote `t12` (dropping the "Monday 9/14 —" prefix) and moved `t2` above `t1`.
+
+So **positional assertions in the ship gate are inherently brittle** — they were rewritten to
+check that every expected row is *present*, plus only the few positions that genuinely matter:
+the appeal stays the first open row (so it stays the focus card), and the two clock-bound rows
+stay above the financial-aid call. Do not re-pin exact indexes; the gate will just go red again
+the next time she talks to the page.
+
+Same reason the queue text should be matched loosely (`/send the appeal/i`, not the full
+sentence). The coach owns the wording once it has spoken.
