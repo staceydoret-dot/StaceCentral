@@ -33,25 +33,29 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
     hasDel: !!l.querySelector('.tkdel'),
   })));
   check(items.length === 12, `exactly 12 rows (got ${items.length})`);
-  const want = [/^Open the FMLA Designation Notice/, /^Email HR for the dates/,
-                /^Submit Workday timecard corrections/, /^Submit the written appeal to HR/,
-                /9\/14 — APRN appointment/, /Submit the completed ADA form/,
-                /Call Absence Management/, /^Call FAU Financial Aid/,
-                /^Accept the \$119\/month Parent PLUS/, /^Text the Senior Director/,
-                /9\/17 — Follow up with the Senior Director/, /FMLA — approved 9\/9/];
+  const want = [/^Monday 9\/14 — send the appeal/, /^Email HR for the dates/,
+                /^Submit Workday timecard corrections/, /9\/14 — APRN appointment/,
+                /Submit the completed ADA form/, /Call Absence Management/,
+                /^Call FAU Financial Aid/, /^Text the Senior Director/,
+                /9\/17 — Follow up with the Senior Director/, /FMLA — approved 9\/9/,
+                /\$119.*payment plan/, /Lori.*grow therapy/i];
   want.forEach((re, i) => check(items[i] && re.test(items[i].text), `row ${i + 1} matches ${re}`));
 
   console.log('\n[3] the FMLA row is a note, not a to-do');
-  const fmla = items[11] || {};
-  check(fmla.info === true,  'FMLA row marked data-info');
+  /* locate the note by its flag, not by position — the queue reorders often */
+  const infoRows = items.filter(x => x.info);
+  check(infoRows.length === 1, `exactly one info row (got ${infoRows.length})`);
+  const fmla = infoRows[0] || {};
+  check(/FMLA — approved 9\/9/.test(fmla.text), 'the info row is the FMLA note');
   check(fmla.hasBox === false, 'FMLA row has NO checkbox');
   check(fmla.hasDel === false, 'FMLA row has no remove button');
-  const others = items.slice(0, 11);
+  const others = items.filter(x => !x.info);
+  check(others.length === 11, `11 real tasks (got ${others.length})`);
   check(others.every(x => x.hasBox), 'the other 11 rows DO have checkboxes');
 
-  console.log('\n[4] "Start here" picks the Senior Director message');
+  console.log('\n[4] "Start here" picks the appeal send-off');
   let focus = await page.textContent('#focus .fmain');
-  check(/^Open the FMLA Designation Notice/.test(focus.trim()), 'focus card = read the Designation Notice');
+  check(/^Monday 9\/14 — send the appeal/.test(focus.trim()), 'focus card = send the appeal');
 
   console.log('\n[5] tracker tap data survived (the whole point of the merge)');
   const checked = await page.evaluate(() => {
@@ -98,7 +102,7 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
     const q = s.today.tasks; const t = q.find(x => x.id === 't1');
     return { pos: q.indexOf(t), why: (t || {}).why || '' };
   });
-  check(t1.pos === 9, `Director text demoted to position 10 (got ${t1.pos + 1})`);
+  check(t1.pos === 7, `Director text parked behind the appeal work (got position ${t1.pos + 1})`);
   check(/ON HOLD until the appeal resolves/.test(t1.why), 'carries the hold reason');
   check(/checked back on the 17th/.test(t1.why), 'drafted message still preserved');
 

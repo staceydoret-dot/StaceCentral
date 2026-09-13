@@ -1,6 +1,6 @@
 # HANDOFF — Today tab / path-to-psychiatry artifact
 
-**Last updated:** 2026-09-08
+**Last updated:** 2026-09-13
 
 This file exists because it didn't. A previous session's tooling was never committed, so
 a later session had no way to find the artifact, merge into it safely, or verify a change
@@ -133,40 +133,64 @@ those out of its console-error check.
 
 ---
 
-## Current queue (rebuilt 2026-09-09, appeal-first)
+## Current queue (rebuilt 2026-09-13 — appeal drafted, Monday is the send)
 
-Intermittent FMLA was **approved 9/9/2026** (Notice of Eligibility + Designation Notice). The
-Absence Management email documents a route for **closed/historical pay periods** — a timecard
-correction request in Workday — which is why the appeal now leads the queue.
+The written appeal to HR is **drafted and staged three ways**: a Google Doc (the master,
+Times New Roman 12pt / 1.5), a PDF, and a Gmail draft with the PDF attached. Drafting it is
+recorded in `wins`; `t12` is now only the act of sending.
 
-1. `t9` Open the FMLA Designation Notice, read the certified frequency and duration — gates everything
-2. `t10` Email HR for the dates behind the 9/8 corrective action
-3. `t11` Workday timecard corrections for covered late arrivals (ILL-1 for current/future)
-4. `t12` Submit the written appeal to HR — target Fri 9/11, hard deadline **Tue 9/15**
-   (7 calendar days from 9/8, weekend included)
-5. `t2` 9/14 APRN appointment · 6. `t3` submit ADA form · 7. `t4` Absence Management call
-8. `t7` FAU financial aid · 9. `t8` Parent PLUS rehab agreement
-10. `t1` Text the Senior Director — **demoted to position 10 and marked ON HOLD** until the appeal
-    resolves; the drafted message is preserved intact in its `why`
-11. `t6` 9/17 Director follow-up — conditional on the appeal resolving
-12. `t5` FMLA — `info: true`, rewritten from "sitting in their queue" to "approved 9/9"
+Appeal letter (master): https://docs.google.com/document/d/1Zdcoc4J_JbsmknxMx5gG-cYh5ZsghmujzIre_IhRxVE/edit
+
+1. `t12` **Monday 9/14 — send the appeal**: download the PDF, attach both FMLA notices,
+   email Ruth, forward the sent copy to Gmail. Hard deadline **Tue 9/15** (7 calendar days
+   from 9/8). She sends from her *work* Outlook — she cannot reach it off-site.
+2. `t10` Email HR for the dates behind the 9/8 corrective action — no longer blocking
+3. `t11` Workday timecard corrections for covered late arrivals (ILL-1 going forward)
+4. `t2` 9/14 APRN appointment · 5. `t3` submit ADA form · 6. `t4` Absence Management call
+7. `t7` FAU financial aid · 8. `t1` Senior Director text (**parked**, position 8)
+9. `t6` 9/17 Director follow-up · 10. `t5` FMLA — `info: true`
+11. `t13` Parent PLUS payment plan · 12. `t8` Lori / Grow Therapy
 
 Ids are not in list order. Intentional — they are stable handles the in-page coach uses via
 `complete_task`; order lives in the array. Do not renumber.
 
-### Corrections worth remembering
-- FMLA was first assessed as a **weak** lever ("late is not absent", pattern looked chronic rather
-  than episodic). The 9/9 intermittent approval plus the documented retroactive correction path
-  reversed that. It is now the strongest ground.
-- One occurrence has an external, verifiable cause: a homicide investigation closed the train
-  tracks at Cypress Creek on a Thursday. Evidence decays — transit alerts and news coverage should
-  be captured early.
-- Her manager moved the start time 8:15 → 8:30 informally. It does not close the gap (arrival is
-  8:40–8:45) and further change must go through HR, not the manager.
-- The real commute bottleneck is the **last mile** from station to site, not the timetable.
+### The appeal's argument (worth keeping)
+FMLA period begins **8/26/2026** → employer notified **9/2** → corrective action issued
+**9/8** → approved **9/9**. Any occurrence on or after 8/26 falls inside an approved FMLA
+period, so she does not need the occurrence dates: state the rule, let HR match. Certified
+frequency is *"2 time per week lasting 9 hours per episode"* — a 15-minute late arrival is a
+fraction of one episode, so her 9 hours of PTO covers ~36 of them.
 
-**Open discrepancy on `t8`:** `scheduledOnce.rehab-check` records $5/month; the offered agreement
-is $119/month — about $1,026 more across nine payments. Unresolved.
+One occurrence has an external cause, now sourced: a fatality on the Tri-Rail tracks in the
+6200 block of N. Andrews Ave, Fort Lauderdale at ~6:15 a.m. **Thursday 9/3/2026**, covered by
+WSVN 7News, NBC6 and Local 10. The coverage confirms the incident and the police response —
+it does **not** mention a service suspension, so the letter claims only the delay as her own
+account. Do not overstate that.
+
+### Corrections worth remembering
+- FMLA was first assessed as a **weak** lever ("late is not absent"). The 9/9 intermittent
+  approval plus the documented retroactive correction path reversed that. It is now the
+  strongest ground.
+- Her manager moved the start time 8:15 → 8:30 informally. It does not close the gap (arrival
+  is 8:40–8:45) and further change must go through HR, not the manager.
+- The real commute bottleneck is the **last mile** from station to site, not the timetable.
+- **Ruth** is her HR contact — Ruth sent her the accommodation request form on 9/8, and the
+  appeal goes to Ruth.
+
+### Tooling added 2026-09-13
+- `tools/appeal/build_letter.py` — the PDF (reportlab, base-14 `Times-Roman`, 18pt leading =
+  1.5 spacing at 12pt, 1in margins). `pip install reportlab` first.
+- `tools/appeal/build_docx.py` — a Word version (python-docx). LibreOffice cannot convert in
+  this image ("source file could not be loaded"), so do not rely on it to preview.
+- `tools/appeal/letter.html` — what was uploaded to Drive. Google converts `text/html` to a
+  native Doc and honours inline `font-family` / `font-size` / `line-height`.
+- `tools/merge_appeal_win.py` — the merge that banked the win and rewrote `t12`.
+
+### Ship gate note
+The gate's queue assertions are **order-sensitive and go stale every time the queue changes**.
+When rows move, update `want[]`, the focus-card expectation and the Director position — do not
+delete assertions to get green. The info row is now located by its `info` flag rather than by
+index, which is the pattern to follow.
 
 `checked` — 7 entries, unchanged throughout:
 `m06` 08-31 · `a01` `m01` `m05` `a02` `a03` `m11` all 09-05
