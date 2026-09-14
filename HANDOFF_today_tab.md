@@ -281,3 +281,26 @@ moment she actually used the page:
 
 Rule of thumb for this gate: assert what must always be true, never what happened to be true
 on the day it was written.
+
+## Do not "fix" the ADA form — it is already fillable (2026-09-14)
+
+The Cleveland Clinic *Medical Statement in Support of an Accommodation Request* ships as a
+**working AcroForm: 68 fields**, including a `/Sig` digital-signature field for the provider.
+Text fields, checkboxes and radio groups all behave correctly.
+
+I wrongly concluded it was flat and rebuilt a fillable version on top of it. The bad check was
+`strings file.pdf | grep -c /Widget` returning 0 — **this PDF stores its objects in compressed
+object streams, so `strings` cannot see them.** Never diagnose PDF structure that way. Use a
+real parser:
+
+```python
+from pypdf import PdfReader
+r = PdfReader(path); print(len(r.get_fields() or {}))
+```
+
+Note the system `pypdf` is unusable here — importing it panics via a broken
+`cryptography` build (`pyo3_runtime.PanicException`). Create a venv and `pip install pypdf`.
+
+If she reports the form "isn't editable" again, it is the **viewer**, not the file: Gmail's
+inline preview and Google Drive's preview render forms flat. Adobe Acrobat Reader, macOS
+Preview, Chrome and Edge all fill it fine.
