@@ -31,6 +31,7 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
     info: l.getAttribute('data-info') === 'true',
     hasBox: !!l.querySelector('.tkbox'),
     hasDel: !!l.querySelector('.tkdel'),
+    done: l.getAttribute('data-done') === 'true',
   })));
   check(items.length === 12, `exactly 12 rows (got ${items.length})`);
   /* The in-page coach reorders the queue and rewrites task text on its own — it did
@@ -38,22 +39,22 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
      handful of positions that actually matter get pinned below. */
   const want = [/send the appeal/i, /^Text the Senior Director/,
                 /^Email HR for the dates/, /^Submit Workday timecard corrections/,
-                /9\/14 — APRN appointment/, /Submit the completed ADA form/,
+                /APRN appointment/, /Submit the completed ADA form/,
                 /Call Absence Management/, /^Call FAU Financial Aid/,
                 /9\/17 — Follow up with the Senior Director/, /FMLA — approved 9\/9/,
                 /\$119.*payment plan/, /Lori.*grow therapy/i];
   want.forEach(re => check(items.some(x => re.test(x.text)), `a row matches ${re}`));
 
-  /* what position DOES matter: the appeal is the thing with a hard deadline, so it
-     must stay the first open row and therefore the focus card */
-  const firstOpen = items.find(x => !x.info);
-  check(firstOpen && /send the appeal/i.test(firstOpen.text), 'the appeal is the first open row');
+  /* The durable invariant is not WHICH task leads — she ticks things off — but that the
+     focus card always shows the first row that is neither done nor an info note. */
+  const firstOpen = items.find(x => !x.info && !x.done);
+  check(!!firstOpen, 'there is an open row to focus on');
 
   /* the two clock-bound rows stay above the money and long-range rows */
   const posOf = re => items.findIndex(x => re.test(x.text));
   check(posOf(/^Text the Senior Director/) < posOf(/^Call FAU Financial Aid/),
         'Weston follow-up sits above the financial-aid call');
-  check(posOf(/9\/14 — APRN appointment/) < posOf(/^Call FAU Financial Aid/),
+  check(posOf(/APRN appointment/) < posOf(/^Call FAU Financial Aid/),
         'APRN appointment sits above the financial-aid call');
 
   console.log('\n[3] the FMLA row is a note, not a to-do');
@@ -68,9 +69,11 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
   check(others.length === 11, `11 real tasks (got ${others.length})`);
   check(others.every(x => x.hasBox), 'the other 11 rows DO have checkboxes');
 
-  console.log('\n[4] "Start here" picks the appeal send-off');
+  console.log('\n[4] "Start here" picks the first unfinished row');
   let focus = await page.textContent('#focus .fmain');
-  check(/send the appeal/i.test(focus.trim()), 'focus card = send the appeal');
+  const lead = items.find(x => !x.info && !x.done);
+  check(lead && focus.trim().startsWith(lead.text.trim().slice(0, 30)),
+        `focus card = first open row (${(lead || {}).text || 'none'})`);
 
   console.log('\n[5] tracker tap data survived (the whole point of the merge)');
   const checked = await page.evaluate(() => {
@@ -90,11 +93,18 @@ function check(cond, m) { cond ? ok(m) : bad(m); }
   await page.click('.switch button[data-view="today"]');
   await page.waitForTimeout(300);
 
-  console.log('\n[6] ticking all 11 real tasks never promotes the FMLA note');
-  for (let i = 0; i < 11; i++) {
-    await page.click('#tasklist li[data-done="false"] .tkbox');
+  console.log('\n[6] ticking every remaining task never promotes the FMLA note');
+  /* she ticks rows off as she goes, so the number left is not fixed — drain the list
+     instead of counting, and cap it so a rendering bug cannot spin forever */
+  let drained = 0;
+  for (;;) {
+    const open = await page.$$('#tasklist li[data-done="false"] .tkbox');
+    if (!open.length) break;
+    if (++drained > 40) throw new Error('tasklist never drained — rows are not sticking');
+    await open[0].click();
     await page.waitForTimeout(150);
   }
+  check(drained > 0, `drained the remaining open rows (${drained})`);
   focus = await page.textContent('#focus .fmain');
   check(!/FMLA/.test(focus), 'FMLA never becomes the focus card');
   check(/Nothing left on today/.test(focus), 'focus shows the cleared state instead');

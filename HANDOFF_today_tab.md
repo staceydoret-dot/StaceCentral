@@ -258,3 +258,26 @@ the next time she talks to the page.
 
 Same reason the queue text should be matched loosely (`/send the appeal/i`, not the full
 sentence). The coach owns the wording once it has spoken.
+
+## 2026-09-14 — the appeal was filed
+
+Sent to **Ruth Owens** at 11:59 AM Monday 9/14, inside the seven-day window (deadline was
+9/15). `t12` is ticked. The ADA form also went to the Grow Therapy APRN ahead of the 12:30
+appointment, banked as a win.
+
+**Still open that day:** the Weston text (`t1`), window 9am–4pm, cohort closes 9/26.
+
+### Ship gate lessons from this round
+Three assertions encoded a single moment rather than an invariant, and all three went red the
+moment she actually used the page:
+
+- the APRN row's text — the coach rewrote it to "Today 12:30 — …". Match loosely.
+- "the appeal is the focus card" — false as soon as she ticked it. The real contract is
+  **the focus card shows the first row that is neither done nor an info note**; that is what
+  is asserted now.
+- "tick all 11 tasks" — a fixed count breaks once any row is already done. The loop now
+  **drains** `li[data-done="false"]` until empty, capped at 40 to fail loudly on a render bug
+  rather than hang.
+
+Rule of thumb for this gate: assert what must always be true, never what happened to be true
+on the day it was written.
